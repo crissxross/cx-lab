@@ -1,0 +1,68 @@
+<html>
+<body>
+  <style>
+	.g {
+		display: grid;
+		grid-auto-rows: calc(20vh - 4px);
+		gap: 4px;
+		background: grey;
+		margin: 0;
+	}
+	.r {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 9vw;
+		padding-inline: 4vw;
+		gap: 10vw;
+		background: white;
+	}
+	.r:nth-child(even) {
+		justify-content: center;
+	}
+	.r:nth-child(3n) {
+		justify-content: end;
+	}
+	.sq {
+		background: black;
+		border-inline: 4px solid grey;
+	}
+</style>
+	<div class="g">
+		<div class="r">
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+		</div>
+		<div class="r">
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+		</div>
+		<div class="r">
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+		</div>
+		<div class="r">
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+		</div>
+		<div class="r">
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+			<div class="sq"></div>
+		</div>
+	</div>
+</body>
+</html>

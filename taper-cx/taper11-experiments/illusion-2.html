@@ -1,0 +1,74 @@
+<html>
+<body>
+  <style>
+	main {
+		display: grid;
+		grid-auto-rows: calc(20vh - 4px);
+		gap: 4px;
+		background: grey;
+		margin: 0;
+    font-family: sans-serif;
+	}
+	.r {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 9vw;
+		padding-inline: 4vw;
+		gap: 10vw;
+		background: white;
+	}
+	.r:nth-child(even) {
+		justify-content: center;
+	}
+	.r:nth-child(3n) {
+		justify-content: end;
+	}
+	p {
+    margin: 0;
+		background: black;
+		border-inline: 4px solid grey;
+    display: grid;
+    place-content: center;
+    color: white;
+    font-size: 10vw;
+	}
+</style>
+	<main>
+		<div class="r">
+			<p>p</p>
+			<p>a</p>
+			<p>r</p>
+			<p>a</p>
+			<p>l</p>
+		</div>
+		<div class="r">
+			<p>l</p>
+			<p>e</p>
+			<p></p>
+			<p></p>
+			<p></p>
+		</div>
+		<div class="r">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+		</div>
+		<div class="r">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+		</div>
+		<div class="r">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+		</div>
+	</main>
+</body>
+</html>
