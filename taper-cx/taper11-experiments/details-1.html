@@ -1,31 +1,77 @@
 <html>
   <body>
   <style>
-    div {
-      /* display: grid;
-      place-content: center; */
-      padding: 10vw;
+    body {
+      margin:0 ; overflow:hidden;
+      background: black;
+    }
+    main {
+      font-family: sans-serif;
+      background: white;
+      /* margin: 1vw; */
+      /* border: 1vh solid grey; */
+      /* display: grid; */
+      /* align-content: center; */
+    }
+    summary {
+      font-size: 5vh;
+      height: 10vh;
+      --s: 5vmin;
+      --cg: conic-gradient(at 50% 25%, #fff0 270deg, black 0);
+      --cs: calc(var(--s) * 2) calc(var(--s) * 4);
+      background:
+        linear-gradient(grey 2.5%, #fff0 0 97.5%, grey 0) 50% calc(50% + var(--s) / 2) / 100% var(--s),
+        var(--cg) 50% / var(--cs),
+        var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s)) / var(--cs),
+        var(--cg) calc(50% + var(--s)) calc(50% + var(--s) * 2) / var(--cs),
+        var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s) * 3) / var(--cs);
+    }
+    summary::marker {
+      color: red;
+    }
+    p {
+      padding-left: 5vw;
     }
 
   </style>
-    <div>
+    <main>
       <details>
-        <summary>Details</summary>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <summary></summary>
+        <p>// Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
       </details>
       <details>
-        <summary>Details</summary>
-        <p>Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+        <summary></summary>
+        <p>\ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
       </details>
       <script></script>
       <details>
-        <summary>Details</summary>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <summary></summary>
+        <p>|| Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
       </details>
       <details>
-        <summary>Details</summary>
-        <p>Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+        <summary></summary>
+        <p>= Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
       </details>
-    </div>
+      <details>
+        <summary></summary>
+        <p>≠ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+      </details>
+      <details>
+        <summary></summary>
+        <p>|| Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </details>
+      <details>
+        <summary></summary>
+        <p>= Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+      </details>
+      <details>
+        <summary></summary>
+        <p>≠ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+      </details>
+      <details>
+        <summary></summary>
+        <p>≠ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+      </details>
+    </main>
   </body>
 </html>

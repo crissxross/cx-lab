@@ -1,0 +1,19 @@
+<!-- from https://codepen.io/MarkBoots/pen/OJwRjGJ -->
+<html>
+  <body>
+  <style>
+    html {
+      height: 100%;
+      --s: 5vmin;
+      --cg: conic-gradient(at 50% 25%, #fff0 270deg, black 0);
+      --cs: calc(var(--s) * 2) calc(var(--s) * 4);
+      background:
+        linear-gradient(grey 2.5%, #fff0 0 97.5%, grey 0) 50% calc(50% + var(--s) / 2) / 100% var(--s),
+        var(--cg) 50% / var(--cs),
+        var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s)) / var(--cs),
+        var(--cg) calc(50% + var(--s)) calc(50% + var(--s) * 2) / var(--cs),
+        var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s) * 3) / var(--cs);
+    }
+  </style>
+  </body>
+</html>
