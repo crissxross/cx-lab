@@ -2,20 +2,18 @@
   <body>
   <style>
     body {
-      margin:0 ; overflow:hidden;
-      background: black;
+      margin:0;
+      /* overflow:hidden; */
     }
     main {
       font-family: sans-serif;
-      background: white;
-      /* margin: 1vw; */
-      /* border: 1vh solid grey; */
-      /* display: grid; */
-      /* align-content: center; */
+      /* I don't know if it's worth doing responsive scale font-size because template doesn't have meta tag for mobile */
+      font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
     }
     summary {
       font-size: 5vh;
       height: 10vh;
+      cursor: pointer;
       --s: 5vmin;
       --cg: conic-gradient(at 50% 25%, #fff0 270deg, black 0);
       --cs: calc(var(--s) * 2) calc(var(--s) * 4);
@@ -29,12 +27,15 @@
     summary::marker {
       color: red;
     }
-    p {
-      padding-left: 5vw;
+    details[open] p {
+      color: white;
+      background-color: black;
+      margin: 0;
+      padding: 1vw 5vw;
     }
-
   </style>
     <main>
+      <!-- 11 details -->
       <details>
         <summary></summary>
         <p>// Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -43,7 +44,6 @@
         <summary></summary>
         <p>\ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
       </details>
-      <script></script>
       <details>
         <summary></summary>
         <p>|| Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -63,6 +63,14 @@
       <details>
         <summary></summary>
         <p>= Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+      </details>
+      <details>
+        <summary></summary>
+        <p>≠ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
+      </details>
+      <details>
+        <summary></summary>
+        <p>≠ Ipsam impedit perspiciatis tenetur cupiditate aperiam enim nostrum.</p>
       </details>
       <details>
         <summary></summary>
