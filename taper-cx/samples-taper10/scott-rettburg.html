@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta property="og:title" content="Ten Lines">
+        <meta property="og:author" content="Scott Rettberg">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="A poem by Scott Rettberg for Taper #10"/>
+        <meta property="og:image" content="https://taper.badquar.to/10/images/ten_lines.jpg">
+        <meta property="og:url" content="https://taper.badquar.to/10/ten_lines.html">
+        <title>Ten Lines (Taper #10)</title>
+        <!-- “Ten Lines” Copyright (C) 2023 Scott Rettberg
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #10: Powers of Ten, Spring 2023:
+
+https://taper.badquar.to/10/ten_lines.html
+
+... This is really a quite simple thing, though it was a challenge for
+me to deal with the absurd constraints of Taper on my first attempt
+at this maddening form that offers so little room for verbiage. I
+don’t do minimalism for a living. In response to the theme, I was
+interested in producing a work that embraced the basic combinatory
+impulse of Queneau’s Cent mille milliards de poèmes and recombined
+words in a semi-coherent fashion. The words I have chosen to
+include here all include “ten” either at the beginning or the end
+of the word. There are surprisingly few words that work well within
+the constraints I established for this little piece, and I didn’t
+have room for most of them. However I did learn some new ones. For
+example, a tenrec is an animal native to Madagascar that is a
+specific type of hedgehog. I did not know that before I worked on
+this little text machine. A tenotomy is a procedure to treat pain
+in one of your tendons. The tench or doctor fish is a fresh- and
+brackish-water fish of the order Cypriniformes found throughout
+Eurasia from Western Europe including the British Isles east into
+Asia as far as the Ob and Yenisei Rivers. It is also found in Lake
+Baikal. A tenebrist is a painter in the style of Caravaggio,
+characterized by the use of large areas of dark colors, usually
+relieved with a shaft of light. Not every line is going to make
+sense, of course, but to throw my ten cents in, sense is not really
+the point here. The point here is ten. Nevertheless as I’m reading
+the recombinations, I’m struck by the way that our poetic
+metaphor-making minds are driven by a sense of closure that can
+give language a kind of meaning even where it was never consciously
+intended. I hope these strange combinations create some sense of
+ambient narrative or at least a momentary amusement, perhaps a
+tenable if tenuous experience, albeit one that may be completely
+miswritten. At the very least it is my tenative hope that reading
+these lines pushes some tender buttons, and is more pleasurable
+than suffering from a tenesmus. That is my intent. ...
+
+-->
+        <style>
+            body {
+                margin: 0 ;
+                overflow: hidden
+            }
+
+            a {
+                color: #eee ;
+                text-decoration: none
+            }
+
+            header {
+                margin: 0 ;
+                padding: 0 ;
+                background-color: #444 ;
+                color: #bbb ;
+                position: relative ;
+                z-index: 1000
+            }
+
+            header > h1 {
+                margin: 0 ;
+                font-size: 12px ;
+                font-family: sans-serif ;
+                border-bottom: 1px #999 solid ;
+                padding: 5px 10px ;
+                line-height: 17px
+            }
+        </style>
+    </head>
+    <body>
+        <header id=nav>
+            <h1>
+                <a href="index.html">Taper #10 :
+		Powers of Ten</a>
+                : Spring 2023 <br>
+                <a href="ten_lines.html">“Ten Lines”</a>
+                by
+		<a href="about.html#rettberg">Scott Rettberg</a>
+                :
+		<a href="ten_thousand.html">&lt;&lt;</a>
+                &mdash;<a href="one_for_grundy.html">&gt;&gt;</a>
+            </h1>
+        </header>
+        <script>
+            const rI = arr=>Math.floor(Math.random() * arr.length);
+            const [a,b,c,d] = [['able', 'acious', 'der', 'derhearted', 'dinous', 'drilled', 'ebrific', 'se', 'sive', 'sorial', 'tacled', 'tative', 'th', 'tless', 'tlike', 'torial', 'ty', 'uous', 'urable', 'ured'], ['ability', 'ace', 'ement', 'acity', 'ant', 'dency', 'derfoot', 'derizer', 'derloin', 'ch', 'derness', 'der', 'don', 'donitis', 'dril', 'ebrist', 'esmus', 'et', 'ner', 'nis', 'our', 'orium', 'pence', 'penny', 'pin', 'pounder', 'rec', 'seness', 'sioner', 'sility', 'sion', 'sor', 't', 'tacle', 'taculum', 'tage', 'ter', 'terhook', 'tmaker', 'tonomy'], ['backbit', 'bea', 'bit', 'browbea', 'cowrit', 'ea', 'forgot', 'len', 'lit', 'misbegot', 'misea', 'miswrit', 'mol', 'oa', 'outea', 'outwrit', 'overbea', 'overea', 'rewrit', 'rot', 'shot', 'skywrit', 'smit', 'unbea', 'unbit', 'underea', 'unea', 'unmol', 'unwrit', 'verbo', 'writ'], ['bat', 'brigh', 'chas', 'chris', 'dishear', 'enligh', 'fas', 'fat', 'flat', 'frigh', 'foreshor', 'gestal', 'glis', 'grea', 'has', 'hear', 'heigh', 'la', 'ligh', 'lis', 'mois', 'nea', 'premois', 'preswee', 'quie', 'rechris', 'refas', 'remois', 'resof', 'retigh', 'shor', 'smar', 'sof', 'stou', 'straigh', 'strai', 'swee', 'tau', 'threa', 'tigh', 'unfas', 'whi']];
+            const aW = a[rI(a)];
+            const bW = b[rI(b)];
+            const cW = c[rI(c)];
+            const dW = d[rI(d)];
+            const t = `Ten ${aW} ten ${bW} ${dW}tens ${cW}ten ten ${b[rI(b)]}.`;
+            const container = document.createElement("div");
+            container.setAttribute("style", `
+  position: absolute;
+  top: 20%;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 20px;
+`);
+            container.textContent = t;
+            document.body.appendChild(container);
+            let lineCount = 0;
+            const animationInterval = setInterval(()=>{
+                const p = document.createElement("p");
+                p.textContent = `Ten ${a[rI(a)]} ten ${b[rI(b)]} ${d[rI(d)]}tens  ${c[rI(c)]}ten ten ${b[rI(b)]}.`;
+                container.appendChild(p);
+                lineCount += 1;
+                if (lineCount >= 10) {
+                    lineCount = 0;
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild)
+                    }
+                }
+            }
+            , 5000)
+        </script>
+    </body>
+</html>

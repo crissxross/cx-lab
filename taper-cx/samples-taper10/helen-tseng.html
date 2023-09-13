@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta property="og:title" content="X/十/10: Wheel of Fortune">
+        <meta property="og:author" content="Helen Shewolfe Tseng">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="A poem by Helen Shewolfe Tseng for Taper #10"/>
+        <meta property="og:image" content="https://taper.badquar.to/10/images/wheel_of_fortune.jpg">
+        <meta property="og:url" content="https://taper.badquar.to/10/wheel_of_fortune.html">
+        <title>X/十/10: Wheel of Fortune (Taper #10)</title>
+        <!-- “X/十/10: Wheel of Fortune” Copyright (C) 2023 Helen Shewolfe Tseng
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #10: Powers of Ten, Spring 2023:
+
+https://taper.badquar.to/10/wheel_of_fortune.html
+
+In the tarot, the tenth Major Arcana card is the Wheel of Fortune.
+Throughout history, people have turned their gazes toward the sky
+(天, “ten”) in order to divine their fortunes. This piece features a
+Wheel of Fortune drawn with the shapes of X, 十, and 10, all glyphs
+for the number ten, dividing the wheel into ten segments. A play on
+astrological charts, a spin of the wheel generates a visual poem in
+the form of a constellation of stars and words (the latter all
+containing the letters “ten”). The reader is invited to use this
+piece as a divination tool: inquire with a question or concern,
+interpret meaning in the generated poem, and gain insight.
+
+-->
+        <style>
+            body {
+                margin: 0 ;
+                overflow: hidden
+            }
+
+            a {
+                color: #eee ;
+                text-decoration: none
+            }
+
+            header {
+                margin: 0 ;
+                padding: 0 ;
+                background-color: #444 ;
+                color: #bbb ;
+                position: relative ;
+                z-index: 1000
+            }
+
+            header > h1 {
+                margin: 0 ;
+                font-size: 12px ;
+                font-family: sans-serif ;
+                border-bottom: 1px #999 solid ;
+                padding: 5px 10px ;
+                line-height: 17px
+            }
+        </style>
+    </head>
+    <body>
+        <header id=nav>
+            <h1>
+                <a href="index.html">Taper #10 :
+		Powers of Ten</a>
+                : Spring 2023 <br>
+                <a href="wheel_of_fortune.html">“X/十/10: Wheel of Fortune”</a>
+                by
+		<a href="about.html#shewolfe">Helen Shewolfe Tseng</a>
+                :
+		<a href="every_integer.html">&lt;&lt;</a>
+                &mdash;<a href="exponential_containment.html">&gt;&gt;</a>
+            </h1>
+        </header>
+        <style>
+            button {
+                background-color: transparent;
+                border-radius: 5px;
+                font-size: 150%;
+            }
+
+            .f {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%
+            }
+
+            #w {
+                width: 100vw;
+                height: 100vh
+            }
+
+            #b {
+                position: relative
+            }
+
+            #o {
+                width: 100%;
+                height: 100%;
+                border: 2px solid #000;
+                border-radius: 99%
+            }
+
+            .a {
+                position: absolute
+            }
+
+            .s {
+                width: 100%;
+                height: 0;
+                top: 50%;
+                border-top: 1px solid #000
+            }
+
+            .w {
+                font-size: 16px;
+                font-style: italic
+            }
+        </style>
+        <div id="w" class="f">
+            <div id="b">
+                <div id="o">
+                    <div>
+                        <button onclick="window.location.reload()">🔮</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const ten = ["forgotten", "bitten", "content", "attention", "uneaten", "potent", "tender", "tension", "latent", "rotten", "intention", "sweeten", "stench", "hasten", "brighten", "extend", "consistent", "often", "pretend", "smitten", "soften", "threaten", "intense", "potential", "glisten", "tenable", "molten", "competent", "coexistent", "frighten"]
+              , r = (e,t)=>Math.floor(Math.random() * (t - e) + e)
+              , q = e=>document.querySelector(e)
+              , v = ()=>window.innerWidth > window.innerHeight ? "vh" : "vw";
+            function z() {
+                let e = q("#b");
+                e.style.width = e.style.height = "75" + (window.innerWidth > window.innerHeight ? "vh" : "vw")
+            }
+            window.onload = z,
+            window.onresize = z,
+            q("body").style.backgroundImage = `radial-gradient(circle, rgba(${r(90, 255)},${r(90, 255)},${r(90, 255)},100),rgba(${r(90, 255)},${r(90, 255)},${r(90, 255)},100))`;
+            for (let e = 0; e < 5; e++) {
+                var s = document.createElement(`s ${e}`);
+                q("#o").appendChild(s),
+                s.classList.add("s", "a"),
+                s.style.transform = `rotate(${e * r(36, 45)}deg)`,
+                4 == e ? (s.style.transform = `rotate(${r(0, 180)}deg)`,
+                s.style.borderWidth = "2px") : s.style.transform = `rotate(${45 * e}deg)`
+            }
+            function p(e) {
+                var t = Math.floor(Math.random() * e.length)
+                  , n = e[t];
+                return e.splice(t, 1),
+                n
+            }
+            for (let e = 0; e < 10; e++) {
+                var g = document.createElement(`g ${e}`);
+                q("#o").appendChild(g),
+                g.classList.add("g", "a"),
+                g.style.top = `${r(15, 80)}%`,
+                g.style.left = `${r(15, 80)}%`,
+                g.style.fontSize = `${r(30, 90)}px`,
+                g.innerHTML = "."
+            }
+            for (let e = 0; e < r(1, 10); e++) {
+                var w = document.createElement(`w ${e}`);
+                q("#o").appendChild(w),
+                w.classList.add("w", "a"),
+                w.style.top = `${r(15, 80)}%`,
+                w.style.left = `${r(15, 80)}%`,
+                w.innerHTML = `* ${p(ten)}`
+            }
+        </script>
+    </body>
+</html>

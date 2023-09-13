@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta property="og:title" content="10+10=The Briefest Evidence">
+        <meta property="og:author" content="Jason Nelson">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="A poem by  for Taper #10"/>
+        <meta property="og:image" content="https://taper.badquar.to/10/images/briefest_evidence.jpg">
+        <meta property="og:url" content="https://taper.badquar.to/10/briefest_evidence.html">
+        <title>10+10=The Briefest Evidence by Jason Nelson (Taper #10)</title>
+        <!-- “10+10=The Briefest Evidence” Copyright (C) 2023 Author
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #10: Powers of Ten, Spring 2023:
+
+https://taper.badquar.to/10/briefest_evidence.html
+
+About 10+10=The Briefest Evidence by Jason Nelson
+
+10+10=The Briefest Evidence explores the date of October 10th in
+history. While each event is impactful for different reasons and in
+variant ways, the work is less about the events and more about their
+tether, the date. We connect events, experiences and actions through
+time markers. These markers give artificial power to the connections
+between these markers. Days of death and birth, start and finish, are
+pulled from our timelines and given a narrative power.  This work
+examines how those dates arrive into this power, how these 10/10
+signifiers grow over time. Remove one, two more arrive, continuing
+for as long as the timeline continues.  This work is a sibling work
+to both 10+10=The Pain Bees and the retired work Richter.
+
+Instructions: Click the title box, move to hover over words,
+continue until tired or amazed.
+
+-->
+        <style>
+            body {
+                margin: 0 ;
+                overflow: hidden;
+                background-color: black;
+            }
+
+            a {
+                color: #eee ;
+                text-decoration: none
+            }
+
+            .word {
+                position: absolute;
+                font-size: 20px;
+                color: #ffffff;
+                transform-origin: center;
+            }
+
+            #ml {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            #ml button {
+                background-color: #ffffff;
+                border: none;
+                padding: 16px 32px;
+                font-size: 36px;
+                cursor: pointer;
+            }
+
+            header {
+                margin: 0 ;
+                padding: 0 ;
+                background-color: #444 ;
+                color: #bbb ;
+                position: relative ;
+                z-index: 1000
+            }
+
+            header > h1 {
+                margin: 0 ;
+                font-size: 12px ;
+                font-family: sans-serif ;
+                border-bottom: 1px #999 solid ;
+                padding: 5px 10px ;
+                line-height: 17px
+            }
+        </style>
+    </head>
+    <body>
+        <header id=nav>
+            <h1>
+                <a href="index.html">Taper #10 :
+		Powers of Ten</a>
+                : Spring 2023 <br>
+                <a href="briefest_evidence.html">“10+10=The Briefest Evidence”</a>
+                by
+		<a href="about.html#nelson">Jason Nelson</a>
+                :
+		<a href="myriad.html">&lt;&lt;</a>
+                &mdash;<a href="pain_bees.html">&gt;&gt;</a>
+            </h1>
+        </header>
+        <div id="ws"></div>
+        <div id="ml">
+            <button id="sb">
+                <b>--> 10/10=The Briefest Evidence &lt;--</b>
+                <br>
+                <br>click &hover
+            </button>
+        </div>
+        <script>
+            ws = "1492=Mutiny-SantaMaria#----->>>>#1780=Hurricane-30000#1846=Triton+Discovery#1899=Bicycle+Patent#1901=FrederickDouglass+Born#1903=WomensUnion+UK#1928=ChiangKai-shek+Chair#1953=WinkyDinkYou+InteractiveTV#1957=WindscaleFireXNuke#1959=Global+Airline#1967=Space+Treaty#1975=PapuaNewGuinea+UN#2002=Iraq+War#2011=Giant+Virus#2019=Queensland+Fires#Day=World+Porridge#Day=Mental-Health".split("#"),
+            colors = ["#bd0202", "#ffffff", "#969494", "#9f932f"],
+            szs = ["20px", "30px", "50px", "100px"];
+            function rW() {
+                let e = Math.floor(Math.random() * ws.length);
+                return ws[e]
+            }
+            function rC() {
+                let e = Math.floor(Math.random() * colors.length);
+                return colors[e]
+            }
+            function rS() {
+                let e = Math.floor(Math.random() * szs.length);
+                return szs[e]
+            }
+            function rA() {
+                return Math.floor(360 * Math.random())
+            }
+            function rP() {
+                let e = Math.floor(Math.random() * window.innerWidth)
+                  , t = Math.floor(Math.random() * window.innerHeight);
+                return {
+                    x: e,
+                    y: t
+                }
+            }
+            function cW() {
+                let e = document.createElement("div");
+                e.className = "word",
+                e.textContent = rW(),
+                e.style.color = rC(),
+                e.style.fontSize = rS(),
+                e.style.transform = `rotate(${rA()}deg)`;
+                let {x: t, y: n} = rP();
+                e.style.top = `${n}px`,
+                e.style.left = `${t}px`,
+                e.addEventListener("mouseover", ()=>{
+                    e.remove(),
+                    cW(),
+                    cW()
+                }
+                ),
+                document.getElementById("ws").appendChild(e)
+            }
+            for (let i = 0; i < 2; i++)
+                cW();
+            let soundElement = document.querySelector("#ws");
+            soundElement.addEventListener("mouseover", pRS, !1);
+            let context = null
+              , waveforms = ["sine", "square", "sawtooth", "triangle"];
+            function pRS() {
+                null === context && (context = new AudioContext);
+                let e = context.createOscillator()
+                  , t = context.createGain();
+                e.type = waveforms[Math.floor(Math.random() * waveforms.length)];
+                let n = (100 + 10 * Math.random()).toFixed(2);
+                e.frequency.value = n,
+                t.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1),
+                e.connect(t),
+                t.connect(context.destination),
+                e.start(0)
+            }
+            const modal = document.getElementById("ml")
+              , startButton = document.getElementById("sb");
+            startButton.addEventListener("click", ()=>{
+                modal.remove()
+            }
+            );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta property="og:title" content="To Make Sense Of Existence">
+        <meta property="og:author" content="Chris Joseph">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="A poem by Chris Joseph for Taper #10"/>
+        <meta property="og:image" content="https://taper.badquar.to/10/images/sense_of_existence.jpg">
+        <meta property="og:url" content="https://taper.badquar.to/10/sense_of_existence.html">
+        <title>To Make Sense Of Existence (Taper #10)</title>
+        <!-- “To Make Sense Of Existence” Copyright (C) 2023 Chris Joseph
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #10: Powers of Ten, Spring 2023:
+
+https://taper.badquar.to/10/sense_of_existence.html
+
+Does it make sense to make sense of existence? Does no-thing always
+require a thing for a definition of non-existence? Binary
+representation might be simpler in that sense: 0 or 1. But the digits
+are both Things, rather than no-thing and some-thing. Aren’t
+representations of nothing still something? A representation of
+something could be nothing. Creating a visual epoem within 2KB is an
+excellent challenge: what to include (1) and what to remove (0)? So,
+does it make sense?
+
+-->
+        <style>
+            body {
+                margin: 0 ;
+                overflow: hidden
+            }
+
+            a {
+                color: #eee ;
+                text-decoration: none
+            }
+
+            header {
+                margin: 0 ;
+                padding: 0 ;
+                background-color: #444 ;
+                color: #bbb ;
+                position: relative ;
+                z-index: 1000
+            }
+
+            header > h1 {
+                margin: 0 ;
+                font-size: 12px ;
+                font-family: sans-serif ;
+                border-bottom: 1px #999 solid ;
+                padding: 5px 10px ;
+                line-height: 17px
+            }
+        </style>
+    </head>
+    <body>
+        <header id=nav>
+            <h1>
+                <a href="index.html">Taper #10 :
+		Powers of Ten</a>
+                : Spring 2023 <br>
+                <a href="sense_of_existence.html">“To Make Sense Of Existence”</a>
+                by
+		<a href="about.html#joseph">Chris Joseph</a>
+                :
+		<a href="ten_dust_tree.html">&lt;&lt;</a>
+                &mdash;<a href="universal_zoom.html">&gt;&gt;</a>
+            </h1>
+        </header>
+        <style>
+            .lc,.sc {
+                position: absolute;
+                display: inline-block;
+                text-align: left;
+                line-height: 1
+            }
+
+            #q,body,html {
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+                margin: 0
+            }
+
+            #q {
+                position: absolute;
+                z-index: 2;
+                top: 45px;
+                left: 0
+            }
+
+            .lc {
+                font-family: arial,mns-serif;
+                font-weight: 700
+            }
+
+            .sc {
+                z-index: 500;
+                font-family: Baskerville,serif
+            }
+
+            .m {
+                animation: 30s ease-out infinite forwards an
+            }
+
+            @keyframes an {
+                0% {
+                    letter-spacing: -1px
+                }
+
+                100% {
+                    letter-spacing: 5vw
+                }
+            }
+        </style>
+        <div id="q"></div>
+        <script>
+            function se() {
+                return w[0][Math.floor(z() * w[0].length)] + " " + w[1][Math.floor(z() * w[1].length)]
+            }
+            function fs() {
+                return 150 * z() + 1 + "vw"
+            }
+            function gr() {
+                return "#" + (v = (256 * Math.random() | 0).toString(16)) + v + v
+            }
+            function gd() {
+                var e = "linear-gradient(" + Math.floor(360 * Math.random()) + "deg, " + gr() + ", " + gr() + ")";
+                document.body.style.background = e
+            }
+            function z() {
+                return Math.random()
+            }
+            for (i = 0,
+            a = 75,
+            k = 0,
+            tt = 0,
+            j = 0,
+            w = [["this", "that", "my", "your", "our", "each", "one", "every"], ["hole", "zero", "void", "blank", "nothing", "nonsense", "absence", "nought", "whole", "something", "presence", "existence", "sense"]]; i < a; i++) {
+                var e = document.createElement("div");
+                document.getElementById("q").appendChild(e),
+                e.id = "l" + i,
+                e.className = "lc"
+            }
+            for (m = 0; m < 7; m++) {
+                var t = document.createElement("div");
+                document.getElementById("q").appendChild(t),
+                t.id = "r" + m,
+                t.className = "sc"
+            }
+            function p() {
+                if (x = window.innerWidth,
+                y = window.innerHeight - 45,
+                k < a) {
+                    if ((e = document.getElementById("l" + k)).style.fontSize = fs(),
+                    e.style.display = "inline-block",
+                    e.style.opacity = .1 * z(),
+                    e.style.top = z() * y - y / 2 + "px",
+                    e.style.left = z() * x - x / 6 + "px",
+                    e.innerHTML = tt,
+                    0 == tt ? (e.style.color = "#000",
+                    e.style.zIndex = a * tt - k) : e.style.color = "#fff",
+                    !0 == Number.isInteger(k / 25)) {
+                        if (++j > 5) {
+                            for (n = 1; n < 6; n++)
+                                (el = document.getElementById("r" + n)).innerHTML = "",
+                                el.classList.remove("m"),
+                                el.offsetWidth;
+                            j = 1
+                        }
+                        (s = document.getElementById("r" + j)).style.color = gr(),
+                        s.style.top = y / 6 * j + z() * (y / 12) - z() * (y / 6) + "px",
+                        s.style.left = z() * (x - 200) - 100 + "px",
+                        s.classList.add("m"),
+                        s.style.fontSize = 4 * z() + 1 + "vw",
+                        s.innerHTML = se()
+                    }
+                    k++
+                } else
+                    clearTimeout(u),
+                    k = 0,
+                    ++tt > 1 && (tt = 0),
+                    gd();
+                u()
+            }
+            function u() {
+                delayTime = setTimeout(function() {
+                    p()
+                }, 60)
+            }
+            gd(),
+            p();
+        </script>
+    </body>
+</html>
