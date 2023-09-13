@@ -1,0 +1,86 @@
+<html>
+<body>
+<style>
+	body {
+		margin:0 ;
+		/* overflow:hidden;  */
+	}
+	main {
+		display: grid;
+		grid-auto-rows: calc(20vh - 4px);
+		gap: 4px;
+		margin: 0;
+		font-family: sans-serif;
+		background: grey;
+	}
+	.r {
+		--w: 9.5vw;
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: var(--w);
+		padding-inline: 4vw;
+		gap: var(--w);
+		background: #fff;
+	}
+	.r:nth-child(even) {
+		justify-content: center;
+	}
+	.r:nth-child(3n) {
+		justify-content: end;
+	}
+	p {
+    margin: 0;
+		background: #000;
+		border-inline: 4px solid #999;
+    display: grid;
+    place-content: center;
+    /* color: #222; */
+    color: #666;
+    font-size: 12vw;
+	}
+</style>
+	<main>
+	</main>
+	<script>
+		const main = document.querySelector('main');
+
+		const arr = [
+			'=', '≠', '\\\\', '||', '//', '#', 'll', '[[', ']]', '_',
+			'=', '≠', '\\\\', '||', '//', '#', 'll', '[[', ']]', '_',
+			'=', '≠', '\\\\', '||', '//', '#', 'll', '[[', ']]', '_',
+			'/|', '|/', '|\\', '\\|',
+		]
+
+		const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+		main.innerHTML = `<div class="r">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			</div>`.repeat(5);
+
+		const pars = document.querySelectorAll('p');
+
+		pars.forEach(p => {
+			p.textContent = rand(arr);
+		});
+
+		pars.forEach((p, i) => {
+			setInterval(function() {
+				p.textContent = rand(arr);
+			}, 500 * (Math.random() * (i + 1)))
+		});
+
+		setTimeout(function() {
+				location.reload()
+		}, 2000)
+
+		// paras.forEach(p => {
+		// 	p.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
+		// });
+
+	</script>
+</body>
+</html>

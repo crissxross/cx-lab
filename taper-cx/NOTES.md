@@ -12,6 +12,14 @@ This meta tag for mobile devices is NOT included in the template's head
 I don't know if it's worth doing responsive scale font-size because template doesn't have meta tag for mobile
 `font-size: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);`
 
+### selecting elements
+
+```js
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+const main = $('main');
+```
+
 
 ## ART/LIT NOTES
 

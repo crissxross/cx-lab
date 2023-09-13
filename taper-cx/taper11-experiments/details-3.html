@@ -37,14 +37,45 @@
     <main>
     </main>
     <script>
-      const $ = document.querySelector.bind(document);
-      const $$ = document.querySelectorAll.bind(document);
-      const main = $('main');
-      const det = $('details');
+      const main = document.querySelector('main');
 
-      main.innerHTML = `<details><summary></summary><p>
-        // a different way of appending 5 details elements to the main element
-        </p></details>`.repeat(11);
+      const arr = [
+        'Straight up and down.',
+        'Bending the truth is okay in moderation.',
+        'By crook or by hook.',
+        'Crooked teeth are a sign of good luck.',
+        'As honest as the day is long.',
+        'Straight talking can lead to a straighter smile.',
+        'A straight line is the shortest distance between two points.',
+        'Straight up, I saw it with my own eyes.',
+      ]
+
+      const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+      main.innerHTML = `<details><summary></summary><p></p></details>`.repeat(11);
+
+      const pars = document.querySelectorAll('p');
+      const dets = document.querySelectorAll('details');
+      const ranIndex = Math.floor(Math.random() * dets.length);
+
+      pars.forEach(p => {
+        p.textContent = rand(arr);
+      });
+
+      setInterval(function() {
+        dets.forEach(det => {
+          if (det.open) {
+              det.open = false;
+          }
+        });
+      }, 5000);
+
+      // dets[ranIndex].open = true;
+
+      // setTimeout(function() {
+			// 	location.reload()
+		  // }, 1000)
+
     </script>
   </body>
 </html>
