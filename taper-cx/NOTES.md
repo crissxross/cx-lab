@@ -23,6 +23,8 @@ const main = $('main');
 
 ## ART/LIT NOTES
 
+parallel processor
+
 ### Parallels
 
 parallel

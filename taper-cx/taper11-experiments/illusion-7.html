@@ -1,0 +1,101 @@
+<html>
+<body>
+<style>
+	body {
+		margin:0 ;
+		/* overflow:hidden;  */
+	}
+	main {
+		display: grid;
+		grid-auto-rows: calc(20vh - 4px);
+		gap: 4px;
+		margin: 0;
+		font-family: sans-serif;
+		/* background: #999; */
+		background-color: hsl(0, 85%, 45%);
+	}
+	.r {
+		--w: 9.5vw;
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: var(--w);
+		padding-inline: 4vw;
+		gap: var(--w);
+		background: #fff;
+	}
+	.r:nth-child(even) {
+		justify-content: center;
+	}
+	.r:nth-child(3n) {
+		justify-content: end;
+	}
+	p {
+    margin: 0;
+		background: #000;
+		/* border-inline: 4px solid #999; */
+		border-inline: 4px solid hsl(0 85% 45%);
+    display: grid;
+    place-content: center;
+    color: #666;
+    font-size: 15vmin;
+	}
+</style>
+	<main>
+	</main>
+	<script>
+		const main = document.querySelector('main');
+		const time = 1500;
+
+		const arr = [
+			'=', '\\\\', '||', '//', 'll', '[[', ']]',
+			'=', '\\\\', '||', '//', 'll', '[[', ']]',
+			'=', '\\\\', '||', '//', 'll', '[[', ']]',
+			'=', '\\\\', '||', '//', 'll', '=', '=',
+			'=', '\\\\', '||', '//', 'll', '=', '=',
+			'/|', '|/', '|\\', '\\|',
+		]
+
+		const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+		main.innerHTML = `<div class="r">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			</div>`.repeat(5);
+
+		const pars = document.querySelectorAll('p');
+
+		pars.forEach(p => {
+			p.textContent = rand(arr);
+			process(p, time);
+		});
+
+		function process(p, t) {
+			if (p.textContent === '/|' || p.textContent === '|/' || p.textContent === '|\\' || p.textContent === '\\|') {
+				setTimeout(function() {
+					p.style.backgroundColor = '#900';
+					setTimeout(function() {
+						p.textContent = '';
+						p.style.backgroundColor = '#000';
+					}, t * 0.5);
+				}, t * 0.25);
+			}
+		}
+
+		// pars.forEach((p, i) => {
+		// 	let n = 500 * (Math.random() * (i + 1));
+		// 	setInterval(function() {
+		// 		p.textContent = rand(arr);
+		// 		process(p, n);
+		// 	}, n);
+		// });
+
+		setTimeout(function() {
+				location.reload()
+		}, time);
+
+	</script>
+</body>
+</html>
