@@ -1,17 +1,14 @@
 <html>
   <body>
   <style>
-    body {
+    body, p {
       margin:0;
-      /* overflow:hidden; */
     }
     main {
       font-family: sans-serif;
-      /* font-size: calc(1.08rem + 0.22vw); */
-      font-size: 1.25rem;
+      font-size: 5vmin;
     }
     summary {
-      font-size: 5vh;
       height: 10vh;
       cursor: pointer;
       --s: 5vmin;
@@ -27,20 +24,19 @@
     summary::marker {
       color: red;
     }
-    details[open] p {
+    p {
       color: white;
       background-color: black;
-      margin: 0;
-      padding: 1vw 5vw;
+      /* padding: 1vw 5vw; */
+      text-align: center;
     }
   </style>
     <main>
+      <p>Crooked or straight?</p>
+      <section></section>
     </main>
     <script>
-      const main = document.querySelector('main');
-
       const arr = [
-        'Crooked or straight? You decide.',
         'Straight up and down.',
         'Bending the truth is okay in moderation.',
         'By crook or by hook.',
@@ -49,34 +45,28 @@
         'Straight talking can lead to a straighter smile.',
         'A straight line is the shortest distance between two points.',
         'Straight up, I saw it with my own eyes.',
+        'Talking while walking',
+        'Driving while drinking',
+        'Listening while talking.',
       ]
-
-      const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-      main.innerHTML = `<details><summary></summary><p></p></details>`.repeat(11);
-
-      const pars = document.querySelectorAll('p');
+      const sect = document.querySelector('section');
+      sect.innerHTML =`<details><summary></summary><p></p></details>`.repeat(11);
       const dets = document.querySelectorAll('details');
-      const ranIndex = Math.floor(Math.random() * dets.length);
-
-      pars.forEach(p => {
-        p.textContent = rand(arr);
+      const pars = document.querySelectorAll('details p');
+      pars.forEach((p, i) => {
+        p.textContent = arr[i];
       });
-
-      setInterval(function() {
-        dets.forEach(det => {
+      dets.forEach((det, i) => {
+        det.addEventListener('toggle', function() {
           if (det.open) {
+            setTimeout(function() {
               det.open = false;
+            }, 2000);
+          } else {
+            console.log(`det ${i} closed`);
           }
         });
-      }, 5000);
-
-      // dets[ranIndex].open = true;
-
-      // setTimeout(function() {
-			// 	location.reload()
-		  // }, 1000)
-
+      });
     </script>
   </body>
 </html>

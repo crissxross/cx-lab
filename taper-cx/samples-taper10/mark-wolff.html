@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta property="og:title" content="A Hundred Thousand Billion Color Combinations">
+        <meta property="og:author" content="Mark Wolff">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="A poem by Mark Wolff for Taper #10"/>
+        <meta property="og:image" content="https://taper.badquar.to/10/images/color_combinations.jpg">
+        <meta property="og:url" content="https://taper.badquar.to/10/color_combinations.html">
+        <title>A Hundred Thousand Billion Color Combinations (Taper #10)</title>
+        <!-- “A Hundred Thousand Billion Color Combinations” Copyright (C) 2023 Mark Wolff
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #10: Powers of Ten, Spring 2023:
+
+https://taper.badquar.to/10/color_combinations.html
+
+This work represents each of the original sonnets in Raymond
+Queneau’s Cent mille milliards de poèmes as one of ten colors. A
+randomly generated sonnet is initially displayed but the reader can
+change the color of any verse (or color band) to any of the other
+nine colors. There are 100,000,000,000,000 possible combinations of
+colors.
+
+Using colors instead of the original text for these poems avoids
+copyright problems, keeps the code within 2kb, and demonstrates a
+technique developed by Queneau for reducing texts such as Mallarmé’s
+sonnets to something more abstract but still meaningful.
+
+The colors were selected with https://colorbrewer2.org/.
+
+-->
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden
+            }
+
+            a {
+                color: #eee;
+                text-decoration: none
+            }
+
+            header {
+                margin: 0;
+                padding: 0;
+                background-color: #444;
+                color: #bbb;
+                position: relative;
+                z-index: 1000
+            }
+
+            header>h1 {
+                margin: 0;
+                font-size: 12px;
+                font-family: sans-serif;
+                border-bottom: 1px #999 solid;
+                padding: 5px 10px;
+                line-height: 17px
+            }
+        </style>
+    </head>
+    <body>
+        <header id=nav>
+            <h1>
+                <a href="index.html">Taper #10 :
+				Powers of Ten</a>
+                : Spring 2023 <br>
+                <a href="color_combinations.html">“A Hundred Thousand Billion Color
+				Combinations”</a>
+                by
+			<a href="about.html#wolff">Mark Wolff</a>
+                :
+			<a href="exponential_containment.html">&lt;&lt;</a>
+                &mdash;<a href="ten_as_in_sky.html">&gt;&gt;</a>
+            </h1>
+        </header>
+        <canvas id="c" width="660" height="650" style="padding:0;margin:auto;display:block;position:absolute;top:0;bottom:0;left:0;right:0;border:6px solid #000000;"></canvas>
+        <script>
+            var cs = "#a6cee3 #1f78b4 #b2df8a #33a02c #fb9a99 #e31a1c #fdbf6f #ff7f00 #cab2d6 #6a3d9a".split(" ");
+            function r(x, n) {
+                return Math.floor(Math.random() * (x - n) + n)
+            }
+            var c = document.getElementById("c")
+              , t = c.getContext("2d")
+              , e = [];
+            function re() {
+                t.clearRect(0, 0, c.width, c.height);
+                for (i = 0; i < e.length; i++) {
+                    e[i].draw();
+                }
+            }
+            var rect = (function() {
+                function rect(t, p, x, y, w, h, f, s, sw) {
+                    this.t = t;
+                    this.p = p;
+                    this.x = x;
+                    this.y = y;
+                    this.w = w;
+                    this.h = h;
+                    this.f = f;
+                    this.s = s;
+                    this.sw = sw;
+                    return this;
+                }
+                rect.prototype.draw = function() {
+                    t.beginPath();
+                    t.fillStyle = this.f;
+                    t.strokeStyle = this.s;
+                    t.lineWidth = this.sw;
+                    t.rect(this.x, this.y, this.w, this.h);
+                    t.stroke();
+                    t.fill();
+                }
+                return rect;
+            }
+            )();
+            for (i = 0; i < 14; i++) {
+                var g = 20
+                  , w = 600
+                  , h = 20
+                  , x = 30
+                  , y = 23 + i * (h + g)
+                  , cr = cs[r(0, cs.length)];
+                if (i >= 11) {
+                    y += 3 * g;
+                } else if (i >= 8) {
+                    y += 2 * g;
+                } else if (i >= 4) {
+                    y += g;
+                }
+                e.push(new rect("line",null,x,y,w,h,cr,"black",2));
+            }
+            re();
+            c.addEventListener("mousedown", function(ev) {
+                var x = ev.pageX - c.offsetLeft
+                  , y = ev.pageY - c.offsetTop;
+                for (i = e.length - 1; i >= 0; i--) {
+                    if (y > e[i].y && y < e[i].y + e[i].h && x > e[i].x && x < e[i].x + e[i].w) {
+                        if (e[i].t == "line") {
+                            x = x + 40 < c.width ? x : c.width - 40;
+                            y = y + 265 < c.height ? y : c.height - 265;
+                            e.push(new rect("frame",null,x,y,40,265,"white","black",2));
+                            for (j = 0; j < cs.length; j++) {
+                                var cg = 8
+                                  , cx = x + cg
+                                  , ch = 18
+                                  , cy = 6 + y + j * (ch + cg);
+                                e.push(new rect("cr",i,cx,cy,24,ch,cs[j],"black",2));
+                            }
+                            break;
+                        }
+                    }
+                }
+                re();
+            });
+            c.addEventListener("mouseup", function(ev) {
+                var x = ev.pageX - c.offsetLeft
+                  , y = ev.pageY - c.offsetTop;
+                for (i = e.length - 1; i >= 0; i--) {
+                    if (y > e[i].y && y < e[i].y + e[i].h && x > e[i].x && x < e[i].x + e[i].w) {
+                        if (e[i].t == "cr") {
+                            e[e[i].p].f = e[i].f;
+                            e.splice(14, 11);
+                            re();
+                            break;
+                        }
+                    }
+                }
+                if (e.length > 14) {
+                    e.splice(14, 11);
+                    re();
+                }
+            });
+        </script>
+    </body>
+</html>
