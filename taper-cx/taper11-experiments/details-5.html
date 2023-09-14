@@ -1,0 +1,67 @@
+<html>
+  <body>
+  <style>
+    body, p {
+      margin:0;
+    }
+    main {
+      font-family: sans-serif;
+      font-size: 5vmin;
+    }
+    summary {
+      height: 10vh;
+      cursor: pointer;
+      --s: 5vmin;
+      --cg: conic-gradient(at 50% 25%, #fff0 270deg, black 0);
+      --cs: calc(var(--s) * 2) calc(var(--s) * 4);
+      background:
+        linear-gradient(grey 2.5%, #fff0 0 97.5%, grey 0) 50% calc(50% + var(--s) / 2) / 100% var(--s),
+        var(--cg) 50% / var(--cs),
+        var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s)) / var(--cs),
+        var(--cg) calc(50% + var(--s)) calc(50% + var(--s) * 2) / var(--cs),
+        var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s) * 3) / var(--cs);
+    }
+    summary::marker {
+      color: red;
+    }
+    p {
+      color: white;
+      background-color: black;
+      /* padding: 1vw 5vw; */
+      text-align: center;
+    }
+  </style>
+    <main>
+      <p>Stroop it</p>
+      <section></section>
+    </main>
+    <script>
+      // turquoise, coral, ivory, khaki, plum, salmon, teal, tomato, wheat, aquamarine, cyan, violet, tan
+      const cols = ['crimson', 'red', 'orange', 'yellow', 'lime', 'blue', 'aqua', 'gold', 'purple', 'magenta', 'pink']
+
+      const sect = document.querySelector('section');
+      sect.innerHTML =`<details><summary></summary><p></p></details>`.repeat(11);
+      const dets = document.querySelectorAll('details');
+      const pars = document.querySelectorAll('details p');
+
+      const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+      pars.forEach((p, i) => {
+        p.textContent = rand(cols);
+        p.style.color = rand(cols);
+      });
+
+      dets.forEach((det, i) => {
+        det.addEventListener('toggle', function() {
+          if (det.open) {
+            setTimeout(function() {
+              det.open = false;
+            }, 2000);
+          } else {
+            console.log(`det ${i} closed`);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
