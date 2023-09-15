@@ -7,6 +7,11 @@
       font-family: sans-serif;
       font-size: 5vmin;
     }
+    p {
+      color: white;
+      background-color: black;
+      text-align: center;
+    }
     summary {
       height: 10vh;
       cursor: pointer;
@@ -23,10 +28,14 @@
     summary::marker {
       color: red;
     }
-    p {
-      color: white;
-      background-color: black;
-      text-align: center;
+    details {
+      transition:all 1s;
+    }
+    details:not([open]) {
+      transform: translateX(0);
+    }
+    details[open] {
+      transform: translateX(1em);
     }
   </style>
     <main>
@@ -55,13 +64,24 @@
         p.textContent = arr[i];
       });
 
-      dets.forEach((d, i) => {
-        d.addEventListener('toggle', () => {
-          if (d.open) {
-            setTimeout(() => d.open = false, 2000);
-          }
+      // dets.forEach((d, i) => {
+      //   d.addEventListener('toggle', () => {
+      //     if (d.open) {
+      //       setTimeout(() => d.open = false, 2000);
+      //     }
+      //   });
+      // });
+
+      dets.forEach(td => {
+        td.addEventListener("click", () => {
+          dets.forEach(d => {
+            if (d !== td) {
+              d.removeAttribute("open");
+            }
+          });
         });
       });
+
     </script>
   </body>
 </html>

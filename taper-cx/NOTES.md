@@ -2,6 +2,8 @@
 
 ## TECH NOTES
 
+max size 2.048 kB
+
 ### head meta
 This meta tag for mobile devices is NOT included in the template's head
 ```html
@@ -19,6 +21,11 @@ const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 const main = $('main');
 ```
+
+### named colors (single word)
+
+turquoise, coral, ivory, khaki, plum, salmon, teal, tomato, wheat, aquamarine, cyan, violet, tan
+'crimson', 'red', 'orange', 'yellow', 'lime', 'blue', 'aqua', 'gold', 'purple', 'magenta', 'pink'
 
 
 ## ART/LIT NOTES

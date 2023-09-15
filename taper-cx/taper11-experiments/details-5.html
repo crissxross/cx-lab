@@ -1,12 +1,12 @@
 <html>
   <body>
   <style>
-    body, p {
+    body { overflow:hidden; } /* template */
+    * {
       margin:0;
     }
     main {
       font-family: sans-serif;
-      font-size: 5vmin;
     }
     summary {
       height: 10vh;
@@ -21,26 +21,30 @@
         var(--cg) calc(50% + var(--s)) calc(50% + var(--s) * 2) / var(--cs),
         var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s) * 3) / var(--cs);
     }
+    h2,
     summary::marker {
       color: red;
+      font-size: 5vmin;
+    }
+    h2, p {
+      background-color: black;
+      color: white;
+      text-align: center;
     }
     p {
-      color: white;
-      background-color: black;
-      /* padding: 1vw 5vw; */
-      text-align: center;
+      font-size: 10vmin;
+      padding-bottom: 0.1em;
     }
   </style>
     <main>
-      <p>Stroop it</p>
+      <h2>Click to Stroop</h2>
       <section></section>
     </main>
     <script>
-      // turquoise, coral, ivory, khaki, plum, salmon, teal, tomato, wheat, aquamarine, cyan, violet, tan
-      const cols = ['crimson', 'red', 'orange', 'yellow', 'lime', 'blue', 'aqua', 'gold', 'purple', 'magenta', 'pink']
+      const cols = ['crimson', 'red', 'orange', 'yellow', 'lime', 'blue', 'turquoise', 'gold', 'purple', 'magenta', 'pink']
 
       const sect = document.querySelector('section');
-      sect.innerHTML =`<details><summary></summary><p></p></details>`.repeat(11);
+      sect.innerHTML =`<details><summary></summary><p></p></details>`.repeat(9);
       const dets = document.querySelectorAll('details');
       const pars = document.querySelectorAll('details p');
 
@@ -54,11 +58,7 @@
       dets.forEach((det, i) => {
         det.addEventListener('toggle', () => {
           if (det.open) {
-            setTimeout(() => {
-              det.open = false;
-            }, 2000);
-          } else {
-            console.log(`det ${i} closed`);
+            setTimeout(() => det.open = false, 2000);
           }
         });
       });

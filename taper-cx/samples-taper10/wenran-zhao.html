@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta property="og:title" content="Writing Lines">
+        <meta property="og:author" content="wénrán zhào">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="A poem by wénrán zhào for Taper #10"/>
+        <meta property="og:image" content="https://taper.badquar.to/10/images/writing_lines.jpg">
+        <meta property="og:url" content="https://taper.badquar.to/10/writing_lines.html">
+        <title>Writing Lines (Taper #10)</title>
+        <!-- “Writing Lines” Copyright (C) 2023 ¡wénrán zhào!
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #10: Powers of Ten, Spring 2023:
+
+https://taper.badquar.to/10/writing_lines.html
+
+Starting from a sentence with minor mistakes, this piece of code
+iterates over the sentence 10 times, ending up making more and more
+mistakes. Writing lines might bring us back to childhood memories of
+writing the same words over and over again, to learn or to practice,
+or being punished, or happening outside of writing but in playing
+musical instruments, rehearsing performances.
+
+There should be something poetic in the definition of insanity, doing
+the same thing over and over and expecting different results.  For
+instance, there is semantic satiation, a common psychological
+phenomenon in which repetition causes a word or phrase to temporarily
+lose meaning to a person.  In this poem, the digital memory remembers
+all of the mistakes that have been made,  and then brings us back,
+along the path where these mistakes happened.  In some other cases,
+perhaps, 10 repetitions are enough for us to remember something, or
+forget something.
+
+-->
+        <style>
+            body {
+                margin: 0 ;
+                overflow: hidden
+            }
+
+            a {
+                color: #eee ;
+                text-decoration: none
+            }
+
+            header {
+                margin: 0 ;
+                padding: 0 ;
+                background-color: #444 ;
+                color: #bbb ;
+                position: relative ;
+                z-index: 1000
+            }
+
+            header > h1 {
+                margin: 0 ;
+                font-size: 12px ;
+                font-family: sans-serif ;
+                border-bottom: 1px #999 solid ;
+                padding: 5px 10px ;
+                line-height: 17px
+            }
+        </style>
+    </head>
+    <body>
+        <header id=nav>
+            <h1>
+                <a href="index.html">Taper #10 :
+		Powers of Ten</a>
+                : Spring 2023 <br>
+                <a href="writing_lines.html">“Writing Lines”</a>
+                by
+            <a href="about.html#zhao_w">¡wénrán zhào!</a>
+                :
+            <a href="ten_as_in_sky.html">&lt;&lt;</a>
+                &mdash;<a href="tardy_student.html">&gt;&gt;</a>
+            </h1>
+        </header>
+        <div id="text" style="font-size:1.3vw;line-height:3vw;font-family:'Courier New', monospace;font-weight:bold;height:92vh;background-color:#F1F5F8;margin:auto;text-align:center;padding-top:7%"></div>
+        <script>
+            let text = "I’m typing my mistakes for 10 times so that I won’t make any mistakes."
+            const keys = {
+                q: ["w", "a"],
+                w: ["q", "e", "s"],
+                e: ["w", "r", "d"],
+                r: ["e", "t", "f"],
+                t: ["r", "y", "g"],
+                y: ["t", "u", "h"],
+                u: ["y", "i", "j"],
+                i: ["u", "o", "k"],
+                o: ["i", "p", "l"],
+                p: ["o", "l"],
+                a: ["q", "s", "z"],
+                s: ["w", "a", "d", "x", "z"],
+                d: ["e", "s", "f", "c", "x"],
+                f: ["r", "d", "g", "v", "c"],
+                g: ["t", "f", "h", "b", "v"],
+                h: ["y", "g", "j", "n", "b"],
+                j: ["u", "h", "k", "m", "n"],
+                k: ["i", "j", "l", "m"],
+                l: ["o", "k"],
+                z: ["a", "s", "x"],
+                x: ["s", "d", "z", "c"],
+                c: ["d", "f", "x", "v"],
+                v: ["f", "g", "c", "b"],
+                b: ["g", "h", "v", "n"],
+                n: ["h", "j", "b", "m"],
+                m: ["j", "k", "n"]
+            }
+              , cap = /([A-Z])/g
+              , lower = /([a-z])/g;
+            refresh = ()=>{
+                newtext = "",
+                chance = .02,
+                count = 9,
+                speed = 70,
+                ind = 0,
+                lines = [],
+                rev_strt = !1,
+                timer = 0
+            }
+            writeLines = ()=>{
+                if (newtext = "",
+                10 === lines.length && (rev_strt = !0),
+                rev_strt)
+                    9 === count && (document.getElementById("text").innerHTML = ""),
+                    speed += 4,
+                    newtext = lines[count],
+                    count < 0 ? (document.getElementById("text").innerHTML = "",
+                    rev_strt = !1,
+                    refresh()) : (typeWriter(),
+                    count--);
+                else {
+                    for (var e in text) {
+                        if (l = text[e],
+                        Math.random() < chance) {
+                            if (cap.test(l)) {
+                                let e = keys[l.toLowerCase()];
+                                l = e[Math.floor(Math.random() * e.length)],
+                                l = .3 < Math.random() ? l.toUpperCase() : l
+                            } else if (lower.test(l)) {
+                                let e = keys[l];
+                                l = e[Math.floor(Math.random() * e.length)],
+                                l = .8 < Math.random() ? l.toUpperCase() : l
+                            }
+                        }
+                        newtext += l
+                    }
+                    lines.push(newtext),
+                    typeWriter(),
+                    speed -= 4,
+                    chance += .08
+                }
+                main = setTimeout(writeLines, 115 * speed)
+            }
+            refresh(),
+            main = setTimeout(writeLines, 500);
+            typeWriter = ()=>{
+                ind < newtext.length ? (document.getElementById("text").innerHTML += newtext.charAt(ind),
+                type = setTimeout(typeWriter, speed),
+                ind++) : (document.getElementById("text").innerHTML += "<br>",
+                ind = 0)
+            }
+            document.addEventListener("visibilitychange", ()=>{
+                document.hidden ? (clearTimeout(type),
+                clearTimeout(main)) : (main = setTimeout(writeLines, 115 * speed),
+                setTimeout(typeWriter, speed))
+            }
+            )
+        </script>
+    </body>
+</html>
