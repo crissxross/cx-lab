@@ -1,14 +1,17 @@
 <html>
+	<!-- TITLE: UNPARALLEL PROCESSING -->
 <body>
 <style>
 	body { overflow:hidden; } /* template */
 	* { margin: 0;}
 	main {
 		display: grid;
-		grid-auto-rows: calc(20vh - 5px);
+		/* -9px to make space for template header 45px/5 */
+		grid-auto-rows: calc(20vh - 5px - 9px);
 		gap: 5px;
 		font-family: sans-serif;
 		background-color: hsl(0, 85%, 45%);
+		border-block-end: 5px solid hsl(0 85% 45%);
 	}
 	.r {
 		--w: 9.5vw;
@@ -35,7 +38,6 @@
 	}
 </style>
 	<main>
-		<!-- TITLE: UNPARALLEL PROCESSING ??? -->
 	</main>
 	<script>
 		const main = document.querySelector('main');
@@ -71,15 +73,6 @@
 				}, t * 0.25);
 			}
 		}
-
-		// pars.forEach((p, i) => {
-		// 	let n = 500 * (Math.random() * (i + 1));
-		// 	setInterval(() => {
-		// 		p.textContent = rand(arr);
-		// 		process(p, n);
-		// 	}, n);
-		// });
-
 		setTimeout(() => location.reload(), time);
 		</script>
 </body>

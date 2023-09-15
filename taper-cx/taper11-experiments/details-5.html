@@ -52,9 +52,9 @@
       });
 
       dets.forEach((det, i) => {
-        det.addEventListener('toggle', function() {
+        det.addEventListener('toggle', () => {
           if (det.open) {
-            setTimeout(function() {
+            setTimeout(() => {
               det.open = false;
             }, 2000);
           } else {
