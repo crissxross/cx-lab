@@ -46,10 +46,10 @@ https://taper.badquar.to/11/unparallel_processing.html
 			grid-auto-rows: calc(20vh - 5px - 9px);
 			gap: 5px;
 			font-family: sans-serif;
-			background-color: hsl(0, 85%, 45%);
-			border-block-end: 5px solid hsl(0 85% 45%);
+			background-color: #d41111;
+			border-block-end: 5px solid #d41111;
 		}
-		.r {
+		.row {
 			--w: 9.5vw;
 			display: grid;
 			grid-auto-flow: column;
@@ -58,19 +58,19 @@ https://taper.badquar.to/11/unparallel_processing.html
 			gap: var(--w);
 			background: #fff;
 		}
-		.r:nth-child(even) {
+		.row:nth-child(even) {
 			justify-content: center;
 		}
-		.r:nth-child(3n) {
+		.row:nth-child(3n) {
 			justify-content: end;
 		}
 		p {
-			background: #000;
-			border-inline: 5px solid hsl(0 85% 45%);
 			display: grid;
 			place-content: center;
-			color: #666;
 			font-size: 15vmin;
+			color: #666;
+			background: #000;
+			border-inline: 5px solid #d41111;
 		}
 	</style>
 		<main>
@@ -79,16 +79,16 @@ https://taper.badquar.to/11/unparallel_processing.html
 		const main = document.querySelector('main');
 		const time = 1500;
 		const arr = [
-			'=', '\\\\', '||', '//', 'll', '[[', ']]',
-			'=', '\\\\', '||', '//', 'll', '[[', ']]',
-			'=', '\\\\', '||', '//', 'll', '[[', ']]',
-			'=', '\\\\', '||', '//', 'll', '=', '=',
-			'=', '\\\\', '||', '//', 'll', '=', '=',
+			'=', '=', '\\\\', '||', '//', 'll', '[[', ']]',
+			'=', '=', '\\\\', '||', '//', 'll', '[[', ']]',
+			'=', '=', '\\\\', '||', '//', 'll', '[[', ']]',
+			'=', '=', '\\\\', '||', '//', 'll', '=', '=',
+			'=', '=', '\\\\', '||', '//', 'll', '=', '=',
 			'/|', '|/', '|\\', '\\|',
 		]
 		const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-		main.innerHTML = `<div class="r"><p></p><p></p><p></p><p></p><p></p></div>`.repeat(5);
+		main.innerHTML = `<div class="row"><p></p><p></p><p></p><p></p><p></p></div>`.repeat(5);
 
 		const pars = document.querySelectorAll('p');
 		pars.forEach(p => {
