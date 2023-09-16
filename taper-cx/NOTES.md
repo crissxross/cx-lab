@@ -30,10 +30,17 @@ turquoise, coral, ivory, khaki, plum, salmon, teal, tomato, wheat, aquamarine, c
 
 ## ART/LIT NOTES
 
-parallel processor
+### titles
+
+click to parallel process
+click for parallel processing
+click for details
+
+Unparallel Processing
 
 ### Parallels
 
+parallel processor
 parallel
 illusion
 parallusion

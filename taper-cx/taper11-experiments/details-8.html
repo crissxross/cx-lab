@@ -30,24 +30,21 @@
   </style>
     <div></div>
     <script>
+      const r = a => a[Math.floor(Math.random() * a.length)];
       const a = [
-        'Straight up and down.',
-        'Bending the truth is okay in moderation.',
-        'Crooked teeth are a sign of good luck.',
-        'As honest as the day is long.',
-        'Straight talking for a straighter smile.',
-        'Straight up, I saw it with my own eyes.',
-        'Driving while drinking',
-        'Listening while talking.',
-        'rub your belly while patting your head',
+        ["It's","We're","They're"],
+        ['straight', 'honest', 'direct', 'logical', 'frank', 'blunt', 'sincere', 'respectable', 'conventional', 'conformist', 'on the level'],
+        ['but', 'yet', 'and', 'however'],
+        ['bent', 'crooked','evasive', 'irrational', 'deceptive', 'askew', 'warped', 'amoral', 'underhand', 'fraudulent', 'out of line'],
       ]
       const dv = document.querySelector('div');
       dv.innerHTML =`<details><summary></summary><p></p></details>`.repeat(9);
       const ds = document.querySelectorAll('details');
       const ps = document.querySelectorAll('p');
-      ps.forEach((p, i) => p.textContent = a[i]);
+
       ds.forEach(td => {
         td.addEventListener('click', () => {
+        ps.forEach((p) => p.textContent = `${r(a[0])} ${r([`${r(a[1])} ${r(a[2])} ${r(a[3])}`,`${r(a[3])} ${r(a[2])} ${r(a[1])}`])}`);
           ds.forEach(d => {
             if (d !== td) {
               d.removeAttribute('open');

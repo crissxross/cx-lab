@@ -1,0 +1,32 @@
+<html>
+  <style>
+    p {
+      padding: 5vh auto;
+      font-family: sans-serif;
+      font-size: 5vmin;
+    }
+  </style>
+  <body>
+    <p></p>
+    <script>
+      const p = document.querySelector('p');
+      const r = (a) => a[Math.floor(Math.random() * a.length)];
+
+      const a = ["It's","We're","They're"];
+
+      const s = ['straight', 'honest', 'direct', 'logical', 'frank', 'blunt', 'sincere', 'respectable', 'conventional', 'conformist', 'on the level'];
+
+      const _ = ['but', 'yet', '&', 'however'];
+
+      const b = ['bent', 'crooked','evasive', 'irrational', 'deceptive', 'askew', 'warped', 'amoral', 'underhand', 'fraudulent', 'out of line'];
+
+      setInterval(() => {
+        p.innerHTML = `
+        ${r(a)} ${r([`${r(s)} ${r(_)} ${r(b)}`,`${r(b)} ${r(_)} ${r(s)}`])}
+        `;
+      }, 3000);
+
+
+    </script>
+  </body>
+</html>
