@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #11)</title>
+
+<!-- "Click for Conviction" Copyright (C) 2023 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #11: Parallels, Fall 2023:
+
+https://taper.badquar.to/11/click_for_conviction.html
+
+... your creative statement here ...
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id=nav>
+	<h1>
+		<a href="index.html">Taper #11 :
+		Parallels</a> : Fall 2023 <br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a> :
+		<a href="prev.html">&lt;&lt;</a> &mdash;
+		<a href="next.html">&gt;&gt;</a>
+	</h1>
+</header>
+<style>
+	body {
+		background-color: #000;
+		font-family: sans-serif;
+		font-size: 5vmin;
+		color: #fff;
+	}
+	* {margin:0;}
+	p {text-align: center;}
+	summary {
+		height: 10vh;
+		cursor: pointer;
+		--s: 5vmin;
+		--cg: conic-gradient(at 50% 25%, #fff0 270deg, #fff 0);
+		--cs: calc(var(--s) * 2) calc(var(--s) * 4);
+		background:
+			linear-gradient(grey 2.5%, #fff0 0 97.5%, grey 0) 50% calc(50% + var(--s) / 2) / 100% var(--s),
+			var(--cg) 50% / var(--cs),
+			var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s)) / var(--cs),
+			var(--cg) calc(50% + var(--s)) calc(50% + var(--s) * 2) / var(--cs),
+			var(--cg) calc(50% + var(--s) / 2) calc(50% + var(--s) * 3) / var(--cs);
+	}
+	summary::marker {color: red;}
+	details {transition:all 1s;}
+	details:not([open]) {transform: translateX(0);}
+	details[open] {transform: translateX(1em);}
+</style>
+	<div></div>
+	<script>
+		const r = a => a[Math.floor(Math.random() * a.length)];
+		const a = [
+			["It's","We're","They're"],
+			['straight', 'honest', 'direct', 'logical', 'frank', 'blunt', 'sincere', 'respectable', 'conventional', 'conformist', 'on the level'],
+			['but', 'yet', 'and', 'however'],
+			['bent', 'crooked','evasive', 'irrational', 'deceptive', 'askew', 'warped', 'amoral', 'underhand', 'fraudulent', 'out of line'],
+		]
+		const dv = document.querySelector('div');
+		dv.innerHTML =`<details><summary></summary><p></p></details>`.repeat(9);
+		const ds = document.querySelectorAll('details');
+		const ps = document.querySelectorAll('p');
+
+		ds.forEach(td => {
+			td.addEventListener('click', () => {
+			ps.forEach((p) => p.textContent = `${r(a[0])} ${r([`${r(a[1])} ${r(a[2])} ${r(a[3])}`,`${r(a[3])} ${r(a[2])} ${r(a[1])}`])}`);
+				ds.forEach(d => {
+					if (d !== td) {
+						d.removeAttribute('open');
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>
