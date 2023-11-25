@@ -57,3 +57,7 @@ Thumbs.db
 # Editor
 .vscode
 .vscode-test
+
+# Lab
+samples/
+notes/
