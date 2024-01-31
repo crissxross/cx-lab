@@ -1,0 +1,94 @@
+<html>
+
+<body>
+  <style>
+    main {
+      font-family: system-ui, sans-serif;
+      max-width: 45ch;
+      margin: 4rem auto;
+      font-size: clamp(1rem, calc(1rem + 1vw), 2.00rem);
+    }
+
+    ol {
+      font-family: monospace;
+      font-size: smaller;
+      color: grey;
+    }
+
+    div {
+      margin: 4rem 0;
+    }
+
+    p:not(:first-child) {
+      opacity: 0;
+    }
+
+    .fadein {
+      animation: fadein 3s ease forwards;
+    }
+
+    @keyframes fadein {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .sr {
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      width: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      white-space: nowrap;
+    }
+  </style>
+  <main>
+    <h1 class="sr">VoiceOver: A poem for screen readers</h1>
+
+    <ol aria-hidden="true">
+      <li>Activate screen reader: press Command + F5</li>
+      <li>Enter web page: Caps Lock + ⬇</li>
+      <li>Read all: Caps Lock + A</li>
+    </ol>
+
+    <div>
+      <p>You want to read?</p>
+      <p class="sr">I want to read</p>
+      <p>What's missing? Who's there?</p>
+      <p class="sr">what's there?</p>
+      <p>You squint at the computer</p>
+      <p class="sr">Who speaks for me?</p>
+      <p>A voice that is not mine speaks my thoughts</p>
+      <p class="sr">Will you make the effort to hear me?</p>
+      <p>Who leaves me unspoken?</p>
+      <p class="sr">Don't leave me unspoken.</p>
+      <p>The voice in your head, who is it?</p>
+      <p class="sr">How do you picture what's said?</p>
+      <p>Do you know where you are?</p>
+    </div>
+
+  </main>
+  <script>
+    console.log(navigator.userAgent);
+
+    const pars = document.querySelectorAll('p');
+
+    document.addEventListener('keydown', (event) => {
+      if (event.metaKey) {
+
+        pars.forEach((p, i) => {
+          p.style.animationDelay = `${0.5 * i}s`;
+          p.classList.add('fadein');
+        });
+
+      }
+    });
+
+
+  </script>
+</body>
+
+</html>

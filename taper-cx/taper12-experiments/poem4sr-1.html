@@ -1,0 +1,87 @@
+<html>
+  <body>
+    <style>
+      /* * { margin: 0;} */
+      main {
+        font-family: system-ui, sans-serif;
+        font-size: 1.5rem;;
+        max-width: 50ch;
+        margin: 4rem auto;
+        /* outline: silver solid 1px; */
+      }
+      div {
+        margin: 4rem 0;
+      }
+      /* visually hidden */
+      .sr {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        white-space: nowrap;
+      }
+    </style>
+    <main>
+      <h1 class="sr">VoiceOver: A poem for screen readers</h1>
+
+      <!-- TODO: hide instructions from screen reader ?? -->
+      <div class="instruct" aria-hidden="true">
+        <!-- NOTE: Does this key combo activate/reveal the poem -->
+        <p>You activate the screen reader: press Command & F5</p>
+        <p>Listen to instructions you must follow</p>
+        <p>Press Caps Lock & Down Arrow ⬇ to enter the space</p>
+        <p>You want to read?</p>
+        <p>Press the key combination: Caps Lock & A</p>
+      </div>
+      <!-- TODO: listen for the key combo Caps Lock A then reveal the rest of poem -->
+      <div class="voiceover">
+        <p class="sr">I want to read</p>
+        <p class="sr">what's there?</p>
+        <p>Who's there?</p>
+        <p>You frown/squint at the computer/device</p>
+        <p>A voice that is not mine speaks my thoughts</p>
+        <p>Who speaks for me?</p>
+        <p class="sr">Will you make the effort to hear me?</p>
+        <p>Who leaves me unspoken?</p>
+        <p class="sr">Don't leave me unspoken.</p>
+        <p>The voice in your head, who is it?</p>
+        <p>How do you picture what's said?</p>
+        <p>Do you know where you are?</p>
+      </div>
+
+      <!-- Temporary placeholder text -->
+<!--
+      <p>Your inner Narrator</p>
+      <p>Inner critic or inner ally?</p>
+      <p>The VoiceOver for your life</p>
+      <p>The Narrator of your life</p>
+      <p>Who speaks your thoughts?</p>
+      <p>Who speaks?</p>
+      <p>Will you make the effort to hear me?</p>
+      <p>Or leave me unspoken?</p>
+      <p>The spoken unspoken</p>
+      <p>Who speaks the picture?</p>
+      <p>Hear the silent words</p>
+      <p>Make the effort</p>
+      <p>Listen to the unspoken</p>
+    -->
+
+    </main>
+    <script>
+      const userData = navigator.userAgentData;
+      const userAgent = navigator.userAgent;
+      console.log(userData);
+      console.log(userData.platform, 'mobile?', userData.mobile);
+      console.log(userAgent);
+      console.log('platform?', navigator.platform);
+      console.log('Mac platform?', userAgent.includes('Macintosh'));
+      console.log('Windows platform?', userAgent.includes('Windows'));
+      console.log('mobile?', userAgent.includes('Mobile'));
+      // platform could be macOS, Windows, Linux, Android, iOS, Chrome OS, or unknown
+    </script>
+  </body>
+</html>
