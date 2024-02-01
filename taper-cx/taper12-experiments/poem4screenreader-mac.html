@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #12)</title>
+
+<!-- “VoiceOver: a poem for screen readers (Mac)” Copyright (C) 2024 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #12: Tools, Spring 2024:
+
+https://taper.badquar.to/12/title_of_your_work.html
+
+MAC VERSION
+
+
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id=nav>
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #12 :
+		Tools</a> : Spring 2024 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a>
+	</h1>
+</header> <!-- All poem code goes here -->
+	<main>
+		<h1>VoiceOver</h1>
+		<ol aria-hidden="true">
+			<li>Start screen reader, press: <b>Command + F5</b></li>
+			<li>Open VoiceOver rotor: <b>Caps Lock + U</b></li>
+			<li>Use ← → <b>arrow keys</b> to find <b>Landmarks</b> menu</li>
+			<li>Select ↓↑ <b>main</b> & press: <b>Enter</b></li>
+			<li>Read all: <b>Caps Lock + A</b></li>
+		</ol>
+		<div>
+			<p>You want to read?</p>
+			<p class="sr">I want to read</p>
+			<p>You must follow instructions to the letter</p>
+			<p class="sr">Will you learn my commands?</p>
+			<p>Surmount the confusion, get over it</p>
+			<p class="sr">How should I instruct you?</p>
+			<p>You sense something missing</p>
+			<p class="sr">A voice that is not mine speaks for me</p>
+			<p>You squint at the screen</p>
+			<p class="sr">Don't leave me unspoken, please</p>
+			<p>Do you know where you are?</p>
+		</div>
+	</main>
+	<style>
+		main {
+			font-family: system-ui, sans-serif;
+			font-size: clamp(1rem, calc(1rem + 1vw), 2.00rem);
+			max-width: 40ch;
+			margin: 1em auto;
+			padding: 0.5em 2em;
+			outline: silver solid 1px;
+		}
+		ol {
+			font-family: monospace;
+			font-size: smaller;
+			color: grey;
+		}
+		div {
+			margin: 4rem 0;
+		}
+		p:not(:first-child) {
+			opacity: 0;
+		}
+		.f {
+			animation: f 3s ease forwards;
+		}
+		@keyframes f {
+			to {
+				opacity: 1;
+			}
+		}
+		.sr {
+			position: absolute;
+			overflow: hidden;
+			clip: rect(0 0 0 0);
+			height: 1px;
+			width: 1px;
+			margin: -1px;
+			padding: 0;
+			border: 0;
+			white-space: nowrap;
+		}
+	</style>
+	<script>
+		const ps = document.querySelectorAll('p');
+		document.addEventListener('keydown', (event) => {
+			if (event.metaKey) {
+				ps.forEach((p, i) => {
+					p.style.animationDelay = `${0.5 * i}s`;
+					p.classList.add('f');
+				});
+			}
+		});
+	</script>
+</body>
+</html>
