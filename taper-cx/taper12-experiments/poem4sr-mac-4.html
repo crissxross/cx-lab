@@ -25,11 +25,11 @@
       opacity: 0;
     }
 
-    .fadein {
-      animation: fadein 3s ease forwards;
+    .f {
+      animation: f 3s ease forwards;
     }
 
-    @keyframes fadein {
+    @keyframes f {
       to {
         opacity: 1;
       }
@@ -48,40 +48,36 @@
     }
   </style>
   <main>
-    <h1>Narrator: a poem for screen readers</h1>
+    <h1>VoiceOver</h1>
 
     <ol aria-hidden="true">
-      <li>Start/stop screen reader, press: Windows logo key + Ctrl + Enter</li>
-      <li>Go to main landmark: Caps Lock + N</li>
-      <li>Narrator will automatically start reading (if not, press: Caps Lock + C)</li>
-    </ol>
-
-    <!-- ALTERNATIVE -->
-    <!-- <ol aria-hidden="true">
-      <li>Start/stop screen reader, press: Windows logo key + Ctrl + Enter</li>
-      <li>Open page landmarks list: Caps Lock + F5</li>
+      <li>Start/stop screen reader, press: Command + F5</li>
+      <li>Open VoiceOver rotor: Caps Lock + U</li>
       <li>Press ⬇ or ⬆ to select main</li>
-      <li>Enter / Spacebar</li>
-      <li>Narrator will automatically start reading (if not, press: Caps Lock + C)</li>
-    </ol> -->
+      <li>Enter / Return</li>
+      <li>Read all: Caps Lock + A</li>
+    </ol>
 
     <div>
       <p>You want to read?</p>
+
       <p class="sr">I want to read</p>
 
-      <p>You must follow the instructions</p>
+      <p>You must follow instructions to the letter</p>
+
       <p class="sr">Will you learn my commands?</p>
 
+      <p>Will you make the effort to hear me?</p>
+
+      <p class="sr">A voice that is not mine speaks my thoughts</p>
+
       <p>You sense something missing</p>
+
       <p class="sr">Who speaks for me?</p>
 
       <p>You squint at the screen</p>
 
-      <p>Will you make the effort to hear me?</p>
       <p class="sr">Don't leave me unspoken.</p>
-
-      <p>How do you picture what's said?</p>
-      <p class="sr">A voice that is not mine speaks my thoughts</p>
 
       <p>Do you know where you are?</p>
 
@@ -89,8 +85,6 @@
 
   </main>
   <script>
-    console.log(navigator.userAgent);
-
     const pars = document.querySelectorAll('p');
 
     document.addEventListener('keydown', (event) => {
@@ -98,12 +92,11 @@
 
         pars.forEach((p, i) => {
           p.style.animationDelay = `${0.5 * i}s`;
-          p.classList.add('fadein');
+          p.classList.add('f');
         });
 
       }
     });
-
 
   </script>
 </body>

@@ -1,0 +1,110 @@
+<html>
+  <!-- NOTE: Excluding this comment, this file is 2.11 KiB which is larger than the version 4 (poems4sr-mac-4.html) so there's no point in trying to do this automatically. Also I may need more instructions for VoiceOver -->
+
+<body>
+  <style>
+    main {
+      font-family: system-ui, sans-serif;
+      font-size: clamp(1rem, calc(1rem + 1vw), 2.00rem);
+      max-width: 45ch;
+      margin: 1em auto;
+      padding: 0.5em 2em;
+      outline: silver solid 1px;
+    }
+
+    ol {
+      font-family: monospace;
+      font-size: smaller;
+      color: grey;
+    }
+
+    div {
+      margin: 4rem 0;
+    }
+
+    .f {
+      animation: f 3s ease forwards;
+    }
+
+    @keyframes f {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .sr {
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      width: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      white-space: nowrap;
+    }
+  </style>
+  <main>
+    <h1>VoiceOver</h1>
+
+    <ol id="o" aria-hidden="true"></ol>
+
+    <div id="d"></div>
+
+  </main>
+  <script>
+    o.innerHTML = `<li></li>`.repeat(5);
+    d.innerHTML = `<p></p>`.repeat(11);
+    ps = document.querySelectorAll('p');
+    ls = document.querySelectorAll('li');
+
+    mac = `
+    Start/stop screen reader, press: Command + F5.
+    Open VoiceOver rotor: Caps Lock + U.
+    Press ⬇ or ⬆ to select main.
+    Enter / Return.
+    Read all: Caps Lock + A`
+    .split('.');
+
+    text = `
+    You want to read?.
+    I want to read.
+    You must follow instructions to the letter.
+    Will you learn my commands?.
+    Will you make the effort to hear me?.
+    A voice that is not mine speaks my thoughts.
+    You sense something missing.
+    Who speaks for me?.
+    You squint at the screen.
+    Don't leave me unspoken.
+    Do you know where you are?`
+    .split('.');
+
+    ls.forEach((l, i) => {
+      l.textContent = `${mac[i]}`;
+    });
+
+    ps[0].textContent = `${text[0]}`;
+
+    document.addEventListener('keydown', (event) => {
+      if (event.metaKey) {
+        i=1;
+
+        ps.forEach((p, i) => {
+          p.textContent = `${text[i]}`;
+          p.style.opacity = 0;
+          if (i % 2 === 1) {
+            p.classList.add('sr');
+          }
+          p.style.animationDelay = `${0.5 * i}s`;
+          p.classList.add('f');
+        });
+        ps[0].style.opacity = 1;
+
+      }
+    });
+
+  </script>
+</body>
+
+</html>

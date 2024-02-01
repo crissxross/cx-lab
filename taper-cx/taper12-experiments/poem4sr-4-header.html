@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Title (Taper #12)</title>
 
-  <!-- “Title” Copyright (C) 2024 Author
+  <!-- “VoiceOver: a poem for screen readers” Copyright (C) 2024 Christine Wilks
 
   Copying and distribution of this file, with or without modification,
   are permitted in any medium without royalty provided the copyright
@@ -91,9 +91,9 @@
     <h1>VoiceOver: a poem for screen readers</h1>
 
     <ol aria-hidden="true">
-      <li>Activate screen reader: press Command + F5</li>
+      <li>Start/stop screen reader, press: Command + F5</li>
       <li>Open VoiceOver rotor: Caps Lock + U</li>
-      <li>Press ⬇ to select main</li>
+      <li>Press ⬇ or ⬆ to select main</li>
       <li>Enter / Return</li>
       <li>Read all: Caps Lock + A</li>
     </ol>
@@ -117,8 +117,6 @@
 
       <p>Will you make the effort to hear me?</p>
 
-      <!-- <p>How do you picture what's said?</p> -->
-
       <p class="sr">A voice that is not mine speaks my thoughts</p>
 
       <p>Do you know where you are?</p>
@@ -127,8 +125,6 @@
 
   </main>
   <script>
-    console.log(navigator.userAgent);
-
     const pars = document.querySelectorAll('p');
 
     document.addEventListener('keydown', (event) => {

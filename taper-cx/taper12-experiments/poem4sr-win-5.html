@@ -1,0 +1,104 @@
+<html>
+
+<body>
+  <style>
+    main {
+      font-family: system-ui, sans-serif;
+      font-size: clamp(1rem, calc(1rem + 1vw), 2.00rem);
+      max-width: 45ch;
+      margin: 1em auto;
+      padding: 0.5em 2em;
+      outline: silver solid 1px;
+    }
+
+    ol {
+      font-family: monospace;
+      font-size: smaller;
+      color: grey;
+    }
+
+    div {
+      margin: 4rem 0;
+    }
+
+    p:not(:first-child) {
+      opacity: 0;
+    }
+
+    .f {
+      animation: f 3s ease forwards;
+    }
+
+    @keyframes f {
+      to {
+        opacity: 1;
+      }
+    }
+
+
+    .sr {
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      width: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      white-space: nowrap;
+    }
+  </style>
+  <main>
+    <h1>Narrator</h1>
+
+    <ol id="o" aria-hidden="true"></ol>
+
+    <div id="d"></div>
+
+  </main>
+  <script>
+    o.innerHTML = `<li></li>`.repeat(3);
+    d.innerHTML = `<p></p>`.repeat(11);
+    ps = document.querySelectorAll('p');
+    lis = document.querySelectorAll('li');
+
+    win = `
+    Start/stop screen reader, press: Windows logo key + Ctrl + Enter.
+    Go to main: Caps Lock + N.
+    Narrator will start reading (if not, press: Caps Lock + C)`
+    .split('.');
+
+    text = `
+    You want to read?.
+    I want to read.
+    You must follow instructions to the letter.
+    Will you learn my commands?.
+    Will you make the effort to hear me?.
+    A voice that is not mine speaks my thoughts.
+    You sense something missing.
+    Who speaks for me?.
+    You squint at the screen.
+    Don't leave me unspoken.
+    Do you know where you are?`
+    .split('.');
+
+    lis.forEach((li, i) => {
+      li.textContent = `${win[i]}`;
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.metaKey) {
+
+        ps.forEach((p, i) => {
+          p.textContent = `${text[i]}`;
+          p.style.animationDelay = `${0.5 * i}s`;
+          p.classList.add('f');
+        });
+
+      }
+    });
+
+  </script>
+</body>
+
+</html>
