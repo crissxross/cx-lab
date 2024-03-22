@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #12)</title>
+
+<!-- “VoiceOver: a poem for screen readers (Mac)” Copyright (C) 2024 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #12: Tools, Spring 2024:
+
+https://taper.badquar.to/12/title_of_your_work.html
+
+NOTE: here are notes for a revised multi-platform version, forthcoming
+
+In a new artist statement, I'll need to add brief instructions for all platforms and ask users to refer to platform-specific tool documentation for further help.
+
+I'll also need to add a note about the final line of the poem being delivered by the screen reader. The final line (with mac VoiceOver) says, "You are currently on a selectable text" 👈 BUT DO NOT DIVULGE THIS - i.e. if you read with a screen reader, you'll hear that line, if not, you'll have to imagine what it might be.
+
+In other words, this poem privileges the screen reader user. As an inversion of the common way of things (usual privileges), those who are unable (or unwilling) to use a screen reader are disadvantaged (and will have an impoverished experience).
+
+Also point out the other sensory experiences non-screen-reader-users will miss out on - e.g. sound (try to describe the voices or ask them to imagine) and the visual indicators of the screen reader's operation & progress - e.g. the focus outline that charts progress and indicates a presence beneath/beyond the text.
+
+Therefore, the experience for non-screen-reader-users is equivalent(?) (or similar) or comparable to (cursory or poorly written) alt text for images.
+
+
+LINKS TO SCREEN READER INFO &/OR USER GUIDES
+
+https://abilitynet.org.uk/factsheets/introduction-screen-readers
+
+https://en.wikipedia.org/wiki/List_of_screen_readers
+
+FOR LINUX USERS
+
+https://help.ubuntu.com/stable/ubuntu-help/a11y-screen-reader.html.en
+
+https://help.gnome.org/users/orca/stable/
+
+
+
+NOTE: ORIGINALLY THIS WAS THE MAC VERSION...
+
+MAC VERSION
+
+In general, a11y accessibility principles tend to be at odds with the goals of computational poetry and brevity. So, somewhat perversely, I decided to create a poem for assistive technology. I was curious to see if I could make an accessible computational poem specifically for the built-in screen readers for Mac and Windows: VoiceOver and Narrator respectively. I didn't realise how tricky it would be! For one thing, the screen readers have different operations, hence there are two versions of the poem.
+
+It turns out that I needed to dedicate a substantial chunk of the 2KB limit for user instructions. I could've put all the instructions here, in this statement, but that would have defeated the purpose. Testing the screen reader (for Mac) and writing the instructions was time-consuming and frequently frustrating. It gave me a small insight into what web browsing might be like for people who depend on screen readers. I spent way more time testing (&/or reading screen reader guides) than coding.
+
+The poem has 12 lines. The final line is not in the code, it's delivered by VoiceOver or Narrator (at least, I hope Narrator behaves the same way).
+
+Please note: I use a Mac and don't have access to Windows OS so I haven't been able to test on that platform. If the onscreen instructions for Windows are inaccurate or lacking in any way, please let me know and I'll try to improve them (bearing in mind that I need to keep them succinct).
+
+FURTHER HELP - LINKS TO USER GUIDES
+
+The guides refer to either a VoiceOver (VO) modifier key or Narrator key - the Caps Lock key is one of the defaults on both platforms. I've used this default key in my instructions.
+
+Complete guide to Narrator - Microsoft Support - https://support.microsoft.com/en-us/windows/complete-guide-to-narrator-e4397a0d-ef4f-b386-d8ae-c172f109bdb1#WindowsVersion=Windows_11
+
+Get started with VoiceOver on Mac - Apple Support (UK) - https://support.apple.com/en-gb/guide/voiceover/vo4be8816d70/mac
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id=nav>
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #12 :
+		Tools</a> : Spring 2024 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a>
+	</h1>
+</header> <!-- All poem code goes here -->
+	<main>
+		<h1>VoiceOver</h1>
+		<!-- TODO: new instructions for all platforms - e.g.:
+		Activate your screen reader (press key combo for different OS)
+		View source code for more instructions or visit your OS screen reader's user guide
+		-->
+		<ol aria-hidden="true">
+			<li>Start screen reader, press: <b>Command + F5</b></li>
+			<li>Open VoiceOver rotor: <b>Caps Lock + U</b></li>
+			<li>Use ← → <b>arrow keys</b> to find <b>Landmarks</b> menu</li>
+			<li>Select ↓↑ <b>main</b> & press: <b>Enter</b></li>
+			<li>Read all: <b>Caps Lock + A</b></li>
+		</ol>
+		<div>
+			<p>You want to read?</p>
+			<p class="sr">I want to read</p>
+			<p>You must follow instructions to the letter</p>
+			<p class="sr">Will you learn my commands?</p>
+			<p>Surmount the confusion, get over it</p>
+			<p class="sr">How should I instruct you?</p>
+			<p>You sense something missing</p>
+			<p class="sr">A voice that is not mine speaks for me</p>
+			<p>You squint at the screen</p>
+			<p class="sr">Don't leave me unspoken, please</p>
+			<p>Do you know where you are?</p>
+		</div>
+	</main>
+	<style>
+		main {
+			font-family: system-ui, sans-serif;
+			font-size: clamp(1rem, calc(1rem + 1vw), 2.00rem);
+			max-width: 40ch;
+			margin: 1em auto;
+			padding: 0.5em 2em;
+			outline: silver solid 1px;
+		}
+		ol {
+			font-family: monospace;
+			font-size: smaller;
+			color: grey;
+		}
+		div {
+			margin: 4rem 0;
+		}
+		p:not(:first-child) {
+			opacity: 0;
+		}
+		.f {
+			animation: f 3s ease forwards;
+		}
+		@keyframes f {
+			to {
+				opacity: 1;
+			}
+		}
+		.sr {
+			position: absolute;
+			overflow: hidden;
+			clip: rect(0 0 0 0);
+			height: 1px;
+			width: 1px;
+			margin: -1px;
+			padding: 0;
+			border: 0;
+			white-space: nowrap;
+		}
+	</style>
+	<script>
+		const ps = document.querySelectorAll('p');
+		document.addEventListener('keydown', (event) => {
+			if (event.metaKey) {
+				ps.forEach((p, i) => {
+					p.style.animationDelay = `${0.5 * i}s`;
+					p.classList.add('f');
+				});
+			}
+		});
+	</script>
+</body>
+</html>
