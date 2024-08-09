@@ -1,0 +1,72 @@
+<html>
+
+<body>
+  <div></div>
+  <style>
+    body {
+      background-color: hsl(351, 90%, 92%);
+    }
+
+    * {
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+    }
+
+    p:nth-child(odd) {
+      background-color: hsl(351, 90%, 89%);
+    }
+
+    i {
+      font-size: 1rem;
+    }
+  </style>
+
+  <script>
+    const r = a => a[Math.floor(Math.random() * a.length)];
+
+
+    const arr = [
+      ["Hydrate", "Smooth", "Brighten", "Reduce", "Minimize", "Depuff", "Firm", "Soften", "Rejuvenate", "Revitalize", "Tighten", "Lift", "Correct", "Balance", "Purify", "Detoxify", "Clarify", "Refine", "Exfoliate", "Renew", "Regenerate", "Repair", "Restore", "Replenish", "Moisturize", "Rehydrate"],
+
+      ["witch", "hag", "crone", "harridan", "dragon", "battleaxe", "old bag", "harpy", "she-devil", "fishwife", "gorgon", "harpy", "nag"],
+
+      ["punish", "soften", "sweeten", "disguise", "discipline", "castigate", "correct", "alter", "regulate", "modify", "control", "revise", "rebuke", "rectify", "repair", "fix", "mend", "remedy", "chastize", "penalize"],
+
+      ["wrinkles", "fine lines", "crow's feet", "sagging", "drooping", "puffiness", "dark circles", "age spots", "discoloration", "uneven skin tone", "dullness", "dryness", "roughness", "flakiness", "lumps", "rough patches", "scaly patches", "cracked skin", "warts", "moles", "freckles", "birthmarks", "scars", "stretch marks", "cellulite", "spider veins", "varicose veins",],
+
+      ["L'Oreal", "Maybelline", "Revlon", "CoverGirl", "Clinique", "Estee Lauder", "Lancome", "MAC", "Mary Kay", "Chanel", "Shiseido", "Garnier", "Olay"],
+
+      ["anti-aging", "damage reversal", "retightening", "Revitalift", "Regenerist", "multi action", "triple action", "bio-active", "pro vital", "firming", "repairing", "perfect smoothing", "anti-fatigue"],
+
+      ["potion", "elixer", "concoction", "brew", "tonic", "serum", "night cream", "day cream", "eye cream", "neck cream", "lotion", "balm", "snake oil"],
+
+      ["retinol", "peptides", "retinoids", "antioxidants", "niacinamide", "hyaluronic acid", "ceramides", "glycolic acid", "glycerin", "amino acids", "botanical oils", "plant extracts"],
+
+    ]
+    const dv = document.querySelector('div');
+    dv.innerHTML = `<p></p>`.repeat(13);
+    const ps = document.querySelectorAll('p');
+    // let t = 5000;
+
+
+    function update() {
+      ps.forEach((p, i) => {
+        p.textContent = `${r(arr[0])} the ${r(arr[1])} and ${r(arr[2])} ${r(arr[3])} with ${r(arr[4])}'s ${r(arr[5])} ${r(arr[6])}.`;
+        p.innerHTML += ` <i>Active ingredient: ${r(arr[7])}</i>`;
+      });
+    }
+
+    update();
+
+    document.body.addEventListener('click', update);
+
+    // setInterval(update, t);
+
+  </script>
+</body>
+
+</html>
