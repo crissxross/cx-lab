@@ -1,0 +1,45 @@
+<html>
+<body>
+  <div id=v>
+    <button id=o>Let's CHANGE!</button>
+  </div>
+  <style>
+    body {background: linear-gradient(#c50021, #450009); color: #fff;}
+    #v {padding: 2rem; font-size: clamp(1rem, calc(1rem + 1vw), 1.5rem); font-family: sans-serif;}
+    #o {cursor: pointer; padding: 0.5em; background-color: #000; color: #fff; }
+  </style>
+  <script>
+    v.innerHTML += `<p></p>`.repeat(13);
+    ps = document.querySelectorAll('p');
+    o.addEventListener('click', u);
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    a = 'old.post-menopausal.senior.elderly.aged.grey-haired.mature.retired.wise.knowledgeable.experienced.worldly-wise.veteran.ancient.venerable.esteemed.revered.respected.august.legendary.eminent.renowned.long-lived'.split('.');
+    b = 'woman.lady.female.wife.maid.dame.mistress.missus.sorceress.mrs.miss.maiden.lass'.split('.');
+    c = 'exposes.doubts.disregards.denounces.contests.ignores.eschews.challenges.confounds.disagrees with.protests against.refuses.opposes.resists.questions'.split('.');
+    d = 'spell.adverts.commercials.propaganda.hype.indoctrination.brainwashing.spin.disinformation.brand.spiel.sales pitch.false claims.verdict.assumptions.expectations.preconceptions.judgements.prejudice.bias.bigotry.chauvinism.ageism.sexism.misogyny'.split('.');
+    e = 'cherishes.reveres.loves.values.cares for.nourishes.appreciates.respects.admires.treasures.thanks.strengthens.boosts'.split('.');
+    f = 'bones.skin.eyes.hands.feet.nervous system.muscles.legs.arms.belly.brain.back.neck.digestive system'.split('.');
+    function u() {
+      sa = shuffle(a);
+      sb = shuffle(b);
+      sc = shuffle(c);
+      sd = shuffle(d);
+      se = shuffle(e);
+      sf = shuffle(f);
+      ps.forEach((p, i) => {
+        setTimeout(() => {
+          p.textContent = `The ${sa[i]} ${sb[i]} ${sc[i]} the ${sd[i]} and ${se[i]} her ${sf[i]}.`;
+        }, 90*i);
+      });
+    }
+    u();
+  </script>
+</body>
+</html>
+
