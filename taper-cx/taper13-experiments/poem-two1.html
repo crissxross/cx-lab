@@ -1,0 +1,33 @@
+<html>
+<body>
+  <div id=v>
+    <button id=o>CHANGE!</button>
+  </div>
+  <style>
+    body {background: linear-gradient(#c50021, #450009); color: #fff;}
+    #v {padding: 2rem; font-size: clamp(1rem, calc(1rem + 1vw), 1.5rem); font-family: sans-serif;}
+    #o {cursor: pointer; padding: 0.5em; background-color: #000; color: #fff; }
+  </style>
+  <script>
+    a = 'old.post-menopausal.senior.elderly.aged.grey-haired.mature.retired.wise.knowledgeable.experienced.worldly-wise.veteran.ancient.venerable.esteemed.revered.respected.august.legendary.eminent.renowned.long-lived'.split('.');
+    b = 'woman.lady.female.wife.maid.dame.mistress.missus.frau.senora.signora.sorceress.mrs.ms.miss.maiden.lass'.split('.');
+    c = 'breaks.doubts.disregards.denounces.contests.ignores.eschews.challenges.confounds.disagrees with.protests against.refuses.opposes.resists'.split('.');
+    d = 'spell.advert.commercials.propaganda.hype.indoctrination.brainwashing.spin.disinformation.signals.brand.spiel.sales pitch.false claims.verdict.assumptions.expectations.preconceptions.judgements.prejudice.bias.bigotry.chauvinism.ageism.sexism.misogyny'.split('.');
+    e = 'cherishes.reveres.loves.values.cares for.nourishes.appreciates.respects.admires.treasures.thanks.strengthens.boosts'.split('.');
+    f = 'bones.skin.eyes.hands.feet.nervous system.muscles.ears.legs.arms.hands.digestive system.brain.back.neck'.split('.');
+    r = x => x[Math.floor(Math.random()*x.length)];
+    v.innerHTML += `<p></p>`.repeat(13);
+    ps = document.querySelectorAll('p');
+    function u() {
+      ps.forEach((p, i) => {
+        setTimeout(() => {
+          p.textContent = `The ${r(a)} ${r(b)} ${r(c)} the ${r(d)} and ${r(e)} her ${r(f)}.`;
+        }, 90*i);
+      });
+    }
+    o.addEventListener('click', u);
+    u();
+  </script>
+</body>
+</html>
+

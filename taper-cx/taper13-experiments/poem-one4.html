@@ -1,0 +1,36 @@
+<html>
+<body>
+  <div id=v>
+    <button id=o>Recast the coven</button>
+  </div>
+  <style>
+    body {background: linear-gradient(#fdd8de, #ffa9b4)}
+    #v {padding: 2rem; font-size: clamp(1rem, calc(1rem + 1vw), 1.5rem);}
+    i {font-size: small;}
+    #o {cursor: pointer; padding: 0.5em; }
+  </style>
+  <script>
+    a = 'Hydrate.Smooth.Reduce.Minimize.Depuff.Firm.Soften.Rejuvenate.Revitalize.Tighten.Correct.Purify.Detoxify.Clarify.Exfoliate.Renew.Regenerate.Repair.Restore.Replenish.Moisturize'.split('.');
+    b = 'witch.hag.crone.harridan.dragon.battleaxe.old bag.harpy.she-devil.fishwife.gorgon.harpy.nag'.split('.');
+    c = 'punish.disguise.discipline.castigate.correct.regulate.modify.control.rebuke.rectify.repair.fix.remedy.chastize.penalize'.split('.');
+    d = 'wrinkles.fine lines.crow\'s feet.sagging.drooping.puffiness.dark circles.age spots.discoloration.uneven skin tone.dullness.dryness.roughness.flakiness.lumps.scaly patches.cracked skin.warts.moles.freckles.birthmarks.stretch marks.cellulite.spider veins.varicose veins'.split('.');
+    e = 'L\'Oreal.Maybelline.Revlon.CoverGirl.Clinique.Estee Lauder.Lancome.MAC.Mary Kay.Chanel.Shiseido.Garnier.Olay'.split('.');
+    f = 'anti-aging.damage reversal.retightening.Revitalift.Regenerist.triple action.bio-active.pro vital.firming.repairing.perfect smoothing.anti-fatigue'.split('.');
+    g = 'potion.elixer.concoction.brew.tonic.serum.night cream.day cream.eye cream.neck cream.lotion.balm.snake oil'.split('.');
+    h = 'retinol.peptides.retinoids.antioxidants.niacinamide.hyaluronic acid.ceramides.glycolic acid.glycerin.amino acids.botanical oils.plant extracts'.split('.');
+    r = x => x[Math.floor(Math.random()*x.length)];
+    v.innerHTML += `<p></p>`.repeat(13);
+    ps = document.querySelectorAll('p');
+    function u() {
+      ps.forEach((p, i) => {
+        setTimeout(() => {
+          p.textContent = `${r(a)} the ${r(b)} and ${r(c)} ${r(d)} with ${r(e)}'s ${r(f)} ${r(g)}.`;
+          p.innerHTML += ` <i>Active ingredients: ${r(h)}, ${r(h)}, ${r(h)}</i>`;
+        }, 90*i);
+      });
+    }
+    o.addEventListener('click', u);
+    u();
+  </script>
+</body>
+</html>
