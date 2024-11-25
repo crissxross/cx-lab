@@ -43,3 +43,48 @@
   </script>
 </body>
 </html>
+<!doctype html>
+<body>
+  <div id=v>
+    <button id=o>Recast the coven</button>
+  </div>
+  <style>
+    body { margin:0 ; overflow:hidden }
+    /* 👆from template */
+    body {background:#fab;overflow-y:scroll;}
+    #v {background: linear-gradient(#fdd, #fab);padding: 3.5vw; font-size: clamp(1rem, 3vw, 1.3rem);}
+    i {font-size: small;}
+    #o {cursor: pointer; padding: 0.5em; font-size: 0.8em;}
+  </style>
+  <script>
+    v.innerHTML += `<p></p>`.repeat(13);
+    ps = document.querySelectorAll('p');
+    o.addEventListener('click', u);
+    function s(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    r = x => x[Math.floor(Math.random()*x.length)];
+    function u() {
+      a = s('Hydrate.Smooth.Reduce.Minimize.Depuff.Firm.Soften.Rejuvenate.Revitalize.Tighten.Correct.Purify.Detoxify.Clarify.Exfoliate.Renew.Regenerate.Repair.Restore.Replenish.Moisturize'.split('.'));
+      b = s('witch.hag.crone.harridan.dragon.battleaxe.old bag.harpy.she-devil.fishwife.gorgon.nag.ogress'.split('.'));
+      c = s('punish.disguise.discipline.castigate.correct.regulate.modify.control.rebuke.rectify.repair.fix.remedy.chastize.penalize'.split('.'));
+      d = s('wrinkles.fine lines.crow\'s feet.sagging.drooping.puffiness.dark circles.age spots.discoloration.uneven skin tone.dullness.dryness.roughness.flakiness.lumps.scaly patches.cracked skin.warts.moles.freckles.stretch marks.cellulite.spider veins.varicose veins'.split('.'));
+      e = s('L\'Oreal.Maybelline.Revlon.CoverGirl.Clinique.Estee Lauder.Lancome.MAC.Mary Kay.Chanel.Shiseido.Garnier.Olay'.split('.'));
+      f = s('anti-aging.damage reversal.retightening.Revitalift.Regenerist.triple action.bio-active.pro vital.firming.repairing.perfect smoothing.anti-fatigue.Multi Correxion'.split('.'));
+      g = s('potion.elixer.concoction.brew.tonic.serum.night cream.day cream.eye cream.neck cream.lotion.balm.snake oil'.split('.'));
+      h = s('retinol.peptides.antioxidants.niacinamide.hyaluronic acid.ceramides.glycolic acid.glycerin.amino acids.botanical oils'.split('.'));
+      ps.forEach((p, i) => {
+        setTimeout(() => {
+          p.textContent = `${a[i]} the ${b[i]} and ${c[i]} ${d[i]} with ${e[i]}'s ${f[i]} ${g[i]}.`;
+          p.innerHTML += ` <i>Active ingredients: ${r(h)}, ${r(h)}, ${r(h)}</i>`;
+        }, 90*i);
+      });
+    }
+    u();
+  </script>
+</body>
+</html>
