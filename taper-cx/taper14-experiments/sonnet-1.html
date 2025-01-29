@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      main {
+        padding: 2vh 10vw;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        font-family: monospace;
+        font-size: clamp(1rem, 8vw, 4rem);
+        color: #666;
+      }
+      .line {
+        display: grid;
+        grid-column: span 10;
+        grid-template-columns: subgrid;
+        text-align: center;
+      }
+      .line div {
+        background: #eee;
+      }
+    </style>
+      <main></main>
+    <script>
+      const main = document.querySelector('main');
+      main.innerHTML = `<div class="line"></div>`.repeat(14);
+      const lines = document.querySelectorAll('.line');
+      lines.forEach(line => {
+        line.innerHTML = `<div>x</div><div>/</div>`.repeat(5);
+      });
+
+    </script>
+  </body>
+</html>

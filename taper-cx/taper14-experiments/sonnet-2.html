@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      main {
+        padding: 2vh 10vw;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        font-family: monospace;
+        font-size: clamp(1rem, 8vw, 4rem);
+        color: #666;
+      }
+      main div {
+        text-align: center;
+        background: #eee;
+      }
+    </style>
+      <main></main>
+    <script>
+      const main = document.querySelector('main');
+
+      // const createGridContent = () => {
+      //   const symbols = ['x', '/'];
+      //   let content = '';
+      //   for (let i = 0; i < 14; i++) {
+      //     for (let j = 0; j < 10; j++) {
+      //       content += `<div>${symbols[j % 2]}</div>`;
+      //     }
+      //   }
+      //   return content;
+      // };
+
+      // main.innerHTML = createGridContent();
+
+      const createContent = () => {
+        const symbols = ['x', '/'];
+        let content = '';
+        for (let i = 0; i < 140; i++) {
+          content += `<div>${symbols[i % 2]}</div>`;
+        }
+        return content;
+      }
+
+      main.innerHTML = createContent();
+
+    </script>
+  </body>
+</html>
