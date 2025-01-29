@@ -13,12 +13,13 @@
       }
       main div {
         text-align: center;
-        background: #eee;
+        /* background: #eee; */
       }
     </style>
       <main></main>
     <script>
       const main = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
 
       // const createGridContent = () => {
       //   const symbols = ['x', '/'];
@@ -37,7 +38,12 @@
         const symbols = ['x', '/'];
         let content = '';
         for (let i = 0; i < 140; i++) {
-          content += `<div>${symbols[i % 2]}</div>`;
+            // content += `<div style="background-color: rgba(${r(0, 255)},${r(0, 255)},${r(0, 255)},0.5);">
+            //   ${symbols[i % 2]}
+            //   </div>`;
+            content += `<div style="background-color: hsl(${r(0, 359)} ${r(20, 100)} ${r(30, 70)}/.6);">
+              ${symbols[i % 2]}
+              </div>`;
         }
         return content;
       }
