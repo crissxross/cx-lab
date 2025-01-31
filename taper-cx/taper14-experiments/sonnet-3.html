@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      main {
+        padding: 2vh 10vw;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        font-family: monospace;
+        font-size: clamp(1rem, 8vw, 4rem);
+        color: hsl(0 0 90/.5);
+      }
+      main div {
+        text-align: center;
+      }
+      .row {
+        display: grid;
+        grid-column: span 10;
+        grid-template-columns: subgrid;
+        outline: red solid 1px;
+      }
+    </style>
+      <main></main>
+    <script>
+      const main = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
+      // BUG: This does not create rows
+      const createGridContent = () => {
+        const symbols = ['x', '/'];
+        let content = '';
+        for (let i = 0; i < 14; i++) {
+            let row = document.createElement('div');
+            row.className = `row row${i}`;
+          for (let j = 0; j < 10; j++) {
+            row += `<div style="background-color: hsl(${r(0, 359)} ${r(20, 100)} ${r(40, 60)}/.7); border-radius: ${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%;">
+              ${symbols[i % 2]}
+              </div>`;
+            }
+            content += row;
+        }
+        return content;
+      };
+
+      main.innerHTML = createGridContent();
+
+    </script>
+  </body>
+</html>
