@@ -27,14 +27,6 @@
       const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
       const vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
 
-      const createRows = () => {
-        let row = '';
-        for (let i = 0; i < 14; i++) {
-            row += `<div class="row row${i}">row</div>`;
-        }
-        return row;
-      }
-
       const createCells = () => {
         let cell = '';
         for (let i = 0; i < 10; i++) {
@@ -45,12 +37,15 @@
         return cell;
       }
 
-      main.innerHTML = createRows();
+      const createRows = () => {
+        let row = '';
+        for (let i = 0; i < 14; i++) {
+            row += `<div class="row row${i}">${createCells()}</div>`;
+        }
+        return row;
+      }
 
-      const lines = document.querySelectorAll('.row');
-      lines.forEach(line => {
-        line.innerHTML = createCells();
-      });
+      main.innerHTML = createRows();
 
     </script>
   </body>
