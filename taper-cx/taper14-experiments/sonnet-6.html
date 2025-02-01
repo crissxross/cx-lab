@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      main {
+        padding: 2vh 10vw;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        font-family: monospace;
+        font-size: clamp(1rem, 8vw, 4rem);
+        color: hsl(0 0 90/.75);
+        text-align: center;
+      }
+      .row {
+        display: grid;
+        grid-column: span 10;
+        grid-template-columns: subgrid;
+      }
+    </style>
+      <main></main>
+    <script>
+      // NOTE: 3 stanzas of 4 lines each and 1 couplet - so repeat ABAB rhyme 3 times then a rhyming couplet
+      // TODO: create the rhyme scheme
+
+      const main = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
+      const vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+
+      color = () => `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      vowl = () => vowels[r(0, 29)];
+
+      mkCell = () => `<div style="background-color: ${color()}; border-radius: ${bordr()};">${vowl()}</div>`;
+
+      rhymeA = () => `<div style="background-color: hsl(0 50 50/.8); border-radius: ${bordr()};">${vowl()}</div>`;
+      rhymeB = () => `<div style="background-color: hsl(100 50 50/.8); border-radius: ${bordr()};">${vowl()}</div>`;
+      rhymeC = () => `<div style="background-color: hsl(200 50 50/.8); border-radius: ${bordr()};">${vowl()}</div>`;
+
+      const createCells = (n) => {
+        let cell = '';
+        // loop - shorter than counting up
+        for (i=10; i--;) {
+          if (i === 0) {
+            // console.log('line', n+1, 'cell', i);
+            if (n === 12 || n === 13) {
+              cell += rhymeC();
+            } else {
+              if (n % 2 === 0) {
+                cell += rhymeA();
+              } else {
+                cell += rhymeB();
+              }
+            }
+          } else {
+            cell += mkCell();
+          }
+        }
+        return cell;
+      }
+
+      const createRows = () => {
+        let row = '';
+        for (let i = 0; i < 14; i++) {
+            row += `<div class="row r${i}">${createCells(i)}</div>`;
+        }
+        return row;
+      }
+
+      main.innerHTML = createRows();
+
+    </script>
+  </body>
+</html>
