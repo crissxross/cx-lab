@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      main {
+        padding: 2vh 10vw;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        font-family: monospace;
+        font-size: clamp(1rem, 8vw, 4rem);
+        color: hsl(0 0 90/.75);
+        text-align: center;
+      }
+      .row {
+        display: grid;
+        grid-column: span 10;
+        grid-template-columns: subgrid;
+      }
+    </style>
+      <main></main>
+    <script>
+      // NOTE: 3 stanzas of 4 lines each and 1 couplet - so repeat ABAB rhyme 3 times then a rhyming couplet
+
+      const main = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
+      const vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+
+      // TODO: adapt these functions to use for all cells
+      color = () => `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      vowl = () => vowels[r(0, 29)];
+
+      // x signifies whether it's a rhyming cell or not (o)
+      cell = (x) => {
+        const div = document.createElement('div');
+        let bg, br, tc;
+        if (x === 'a') {
+          bg = 'hsl(200 50 50/.8)';
+          br = `${r(40,50)}% ${r(40,50)}%`;
+          tc = vowels[r(0, 8)];
+        } else if (x === 'b') {
+          bg = 'hsl(100 50 50/.8)';
+          br = `${r(10,30)}% ${r(10,30)}%`;
+          tc = vowels[r(9, 19)];
+        } else if (x === 'c') {
+          bg = 'hsl(0 50 50/.8)';
+          tc = vowels[r(22, 28)];
+        } else {
+          bg = color();
+          br = bordr();
+          tc = vowl();
+        }
+        div.style.backgroundColor = bg;
+        div.style.borderRadius = br;
+        div.textContent = tc;
+        return div;
+      };
+
+      const createCells = (n) => {
+        const cells = [];
+        for (i=10; i--;) {
+          if (i === 0) {
+            if (n === 12 || n === 13) {
+              cells.push(cell('c'));
+            } else {
+              cells.push(n % 2 === 0 ? cell('a') : cell('b'));
+            }
+          } else {
+            cells.push(cell());
+          }
+        }
+        return cells;
+      };
+
+      // see sonnet-6 for a more concise way to create the rows
+      const createRows = () => {
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < 14; i++) {
+          const row = document.createElement('div');
+          row.className = `row r${i}`;
+          createCells(i).forEach(cell => row.appendChild(cell));
+          fragment.appendChild(row);
+        }
+        return fragment;
+      };
+
+      main.appendChild(createRows());
+
+    </script>
+  </body>
+</html>
