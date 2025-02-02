@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <main style="padding: 2vh 10vw;
+      font-family: monospace;
+      font-size: clamp(1rem, 8vw, 4rem);
+      text-align: center;
+      color: #e6e6e6bf;
+      "></main>
+    <script>
+      const main = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
+      const vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+
+      // TODO: adapt these functions to use for all cells
+      color = () => `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      vowl = () => vowels[r(0, 29)];
+
+      const createRow = (ri) => {
+        let row = '';
+        row += `<div class="row r${ri}">`;
+        for (i=10; i--;) {
+          row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block;">
+            ${vowl()}
+            </div>`;
+        }
+        return row += `</div>`;
+      }
+
+      main.innerHTML = createRow(0);
+      main.innerHTML += createRow(1);
+      // main.appendChild(createRow(2));
+
+    </script>
+  </body>
+</html>
