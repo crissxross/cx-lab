@@ -18,26 +18,32 @@
         display: grid;
         grid-column: span 10;
         grid-template-columns: subgrid;
-        outline: red solid 1px;
+        /* outline: red solid 1px; */
       }
     </style>
       <main></main>
     <script>
       const main = document.querySelector('main');
       const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
-      // BUG: This does not create rows
+
       const createGridContent = () => {
         const symbols = ['x', '/'];
         let content = '';
+
         for (let i = 0; i < 14; i++) {
-            let row = document.createElement('div');
-            row.className = `row row${i}`;
+          // Start with the row div
+          content += `<div class="row row${i}">`;
+
+          // Add 10 cells to each row
           for (let j = 0; j < 10; j++) {
-            row += `<div style="background-color: hsl(${r(0, 359)} ${r(20, 100)} ${r(40, 60)}/.7); border-radius: ${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%;">
-              ${symbols[i % 2]}
+            content += `
+              <div style="background-color: hsl(${r(0, 359)} ${r(20, 100)} ${r(40, 60)}/.7);
+                          border-radius: ${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%;">
+                ${symbols[i % 2]}
               </div>`;
-            }
-            content += row;
+          }
+          // Close the row div
+          content += '</div>';
         }
         return content;
       };
