@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <body>
+    <style>
+      .row div {
+        opacity: 0;
+        --delay: calc((200ms * var(--i) + 2s * var(--r)) - 2s);
+        animation: .5s var(--delay) ease-in-out forwards in;
+      }
+      @keyframes in {
+        from {
+          transform: translateY(-5rem);
+          scale: .2;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          scale: 1;
+        }
+      }
+    </style>
     <main style="padding: 2vh 10vw;
       font-family: monospace;
       font-size: clamp(1rem, 8vw, 4rem);
-      text-align: center;
       color: #e6e6e6bf;
       "></main>
     <script>
@@ -17,11 +34,11 @@
       bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
       vowl = () => vowels[r(0, 29)];
 
-      const createRow = (i) => {
+      const createRow = (r) => {
         let row = '';
-        row += `<div class="row${i}">`;
-        for (c=10; c--;) {
-          row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block;">
+        row += `<div class="row r${r}">`; // r${r} may not be necessary
+        for (i=0; i<10; i++) {
+          row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block; --i: ${i+1}; --r: ${r+1};">
             ${vowl()}
             </div>`;
         }
@@ -30,7 +47,7 @@
 
       createStanza = (lines) => {
         let stanza = '';
-        for (l=lines; l--;) {
+        for (l=0; l<lines; l++) {
           stanza += createRow(l);
         }
         return stanza;
