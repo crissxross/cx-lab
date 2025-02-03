@@ -3,10 +3,13 @@
   <body>
     <style>
       .row div {
-        opacity: 0;
         --delay: calc((200ms * var(--i) + 2s * var(--r)) - 2s);
         animation: .5s var(--delay) ease-in-out forwards in;
       }
+      /* NOTE: 👇this doesn't work the way I want */
+      /* .row div:nth-child(odd) {
+        --delay: calc((100ms * var(--i) + 2s * var(--r)) - 2s);
+      } */
       @keyframes in {
         from {
           transform: translateY(-5rem);
@@ -34,11 +37,14 @@
       bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
       vowl = () => vowels[r(0, 29)];
 
+      // TODO: may have to create cells in pairs to get da dum rhythm for animation, then repeat for each pair in line or stanza
+      // So maybe create divs of 2 cells each, then animate each pair in, then repeat for each pair in line or stanza
+
       const createRow = (r) => {
         let row = '';
         row += `<div class="row r${r}">`; // r${r} may not be necessary
         for (i=0; i<10; i++) {
-          row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block; --i: ${i+1}; --r: ${r+1};">
+          row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block; opacity:0; --i: ${i+1}; --r: ${r+1};">
             ${vowl()}
             </div>`;
         }
