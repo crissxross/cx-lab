@@ -17,10 +17,10 @@
       bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
       vowl = () => vowels[r(0, 29)];
 
-      const createRow = (ri) => {
+      const createRow = (i) => {
         let row = '';
-        row += `<div class="row r${ri}">`;
-        for (i=10; i--;) {
+        row += `<div class="row${i}">`;
+        for (c=10; c--;) {
           row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block;">
             ${vowl()}
             </div>`;
@@ -28,9 +28,15 @@
         return row += `</div>`;
       }
 
-      main.innerHTML = createRow(0);
-      main.innerHTML += createRow(1);
-      // main.appendChild(createRow(2));
+      createStanza = (lines) => {
+        let stanza = '';
+        for (l=lines; l--;) {
+          stanza += createRow(l);
+        }
+        return stanza;
+      }
+
+      main.innerHTML = createStanza(4);
 
     </script>
   </body>
