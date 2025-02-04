@@ -32,16 +32,37 @@
       // TODO: may have to create cells in pairs to get da dum rhythm for animation, then repeat for each pair in line or stanza
       // So maybe create divs of 2 cells each, then animate each pair in, then repeat for each pair in line or stanza
 
+      // Note: previously in style:
+      // --delay: calc((200ms * var(--i) + 2s * var(--r)) - 2s);
+
+      // Note: previously in script:
+      // 2000 is the length of time to finish animating a line of 10 cells
+      // delay = (200 * (i + 1)) + (2000 * (r + 1)) - 2000;
+
       const createRow = (r) => {
         let row = '';
+        let cellTime = 200;
+        let lineTime = cellTime * 10;
         row += `<div class="r${r}">`; // r${r} may not be necessary
         for (i=0; i<10; i++) {
-          row += `<div style="background-color: ${color()}; border-radius: ${bordr()}; padding:4px 8px; margin:2px; display: inline-block; opacity:0; --i: ${i+1}; --r: ${r+1};
-          animation: .5s var(--delay) ease-in-out forwards in;
-          --delay: calc((200ms * var(--i) + 2s * var(--r)) - 2s);
-          ">
-            ${vowl()}
-            </div>`;
+          // this is an imperfect algorithm for the delay
+          if (i % 2 === 0) {
+            delay = (cellTime * (i + 2)) + (lineTime * (r + 1)) - lineTime;
+          } else {
+            delay = (cellTime * (i + 1 + 1/i)) + (lineTime * (r + 1)) - lineTime;
+          }
+          cell = `<div style="background-color: ${color()};
+                  border-radius: ${bordr()};
+                  padding:4px 8px;
+                  margin:2px; display:
+                  inline-block;
+                  opacity:0;
+                  --i: ${i+1};
+                  --r: ${r+1};
+                  animation: .5s ${delay}ms ease-in-out forwards in;">
+                  ${vowl()}
+                  </div>`;
+          row += cell;
         }
         return row += `</div>`;
       }
