@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      @keyframes in {
+        from {
+          transform: translateY(-5rem);
+          scale: .2;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          scale: 1;
+        }
+      }
+    </style>
+    <main style="padding: 2vh 10vw;
+      font-family: monospace;
+      font-size: clamp(1rem, 8vw, 4rem);
+      color: #e6e6e6bf;
+      "></main>
+    <script>
+      const main = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x)
+      const vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+
+      const color = (i, ri) => {
+        if (i === 9) {
+          return ri % 2 === 0 ? `hsl(0 50 50/.8)` : `hsl(100 50 50/.8)`;
+        }
+        return `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      }
+
+      const bordr = (i, ri) => {
+        if (i === 9) {
+          return ri % 2 === 0 ? `${r(10,20)}% ${r(40,50)}%` : `${r(30,50)}% ${r(10,15)}%`;
+        }
+        return `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      }
+
+      const vowl = (i, ri) => {
+        if (i === 9) {
+          return ri % 2 === 0 ? vowels[r(0, 8)] : vowels[r(9, 19)];
+        }
+        return vowels[r(0, 29)];
+      }
+
+      const createRow = (ri) => {
+        let row = '';
+        const cellTime = 180;
+        const pairDelay = 600; //680;
+        const lineTime = pairDelay * 5;
+
+        row += `<div>`;
+        for (i=0; i<10; i++) {
+          const isEven = i % 2 === 0;
+          const pairIndex = Math.floor(i/2);
+          delay = (pairIndex * pairDelay) + (isEven ? 0 : cellTime) + (lineTime * ri);
+          cell = `<div style="background-color: ${color(i, ri)};
+                  border-radius: ${bordr(i, ri)};
+                  padding:.05em .2em;
+                  margin:2px;
+                  display: inline-block;
+                  opacity:0;
+                  animation: .5s ${delay}ms ease-in-out forwards in;">
+                  ${vowl(i, ri)}
+                  </div>`;
+          row += cell;
+        }
+        return row += `</div>`;
+      }
+
+      createStanza = (lines) => {
+        let stanza = '';
+        for (l=0; l<lines; l++) {
+          stanza += createRow(l);
+        }
+        return stanza;
+      }
+
+      main.innerHTML = createStanza(4);
+
+    </script>
+  </body>
+</html>
