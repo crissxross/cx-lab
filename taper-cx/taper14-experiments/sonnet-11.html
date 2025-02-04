@@ -29,33 +29,34 @@
       bordr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
       vowl = () => vowels[r(0, 29)];
 
-      // TODO: may have to create cells in pairs to get da dum rhythm for animation, then repeat for each pair in line or stanza
-      // So maybe create divs of 2 cells each, then animate each pair in, then repeat for each pair in line or stanza
-
-      // Note: previously in style:
-      // --delay: calc((200ms * var(--i) + 2s * var(--r)) - 2s);
-
-      // Note: previously in script:
-      // 2000 is the length of time to finish animating a line of 10 cells
-      // delay = (200 * (i + 1)) + (2000 * (r + 1)) - 2000;
-
+      // NOTE re. animation timings for da-dum rhythm 👇 (helped by Claude 3.5 Sonnet):
+      /**
+        * `pairDelay` constant for spacing between pairs
+        * Calculate `pairIndex` to group cells
+        * Even cells start pair animation
+        * Odd cells follow quickly after their pair
+        * Each pair waits `pairDelay` ms after previous pair
+        * Row delay maintained with `lineTime * r`
+       */
       const createRow = (r) => {
         let row = '';
-        let cellTime = 200;
-        let lineTime = cellTime * 10;
-        row += `<div class="r${r}">`; // r${r} may not be necessary
+        const cellTime = 180; // Base timing unit
+        const pairDelay = 680; // Longer delay between pairs
+        const lineTime = pairDelay * 5;
+
+        row += `<div class="r${r}">`;
         for (i=0; i<10; i++) {
-          // this is an imperfect algorithm for the delay
-          if (i % 2 === 0) {
-            delay = (cellTime * (i + 2)) + (lineTime * (r + 1)) - lineTime;
-          } else {
-            delay = (cellTime * (i + 1 + 1/i)) + (lineTime * (r + 1)) - lineTime;
-          }
+          const isEven = i % 2 === 0;
+          const pairIndex = Math.floor(i/2);
+          delay = (pairIndex * pairDelay) + // Delay for each pair
+                (isEven ? 0 : cellTime) +  // Small delay for second cell in pair
+                (lineTime * r);            // Delay for row position
+
           cell = `<div style="background-color: ${color()};
                   border-radius: ${bordr()};
                   padding:4px 8px;
-                  margin:2px; display:
-                  inline-block;
+                  margin:2px;
+                  display: inline-block;
                   opacity:0;
                   --i: ${i+1};
                   --r: ${r+1};
