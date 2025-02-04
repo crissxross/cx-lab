@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      @keyframes in {from{transform:translateY(-5rem);scale:.2;}to{opacity:1;transform:translateY(0);scale:1;}}
+    </style>
+    <main style="padding:2vh 10vw;font-family:monospace;font-size:clamp(1rem,8vw,4rem);color:#e6e6e6bf;"></main>
+    <script>
+      const main = document.querySelector('main');
+      const r = (x,y) => Math.floor(Math.random()*(y-x)+x)
+      const vs = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+      col = () => `hsl(${r(0,360)} ${r(20,100)} ${r(40,60)}/.7)`;
+      bdr = () => `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      vowl = () => vs[r(0,29)];
+      const mkRw = (r) => {
+        let row='';
+        const cT=180, pD=680, lT=pD*5;
+        row += `<div class="r${r}">`;
+        for (i=0; i<10; i++) {
+          const pI = Math.floor(i/2);
+          d = (pI*pD)+(i%2===0 ? 0 : cT)+(lT*r);
+          cel = `<div style="background-color:${col()};border-radius:${bdr()};padding:4px 8px;margin:2px;display:inline-block;opacity:0;animation:.5s ${d}ms ease-in-out forwards in;">${vowl()}</div>`;
+          row += cel;
+        }
+        return row += `</div>`;
+      }
+      const mkStz = (n) => {
+        let stz='';
+        for (l=0; l<n; l++) {
+          stz += mkRw(l);
+        }
+        return stz;
+      }
+      main.innerHTML = mkStz(4);
+    </script>
+  </body>
+</html>
