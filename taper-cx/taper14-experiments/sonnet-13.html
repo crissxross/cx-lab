@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      @keyframes in {
+        from {
+          transform: translateY(-5rem);
+          scale: .2;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          scale: 1;
+        }
+      }
+    </style>
+    <main style="padding: 2vh 10vw;
+      font-family: monospace;
+      font-size: clamp(1rem, 8vw, 4rem);
+      color: #e6e6e6bf;
+      "></main>
+    <script>
+      const main = document.querySelector('main'),
+        r = (x, y) => Math.floor(Math.random() * (y - x) + x),
+        vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+
+      // NOTE: made rhyme (color, bordr, vowl) functions more concise (with help of Claude 3.5 Sonnet):
+      /**
+       * Combined repeated logic into rhyme helper
+       * Used optional chaining (?.) for concise fallbacks
+       * Maintained original function signatures
+       * Reduced duplicate conditions
+      */
+
+      const rhyme = (i, ri) => i === 9 && {
+        color: ri % 2 ? 'hsl(100 50 50/.8)' : 'hsl(0 50 50/.8)',
+        bordr: ri % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
+        vowl: ri % 2 ? vowels[r(9, 19)] : vowels[r(0, 8)]
+      };
+
+      const color = (i, ri) => rhyme(i, ri)?.color || `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      const bordr = (i, ri) => rhyme(i, ri)?.bordr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      const vowl = (i, ri) => rhyme(i, ri)?.vowl || vowels[r(0, 29)];
+
+      const createRow = (ri) => {
+        let row = '';
+        const cellTime = 180,
+          pairDelay = 600, //680,
+          lineTime = pairDelay * 5;
+
+        row += `<div>`;
+        for (i=0; i<10; i++) {
+          const isEven = i % 2 === 0,
+            pairIndex = Math.floor(i/2),
+            delay = (pairIndex * pairDelay) + (isEven ? 0 : cellTime) + (lineTime * ri),
+            cell = `<div style="background-color: ${color(i, ri)};
+                  border-radius: ${bordr(i, ri)};
+                  padding:.05em .2em;
+                  margin:2px;
+                  display: inline-block;
+                  opacity:0;
+                  animation: .5s ${delay}ms ease-in-out forwards in;">
+                  ${vowl(i, ri)}
+                  </div>`;
+          row += cell;
+        }
+        return row += `</div>`;
+      }
+
+      const createStanza = (lines) => {
+        let stanza = '';
+        for (l=0; l<lines; l++) {
+          stanza += createRow(l);
+        }
+        return stanza;
+      }
+
+      main.innerHTML = createStanza(4);
+
+    </script>
+  </body>
+</html>
