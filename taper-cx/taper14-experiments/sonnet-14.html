@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      @keyframes in {
+        from {
+          transform: translateY(-5rem);
+          scale: .2;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          scale: 1;
+        }
+      }
+    </style>
+    <!-- font-size: 2.5rem seems to fit in a smallish laptop screen -->
+
+    <main style="
+      max-width: fit-content;
+      margin: 2vh auto 0;
+      font-size: clamp(1rem, 0.478rem + 2.609vw, 2.5rem);
+      color: #e6e6e6bf;
+      "></main>
+
+    <!-- NOTE: it's hard to use display: grid for vertical centering because the couplet is added later so position shifts -->
+
+    <!-- <main style="
+      display: grid;
+      place-content: center;
+      min-height: 100dvh;
+      font-size: clamp(1rem, 0.478rem + 2.609vw, 2.5rem);
+      color: #e6e6e6bf;
+      "></main> -->
+
+    <!-- <main style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(1rem, 0.478rem + 2.609vw, 2.5rem);
+      color: #e6e6e6bf;
+      "></main> -->
+
+    <script>
+      const main = document.querySelector('main'),
+        r = (x, y) => Math.floor(Math.random() * (y - x) + x),
+        vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+
+      let sonnet = '';
+      const sylTime = 180; //30; // 180,
+      const pairDelay = 600; //100;  // 600,
+      const liTime = pairDelay * 5;
+
+      const rhyme = (i, l) => i === 9 && {
+        color: l % 2 ? 'hsl(100 50 50/.8)' : 'hsl(0 50 50/.8)',
+        bordr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
+        vowl: l % 2 ? vowels[r(9, 19)] : vowels[r(0, 8)]
+      };
+
+      const color = (i, l) => rhyme(i, l)?.color || `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      const bordr = (i, l) => rhyme(i, l)?.bordr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      const vowl = (i, l) => rhyme(i, l)?.vowl || vowels[r(0, 29)];
+
+      const makeLine = (l) => {
+        let li = '';
+        li += `<div>`;
+        for (i=0; i<10; i++) {
+          const isEven = i % 2 === 0,
+            pairIndex = Math.floor(i/2),
+            delay = (pairIndex * pairDelay) + (isEven ? 0 : sylTime) + (liTime * l),
+            syl = `<div style="background-color: ${color(i, l)};
+                  border-radius: ${bordr(i, l)};
+                  padding: 0 .25em;
+                  margin:2px;
+                  display: inline-block;
+                  opacity:0;
+                  animation: .5s ${delay}ms ease-in-out forwards in;">
+                  ${vowl(i, l)}
+                  </div>`;
+          li += syl;
+        }
+        return li += `</div>`;
+      }
+      // TODO: add a param for stanza number? 1-3 are quatrains
+      const makeStanza = (n, couplet = false) => {
+        let stanza = '';
+        stanza += '<div>';
+        for (l=0; l<n; l++) {
+          stanza += makeLine(l);
+        }
+        console.log(couplet);
+        return stanza += `</div>`;
+      }
+
+      // main.innerHTML = makeStanza(14);
+
+      const makeSonnet = () => {
+        // let sonnet = '';
+        for (let z=0; z<3; z++) {
+          sonnet += makeStanza(4);
+        }
+        sonnet += `<div id="couplet"></div>`;
+        setTimeout(() => {
+          // console.log('Timeout executed');
+          document.querySelector('#couplet').innerHTML = makeStanza(2, true);
+        }, liTime*4);
+        return sonnet;
+      }
+
+      // const makeSonnet = () => {
+      //   let sonnet = '<div>';
+      //   for (let z=0; z<3; z++) {
+      //     sonnet += makeStanza(4);
+      //   }
+      //   sonnet += makeStanza(2, true);
+      //   return sonnet += '</div>';
+      // }
+
+      main.innerHTML = makeSonnet();
+
+    </script>
+  </body>
+</html>
