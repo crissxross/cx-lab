@@ -3,52 +3,6 @@
   <body>
     <style>@keyframes in{0%{transform:translateY(-5rem);scale:.2}to{opacity:1;transform:translateY(0);scale:1}}</style>
     <main style="max-width:fit-content;margin:2vh auto 0;font-size:clamp(1rem,.478rem + 2.609vw,2.5rem);color:hsla(0,0%,90%,.7);"></main>
-    <script>
-      const m = document.querySelector('main'),
-        r = (x, y) => Math.floor(Math.random() * (y - x) + x),
-        vs = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
-      const sT = 180;
-      const pD = 600;
-      const lT = pD * 5;
-      const rhy = (i, l) => i === 9 && {
-        c: l % 2 ? 'hsl(100 50 50/.8)' : 'hsl(0 50 50/.8)',
-        b: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
-        v: l % 2 ? vs[r(9, 19)] : vs[r(0, 8)]
-      };
-      const col = (i, l) => rhy(i, l)?.c || `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
-      const bdr = (i, l) => rhy(i, l)?.b || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
-      const vowl = (i, l) => rhy(i, l)?.v || vs[r(0, 29)];
-      const mkLi = (l) => {
-        let li = '';
-        li += `<div>`;
-        for (i=0; i<10; i++) {
-            pI = Math.floor(i/2),
-            d = (pI * pD) + (i % 2 === 0 ? 0 : sT) + (lT * l),
-            syl = `<div style="background-color:${col(i,l)};border-radius:${bdr(i,l)};padding:0 .25em;margin:2px;display:inline-block;opacity:0;animation:.5s ${d}ms ease-in-out forwards in;">${vowl(i,l)}</div>`;
-          li += syl;
-        }
-        return li += `</div>`;
-      }
-      const mkStz = (n, couplet = false) => {
-        let stz = '';
-        stz += '<div>';
-        for (l=0; l<n; l++) {
-          stz += mkLi(l);
-        }
-        return stz += `</div>`;
-      }
-      const mkSnt = () => {
-        let snt = '';
-        for (let z=0; z<3; z++) {
-          snt += mkStz(4);
-        }
-        snt += `<div id="cp"></div>`;
-        setTimeout(() => {
-          document.querySelector('#cp').innerHTML = mkStz(2, true);
-        }, lT*4 + 900);
-        return snt;
-      }
-      m.innerHTML = mkSnt();
-    </script>
+    <script>const m=document.querySelector("main"),r=(r,i)=>Math.floor(Math.random()*(i-r)+r),vs="iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ".split(""),sT=180,pD=600,lT=3e3,rhy=(i,l)=>9===i&&{c:l%2?"hsl(100 50 50/.8)":"hsl(0 50 50/.8)",b:l%2?`${r(30,50)}% ${r(10,15)}%`:`${r(10,20)}% ${r(40,50)}%`,v:l%2?vs[r(9,19)]:vs[r(0,8)]},col=(i,l)=>rhy(i,l)?.c||`hsl(${r(0,360)} ${r(20,100)} ${r(40,60)}/.7)`,bdr=(i,l)=>rhy(i,l)?.b||`${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`,vowl=(i,l)=>rhy(i,l)?.v||vs[r(0,29)],mkLi=r=>{let l="";for(l+="<div>",i=0;i<10;i++)pI=Math.floor(i/2),d=pI*pD+(i%2==0?0:sT)+lT*r,syl=`<div style="background-color:${col(i,r)};border-radius:${bdr(i,r)};padding:0 .25em;margin:2px;display:inline-block;opacity:0;animation:.5s ${d}ms ease-in-out forwards in;">${vowl(i,r)}</div>`,l+=syl;return l+"</div>"},mkStz=(r,i=!1)=>{let o="";for(o+="<div>",l=0;l<r;l++)o+=mkLi(l);return o+"</div>"},mkSnt=()=>{let r="";for(let i=0;i<3;i++)r+=mkStz(4);return r+='<div id="cp"></div>',setTimeout((()=>{document.querySelector("#cp").innerHTML=mkStz(2,!0)}),12900),r};m.innerHTML=mkSnt();</script>
   </body>
 </html>
