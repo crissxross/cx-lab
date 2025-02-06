@@ -52,14 +52,14 @@
       const liTime = pairDelay * 5;
 
       const rhyme = (i, l) => i === 9 && {
-        color: l % 2 ? 'hsl(100 50 50/.8)' : 'hsl(0 50 50/.8)',
-        bordr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
-        vowl: l % 2 ? vowels[r(9, 19)] : vowels[r(0, 8)]
+        col: l % 2 ? 'hsl(100 50 50/.8)' : 'hsl(0 50 50/.8)',
+        bdr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
+        vwl: l % 2 ? vowels[r(9, 19)] : vowels[r(0, 8)]
       };
 
-      const color = (i, l) => rhyme(i, l)?.color || `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
-      const bordr = (i, l) => rhyme(i, l)?.bordr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
-      const vowl = (i, l) => rhyme(i, l)?.vowl || vowels[r(0, 29)];
+      const color = (i, l) => rhyme(i, l)?.col || `hsl(${r(0, 360)} ${r(20, 100)} ${r(40, 60)}/.7)`;
+      const bordr = (i, l) => rhyme(i, l)?.bdr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      const vowl = (i, l) => rhyme(i, l)?.vwl || vowels[r(0, 29)];
 
       const makeLine = (l) => {
         let li = '';
@@ -88,11 +88,9 @@
         for (l=0; l<n; l++) {
           stanza += makeLine(l);
         }
-        console.log(couplet);
+        // console.log(couplet);
         return stanza += `</div>`;
       }
-
-      // main.innerHTML = makeStanza(14);
 
       const makeSonnet = () => {
         // let sonnet = '';
@@ -103,7 +101,7 @@
         setTimeout(() => {
           // console.log('Timeout executed');
           document.querySelector('#couplet').innerHTML = makeStanza(2, true);
-        }, liTime*4);
+        }, liTime*4 + 900);
         return sonnet;
       }
 
