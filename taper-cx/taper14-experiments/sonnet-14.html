@@ -13,15 +13,23 @@
           scale: 1;
         }
       }
+      main {
+        max-width: fit-content;
+        margin: 2vh auto 0;
+        font-size: clamp(1rem, 0.478rem + 2.609vw, 2.5rem);
+        color: #e6e6e6bf;
+      }
     </style>
+      <h1 style="font-weight: 400;">iɨ ʉu ʏɤ ɘə ɵo ɛɜ aä ɑɒ œɶ _ æɐøɞʌɔɪeɯyʊ</h1> <!-- TODO: REMOVE this temporary h1 -->
+    <main></main>
     <!-- font-size: 2.5rem seems to fit in a smallish laptop screen -->
 
-    <main style="
+    <!-- <main style="
       max-width: fit-content;
       margin: 2vh auto 0;
       font-size: clamp(1rem, 0.478rem + 2.609vw, 2.5rem);
       color: #e6e6e6bf;
-      "></main>
+      "></main> -->
 
     <!-- NOTE: it's hard to use display: grid for vertical centering because the couplet is added later so position shifts -->
 
@@ -44,7 +52,8 @@
     <script>
       const main = document.querySelector('main'),
         r = (x, y) => Math.floor(Math.random() * (y - x) + x),
-        vowels = 'iyɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ'.split('');
+        // the first nine pairs of vowels rhyme
+        vowels = 'iɨʉuʏɤɘəɵoɛɜaäɑɒœɶæɐøɞʌɔɪeɯyʊ'.split('');
 
       let sonnet = '';
       const sylTime = 180; //30; // 180,
