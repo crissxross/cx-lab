@@ -24,56 +24,50 @@
     <script>
       const m = document.querySelector('main');
       const r = (x, y) => Math.floor(Math.random() * (y - x) + x);
-      // TODO: vowel strings together in a single string to avoid repetition
-      const vs = 'iɨʉuʏɤɘəɵoɛɜaäɑɒœɶæɐøɞʌɔɪeɯyʊ'.split('');
 
-      // I've arranged the vowels in 4 sets of alternating rhyming pairs (but only use 3)
-      // So to select rhyming pairs for quatrains:
-      // index of vowels = l + (z * 4)
-      const quatrainVs = 'iʉɨuʏɘɤəɵɛoɜaɑäɒ';
-      const coupletVs = 'œɶiɨʉuʏɤɘəɵoɛɜaäɑɒ';
+      const quaVs = 'iʉɨuʏɘɤəoɛɵɜ';
+      // first pair œɶ are for couplet
+      const vs = `œɶæɐøɞʌɔɪeɯyʊaäɑɒ${quaVs}`.split('');
 
-      // console.log('quatrainVs:', quatrainVs);
-      // console.log('coupletVs:', coupletVs);
-
-      // vowels in rhyme scheme ABABCDCDEFEFGG (except with more quatrains):
-      // iʉɨu ʏɘɤə ɵɛoɜ aɑäɒ œɶ
-
-      const hues = [100, 200, 300];
       const c = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
 
       const sylT = 30; // 180,
       const pD = 100;  // 600,
       const liT = pD * 5;
 
-      const rhyme = (i, l) => i === 9 && {
-        // col: l % 2 ? c(100,50,50,.8) : c(300,50,50,.8),
+      const rhymeB = (i,l) => i === 9 && {
         bdr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
-        // vwl: l % 2 ? vs[r(9, 19)] : vs[r(0, 8)]
       };
 
       const rhymeVC = (i,l,z) => {
-        if (i==9 && z<3) {
+        if (i !== 9) return;
+        if (z<3) {
           // console.log('l:', l, 'in z:', z);
-          console.log('hue1:', 60 + (z * 90), 'hue2:', 120 + (z * 90));
           // console.log('vowel', quatrainVs[l + (z * 4)]);
+          console.log('hue1:', 60 + (z * 90), 'hue2:', 210 + (z * 90)); //150 diff ⭐ red couplet
+          // console.log('hue1:', 260 + (z * 90), 'hue2:', 410 + (z * 90)); //150 diff ⭐ orange couplet
+          // console.log('hue1:', 160 + (z * 90), 'hue2:', 310 + (z * 90)); //150 diff ⭐ blue couplet
           return {
-            vwl: quatrainVs[l + (z * 4)],
-            col: l % 2 ? c((60+(z*90)),50,50,1) : c((120+z*90),50,50,1),
+            vwl: quaVs[l + (z * 4)],
+            col: l % 2 ? c((60+(z*90)),50,50,1) : c((210+z*90),50,50,1), //150 diff ⭐ red couplet
+            // col: l % 2 ? c((260+(z*90)),50,50,1) : c((410+z*90),50,50,1), //150 diff ⭐ orange couplet
+            // col: l % 2 ? c((160+(z*90)),50,50,1) : c((310+z*90),50,50,1), //150 diff ⭐ blue couplet
           }
         }
-        else if (i==9 && z==3) {
+        else if (z==3) {
           // console.log('l:', l, 'couplet vowel', coupletVs[l]);
           return {
-            vwl: coupletVs[l],
-            col: c(0, 50, 50, .9),
+            vwl: vs[l],
+            col: c(0, 50, 50, 1),
+            // col: c(20, 50, 50, 1), //orange
+            // col: c(220, 50, 50, 1), //blue
           }
         }
       }
 
-      const vowl = (i, l, z) => rhymeVC(i,l,z)?.vwl || vs[r(0, 29)];
-      const color = (i, l, z) => rhymeVC(i,l,z)?.col || c(r(0, 360),r(20, 100),r(40, 60),r(6,8)/10);
-      const bordr = (i, l) => rhyme(i, l)?.bdr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+      const vowl = (i,l,z) => rhymeVC(i,l,z)?.vwl || vs[r(0, 29)];
+      const color = (i,l,z) => rhymeVC(i,l,z)?.col || c(r(0, 360),r(20, 100),r(40, 60),r(6,8)/10);
+      const bordr = (i,l) => rhymeB(i,l)?.bdr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
 
       const mkLi = (l,z) => {
         // console.log('li in stz:', z);
@@ -82,14 +76,14 @@
         for (i=0; i<10; i++) {
             pI = Math.floor(i/2),
             dly = (pI * pD) + (i%2===0 ? 0 : sylT) + (liT * l),
-            syl = `<div style="background-color: ${color(i, l, z)};
-                  border-radius: ${bordr(i, l)};
+            syl = `<div style="background-color: ${color(i,l,z)};
+                  border-radius: ${bordr(i,l)};
                   padding: 0 .25em;
                   margin:2px;
                   display: inline-block;
                   opacity:0;
                   animation: .5s ${dly}ms ease-in-out forwards in;">
-                  ${vowl(i, l, z)}
+                  ${vowl(i,l,z)}
                   </div>`;
           li += syl;
         }
