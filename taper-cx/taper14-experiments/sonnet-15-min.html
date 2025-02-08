@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>@keyframes in{0%{transform:translateY(-5rem);scale:.2}to{opacity:1;transform:translateY(0);scale:1}}main{max-width:fit-content;margin:2vh auto 0;font-size:clamp(1rem,.478rem + 2.609vw,2.5rem);color:#e6e6e6bf}</style>
+    <main></main>
+    <script>const m=document.querySelector("main"),r=(r,i)=>Math.floor(Math.random()*(i-r)+r),quaVs="iʉɨuʏɘɤəoɛɵɜ",vs=`œɶæɐøɞʌɔɪeɯyʊaäɑɒ${quaVs}`.split(""),c=(r,i,e,l)=>`hsla(${r} ${i}% ${e}% / ${l})`,sylT=180,pD=600,liT=3e3,rhymeB=(i,e)=>9===i&&{bdr:e%2?`${r(30,50)}% ${r(10,15)}%`:`${r(10,20)}% ${r(40,50)}%`},rhymeVC=(r,i,e)=>{if(9===r)return e<3?{vwl:quaVs[i+4*e],col:c(i%2?60+90*e:210+90*e,50,50,1)}:3==e?{vwl:vs[i],col:c(0,50,50,1)}:void 0},vowl=(i,e,l)=>rhymeVC(i,e,l)?.vwl||vs[r(0,29)],color=(i,e,l)=>rhymeVC(i,e,l)?.col||c(r(0,360),r(20,100),r(40,60),r(6,8)/10),bordr=(i,e)=>rhymeB(i,e)?.bdr||`${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`,mkLi=(r,e)=>{let l="";for(l+="<div>",i=0;i<10;i++)pI=Math.floor(i/2),dly=pI*pD+(i%2==0?0:180)+liT*r,syl=`<div style="background-color: ${color(i,r,e)};border-radius: ${bordr(i,r)};padding: 0 .25em;margin:2px;display: inline-block;opacity:0;animation: .5s ${dly}ms ease-in-out forwards in;">${vowl(i,r,e)}</div>`,l+=syl;return l+"</div>"},mkStz=(r,i,e=!1)=>{let o="";for(o+="<div>",l=0;l<r;l++)o+=mkLi(l,i);return o+"</div>"},mkSnt=()=>{let r="";for(let i=0;i<3;i++)r+=mkStz(4,i);return r+='<div id="cup" style="transform:translateX(1em);"></div>',setTimeout((()=>{document.querySelector("#cup").innerHTML=mkStz(2,3,!0)}),12900),r};m.innerHTML=mkSnt(),setInterval((()=>{m.innerHTML=mkSnt()}),27e3);</script>
+  </body>
+</html>
