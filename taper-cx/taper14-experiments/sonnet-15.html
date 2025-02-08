@@ -31,8 +31,8 @@
 
       const c = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
 
-      const sylT = 30; // 180,
-      const pD = 100;  // 600,
+      const sylT = 180; //30; // 180,
+      const pD = 600; //100;  // 600,
       const liT = pD * 5;
 
       const rhymeB = (i,l) => i === 9 && {
@@ -44,7 +44,7 @@
         if (z<3) {
           // console.log('l:', l, 'in z:', z);
           // console.log('vowel', quatrainVs[l + (z * 4)]);
-          console.log('hue1:', 60 + (z * 90), 'hue2:', 210 + (z * 90)); //150 diff ⭐ red couplet
+          // console.log('hue1:', 60 + (z * 90), 'hue2:', 210 + (z * 90)); //150 diff ⭐ red couplet
           // console.log('hue1:', 260 + (z * 90), 'hue2:', 410 + (z * 90)); //150 diff ⭐ orange couplet
           // console.log('hue1:', 160 + (z * 90), 'hue2:', 310 + (z * 90)); //150 diff ⭐ blue couplet
           return {
@@ -91,7 +91,7 @@
       }
       // z param is for stanza number and works for the 3 quatrains (0-2) & the couplet (3)
       const mkStz = (n, z, cup = false) => {
-        console.log('stz:', z);
+        // console.log('stz:', z);
         let stz = '';
         stz += '<div>';
         for (l=0; l<n; l++) {
@@ -106,7 +106,7 @@
         for (let z=0; z<3; z++) {
           snt += mkStz(4, z);
         }
-        snt += `<div id="cup"></div>`;
+        snt += `<div id="cup" style="transform:translateX(1em);"></div>`;
         setTimeout(() => {
           // couplet is stanza 3 (index)
           document.querySelector('#cup').innerHTML = mkStz(2, 3, true);
@@ -115,6 +115,9 @@
       }
 
       m.innerHTML = mkSnt();
+      setInterval(() => {
+        m.innerHTML = mkSnt();
+      }, liT*9);
 
     </script>
   </body>
