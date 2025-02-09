@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <style>
+      @keyframes in {
+        from {
+          transform: translateY(-5rem);
+          scale: .2;
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          scale: 1;
+        }
+      }
+      main {
+        width: clamp(280px, 45%, 500px);
+        margin: 2vh auto 0;
+        font-size: clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem);
+        color: #ffffff9c;
+        /* color: hsl(0 0 100/.6); */
+      }
+    </style>
+    <main></main>
+    <script>
+      const m = document.querySelector('main');
+      const r = (x, y) => Math.floor(Math.random() * (y - x) + x);
+
+      const quaVs = 'iʉɨuʏɘɤəoɛɵɜ';
+      // first pair œɶ are for couplet
+      const vs = `œɶæɐøɞʌɔɪeɯyʊaäɑɒ${quaVs}`.split('');
+
+      const c = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
+
+      const sylT = 180; //30; // 180,
+      const pD = 600; //100;  // 600,
+      const liT = pD * 5; // i.e. 3000
+      const T = liT*8; // i.e. 24000
+      // NOTE: it takes LiT*6 + pD (i.e. 18600) to generate all the lines of sonnet
+
+      const rhymeB = (i,l) => i === 9 && {
+        bdr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
+      };
+
+      const rhymeVC = (i,l,z) => {
+        if (i !== 9) return;
+        if (z<3) {
+          return {
+            vwl: quaVs[l + (z * 4)],
+            col: l % 2 ? c((60+(z*90)),50,50,1) : c((210+z*90),50,50,1),
+          }
+        }
+        else if (z==3) {
+          return {
+            vwl: vs[l],
+            col: c(0, 50, 50, 1),
+          }
+        }
+      }
+
+      const vowl = (i,l,z) => rhymeVC(i,l,z)?.vwl || vs[r(0, 29)];
+      const color = (i,l,z) => rhymeVC(i,l,z)?.col || c(r(0, 360),r(20, 90),r(40, 60),r(6,8)/10);
+      const bordr = (i,l) => rhymeB(i,l)?.bdr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+
+      const mkLi = (l,z) => {
+        // console.log('li in stz:', z);
+        let li = '';
+        li += `<div>`;
+        for (i=0; i<10; i++) {
+            pI = Math.floor(i/2),
+            dly = (pI * pD) + (i%2===0 ? 0 : sylT) + (liT * l),
+            syl = `<div style="background-color: ${color(i,l,z)};
+                  border-radius: ${bordr(i,l)};
+                  padding: 0 .25em;
+                  margin:2px;
+                  display: inline-block;
+                  opacity:0;
+                  animation: .5s ${dly}ms ease-in-out forwards in;">
+                  ${vowl(i,l,z)}
+                  </div>`;
+          li += syl;
+        }
+        return li += `</div>`;
+      }
+
+      const mkStz = (n, z, cup = false) => {
+        // console.log('stz:', z);
+        let stz = '';
+        stz += '<div>';
+        for (l=0; l<n; l++) {
+          stz += mkLi(l,z);
+        }
+        return stz += `</div>`;
+      }
+
+      const mkSnt = () => {
+        let snt = '';
+        for (let z=0; z<3; z++) {
+          snt += mkStz(4, z);
+        }
+        snt += `<div id="cup" style="transform:translateX(1em);"></div>`;
+        setTimeout(() => {
+          document.querySelector('#cup').innerHTML = mkStz(2, 3, true);
+        }, liT*4 + pD);
+        return snt;
+      }
+
+      const fadeOut = (el) => {
+        setTimeout(() => {
+          el.style.transition = 'opacity 1s';
+          el.style.opacity = 0;
+        }, T-1000);
+      }
+
+      m.innerHTML = mkSnt();
+      // m.style.color = c(0,0,100,.7);
+      fadeOut(m);
+
+      setInterval(() => {
+        m.style.opacity = 1;
+        m.innerHTML = mkSnt();
+        fadeOut(m);
+      }, T);
+
+    </script>
+  </body>
+</html>
