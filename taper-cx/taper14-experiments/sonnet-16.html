@@ -5,7 +5,7 @@
       @keyframes in {
         from {
           transform: translateY(-5rem);
-          scale: .2;
+          scale: .1;
         }
         to {
           opacity: 1;
@@ -33,10 +33,9 @@
       const c = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
 
       const sylT = 180; //30; // 180,
-      const pD = 600; //100;  // 600,
-      const liT = pD * 5; // i.e. 3000
-      const T = liT*8; // i.e. 24000
-      // NOTE: it takes LiT*6 + pD (i.e. 18600) to generate all the lines of sonnet
+      const pD = 750; //100;  // 600,
+      const liT = pD * 5;
+      const T = liT*8;
 
       const rhymeB = (i,l) => i === 9 && {
         bdr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
@@ -75,11 +74,11 @@
                   margin:2px;
                   display: inline-block;
                   opacity:0;
-                  animation: .5s ${dly}ms ease-in-out forwards in;">
+                  animation: .6s ${dly}ms ease-in-out forwards in;">
                   ${vowl(i,l,z)}
                   </div>`;
           li += syl;
-        }
+        } // NOTE: I've increased the animation duration from 0.5s to 0.6s
         return li += `</div>`;
       }
 
@@ -113,7 +112,6 @@
       }
 
       m.innerHTML = mkSnt();
-      // m.style.color = c(0,0,100,.7);
       fadeOut(m);
 
       setInterval(() => {
