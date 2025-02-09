@@ -13,6 +13,9 @@
           scale: 1;
         }
       }
+      body {
+        background-color: #333;
+      }
       main {
         width: clamp(280px, 45%, 500px);
         margin: 2vh auto 0;
@@ -20,6 +23,7 @@
         color: #ffffff9c;
         /* color: hsl(0 0 100/.6); */
       }
+      .syl9 {color: #fff;}
     </style>
     <main></main>
     <script>
@@ -58,7 +62,7 @@
       }
 
       const vowl = (i,l,z) => rhymeVC(i,l,z)?.vwl || vs[r(0, 29)];
-      const color = (i,l,z) => rhymeVC(i,l,z)?.col || c(r(0, 360),r(20, 90),r(40, 60),r(6,8)/10);
+      const color = (i,l,z) => rhymeVC(i,l,z)?.col || c(r(0, 360),r(20, 80),r(40, 60),r(5,7)/10);
       const bordr = (i,l) => rhymeB(i,l)?.bdr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
 
       const mkLi = (l,z) => {
@@ -74,7 +78,8 @@
                   margin:2px;
                   display: inline-block;
                   opacity:0;
-                  animation: .6s ${dly}ms ease-in-out forwards in;">
+                  animation: .6s ${dly}ms ease-in-out forwards in;"
+                  class="syl${i}">
                   ${vowl(i,l,z)}
                   </div>`;
           li += syl;
