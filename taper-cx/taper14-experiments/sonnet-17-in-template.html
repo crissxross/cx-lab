@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #14)</title>
+
+<!-- “Title” Copyright (C) 2024 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #14: Sonnets, Spring 2025:
+
+https://taper.badquar.to/14/title_of_your_work.html
+
+... your creative statement here ...
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id="nav">
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #14 :
+		TBA</a> : Spring 2025 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Christine Wilks</a>
+	</h1>
+</header>
+<!-- All poem code goes here... -->
+<style>
+	@keyframes in {
+		from {
+			transform: translateY(-5rem);
+			scale: .1;
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+			scale: 1;
+		}
+	}
+	body {
+		background-color: #333;
+	}
+	main {
+		width: clamp(280px, 45%, 500px);
+		margin: 1.5vh auto 0;
+		color: #ffffff9c;
+		/* TODO: remove font-size from main - needs to be set dynamically on syllable depending on window.innerHeight */
+		/* 20px at 360 width, 36px at 1240 width */
+		/* font-size: clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem); */
+
+		/* 20px at 360 width, 34px at 1240 width */
+		/* font-size: clamp(1.25rem, 0.892rem + 1.5909vw, 2.125rem); */
+
+		/* 20px at 360 width, 32px at 1240 width */
+		/* font-size: clamp(1.25rem, 0.9432rem + 1.3636vw, 2rem); */
+
+		/* 20px at 360 width, 30px at 1240 width */
+		/* font-size: clamp(1.25rem, 0.9943rem + 1.1364vw, 1.875rem); */
+	}
+	.syl9 {color: #fff;}
+</style>
+<main></main>
+<script>
+	const m = document.querySelector('main');
+	const r = (x, y) => Math.floor(Math.random() * (y - x) + x);
+
+	const quaVs = 'iʉɨuʏɘɤəoɛɵɜ';
+	// first pair are for couplet
+	const vs = `ɑɒœɶæɐøɞʌɔɪeɯyʊaä${quaVs}`.split('');
+
+	const c = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
+
+	// const fz = window.innerHeight < 660 ? '1.85rem'
+	// 				: window.innerHeight < 710 ? '2rem'
+	// 				: window.innerHeight < 740 ? '2.125rem'
+	// 				: '2.25rem';
+	const fz = window.innerHeight < 660 ? 'clamp(1.25rem, 0.99rem + 1.136vw, 1.875rem)'
+					: window.innerHeight < 710 ? 'clamp(1.25rem, 0.94rem + 1.36vw, 2rem)'
+					: window.innerHeight < 740 ? 'clamp(1.25rem, 0.89rem + 1.59vw, 2.125rem)'
+					: 'clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem)';
+	// console.log(`innerHeight:`, window.innerHeight, 'fz:', fz);
+
+	const sylT = 180; //90; //180;
+	const pD = 720; //360; //720;
+	const liT = pD * 5;
+	const T = liT*8;
+
+	const rhyB = (i,l) => i === 9 && {
+		bdr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
+	};
+
+	const rhy = (i,l,z) => {
+		if (i !== 9) return;
+		if (z<3) {
+			return {
+				vwl: quaVs[l + (z * 4)],
+				col: l % 2 ? c((60+(z*90)),50,50,1) : c((210+z*90),50,50,1),
+			}
+		}
+		else if (z==3) {
+			return {
+				vwl: vs[l],
+				col: c(0, 50, 50, 1),
+			}
+		}
+	}
+
+	const vowl = (i,l,z) => rhy(i,l,z)?.vwl || vs[r(0, 29)];
+	const color = (i,l,z) => rhy(i,l,z)?.col || c(r(0, 360),r(20, 80),r(40, 60),r(5,7)/10);
+	const bordr = (i,l) => rhyB(i,l)?.bdr || `${r(0,50)}% ${r(0,50)}% ${r(0,50)}% ${r(0,50)}%`;
+
+	const mkLi = (l,z) => {
+		let li = '';
+		li += `<div>`;
+		for (i=0; i<10; i++) {
+				pI = Math.floor(i/2),
+				dly = (pI * pD) + (i%2===0 ? 0 : sylT) + (liT * l),
+				syl = `<div style="font-size:${fz};background-color: ${color(i,l,z)};border-radius: ${bordr(i,l)};padding: 0 .3em;margin:2px;display: inline-block;opacity:0;animation: .6s ${dly}ms ease-in-out forwards in;"class="syl${i}">${vowl(i,l,z)}</div>`;
+			li += syl;
+		}
+		return li += `</div>`;
+	}
+
+	const mkStz = (n, z, cup = false) => {
+		let stz = '';
+		stz += '<div>';
+		for (l=0; l<n; l++) {
+			stz += mkLi(l,z);
+		}
+		return stz += `</div>`;
+	}
+
+	const mkSnt = () => {
+		let snt = '';
+		for (let z=0; z<3; z++) {
+			snt += mkStz(4, z);
+		}
+		snt += `<div id="cup" style="transform:translateX(1em);"></div>`;
+		setTimeout(() => {
+			document.querySelector('#cup').innerHTML = mkStz(2, 3, true);
+		}, liT*4 + pD);
+		return snt;
+	}
+
+	const fadeOut = (el) => {
+		setTimeout(() => {
+			el.style.transition = 'opacity 1s';
+			el.style.opacity = 0;
+		}, T-1000);
+	}
+
+	m.innerHTML = mkSnt();
+	fadeOut(m);
+
+	setInterval(() => {
+		m.style.opacity = 1;
+		m.innerHTML = mkSnt();
+		fadeOut(m);
+	}, T);
+
+</script>
+</body>
+</html>
