@@ -67,10 +67,11 @@ using typographical quotes “” and apostrophes ‘’.
 		background-color: #333;
 	}
 	main {
-		width: clamp(280px, 45%, 500px);
+		/* width: clamp(280px, 45%, 500px); */
+		width: clamp(320px, 50%, 500px);
 		margin: 1.5vh auto 0;
 		color: #ffffff9c;
-		/* TODO: remove font-size from main - needs to be set dynamically on syllable depending on window.innerHeight */
+		/* NOTE: font-size is set dynamically on syllable depending on window.innerHeight */
 		/* 20px at 360 width, 36px at 1240 width */
 		/* font-size: clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem); */
 
@@ -104,6 +105,7 @@ using typographical quotes “” and apostrophes ‘’.
 					: window.innerHeight < 710 ? 'clamp(1.25rem, 0.94rem + 1.36vw, 2rem)'
 					: window.innerHeight < 740 ? 'clamp(1.25rem, 0.89rem + 1.59vw, 2.125rem)'
 					: 'clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem)';
+	// TODO: remove console.log
 	// console.log(`innerHeight:`, window.innerHeight, 'fz:', fz);
 
 	const sylT = 180; //90; //180;
