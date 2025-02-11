@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>The vowel carries the tone (Taper #14)</title>
+
+<!-- “The vowel carries the tone” Copyright (C) 2024 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #14: Sonnets, Spring 2025:
+
+https://taper.badquar.to/14/vowel_carries_the_tone.html
+
+...
+
+Following the pattern of Shakespeare’s sonnets, as published
+in the quarto of 1609
+(https://www.gutenberg.org/cache/epub/1041/pg1041-images.html),
+this dynamic sonnet features iambic pentameter, three quatrains
+and a final couplet, slightly indented, and an ABABCDCDEFEFGG
+rhyming scheme.
+
+In classical and choral singing practice, singers may be asked to
+ignore all the consonants in the lyrics and sing only the vowel sounds
+because these carry the tone and resonance and therefore have the most
+impact on the quality of the sound.
+
+The vowel sounds in this sonnet are represented by symbols from the
+International Phonetic Alphabet (IPA). Think of the combination of
+colour and shape of each segment (or ‘syllable’) as representing the
+unsung consonants. Colour, shape and vowel symbol constitute the
+syllabic rhyme. I chose IPA vowel symbols
+(https://en.wikipedia.org/wiki/IPA_vowel_chart_with_audio)
+that are similar in both sound and visual appearance, making them
+not-quite-but-almost ‘perfect’ rhymes.
+
+Here’s a link to the non-minified version of this piece:
+ADD LINK
+
+...
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id="nav">
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #14 :
+		TBA</a> : Spring 2025 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="vowel_carries_the_tone.html">“The vowel carries the tone”</a> by
+		<a href="about.html#wilks">Christine Wilks</a>
+	</h1>
+</header>
+<style>
+	@keyframes in {
+		from {
+			transform: translateY(-5rem);
+			scale: .1;
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+			scale: 1;
+		}
+	}
+	body {
+		background-color: #333;
+	}
+	main {
+		width: clamp(320px, 50%, 500px);
+		margin: 1.5vh auto 0;
+		color: #ffffff9c;
+	}
+	.syl9 {color: #fff;}
+</style>
+<main></main>
+<script>
+	const main = document.querySelector('main');
+	const random = (x, y) => Math.floor(Math.random() * (y - x) + x);
+
+	const quatrainVowels = 'iʉɨuʏɘɤəoɛɵɜ';
+	// first pair are for couplet
+	const vowels = `ɑɒœɶæɐøɞʌɔɪeɯyʊaä${quatrainVowels}`.split('');
+
+	const colorHSL = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
+
+	const fontSize = window.innerHeight < 660 ? 'clamp(1.25rem, 0.99rem + 1.136vw, 1.875rem)'
+					: window.innerHeight < 710 ? 'clamp(1.25rem, 0.94rem + 1.36vw, 2rem)'
+					: window.innerHeight < 740 ? 'clamp(1.25rem, 0.89rem + 1.59vw, 2.125rem)'
+					: 'clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem)';
+
+	const syllableTime = 180;
+	const pairDelay = 720;
+	const lineTime = pairDelay * 5;
+	const time = lineTime*8;
+
+	const rhymeBorder = (i,l) => i === 9 && {
+		bdr: l % 2 ? `${random(30,50)}% ${random(10,15)}%` : `${random(10,20)}% ${random(40,50)}%`,
+	};
+
+	const rhyme = (i,l,z) => {
+		if (i !== 9) return;
+		if (z<3) {
+			return {
+				vwl: quatrainVowels[l + (z * 4)],
+				col: l % 2 ? colorHSL((60+(z*90)),50,50,1) : colorHSL((210+z*90),50,50,1),
+			}
+		}
+		else if (z==3) {
+			return {
+				vwl: vowels[l],
+				col: colorHSL(0, 50, 50, 1),
+			}
+		}
+	}
+
+	const vowl = (i,l,z) => rhyme(i,l,z)?.vwl || vowels[random(0, 29)];
+	const color = (i,l,z) => rhyme(i,l,z)?.col || colorHSL(random(0, 360),random(20, 80),random(40, 60),random(5,7)/10);
+	const bordr = (i,l) => rhymeBorder(i,l)?.bdr || `${random(0,50)}% ${random(0,50)}% ${random(0,50)}% ${random(0,50)}%`;
+
+	const makeLine = (l,z) => {
+		let line = '';
+		line += `<div>`;
+		for (i=0; i<10; i++) {
+				pI = Math.floor(i/2),
+				delay = (pI * pairDelay) + (i%2===0 ? 0 : syllableTime) + (lineTime * l),
+				syl = `<div style="font-size:${fontSize};background-color: ${color(i,l,z)};border-radius: ${bordr(i,l)};padding: 0 .3em;margin:2px;display: inline-block;opacity:0;animation: .6s ${delay}ms ease-in-out forwards in;"class="syl${i}">${vowl(i,l,z)}</div>`;
+			line += syl;
+		}
+		return line += `</div>`;
+	}
+
+	const makeStanza = (n, z, cup = false) => {
+		let stanza = '';
+		stanza += '<div>';
+		for (l=0; l<n; l++) {
+			stanza += makeLine(l,z);
+		}
+		return stanza += `</div>`;
+	}
+
+	const makeSonnet = () => {
+		let sonnet = '';
+		for (let z=0; z<3; z++) {
+			sonnet += makeStanza(4, z);
+		}
+		sonnet += `<div id="cup" style="transform:translateX(1em);"></div>`;
+		setTimeout(() => {
+			document.querySelector('#cup').innerHTML = makeStanza(2, 3, true);
+		}, lineTime*4 + pairDelay);
+		return sonnet;
+	}
+
+	const fadeOut = (el) => {
+		setTimeout(() => {
+			el.style.transition = 'opacity 1s';
+			el.style.opacity = 0;
+		}, time-1000);
+	}
+
+	main.innerHTML = makeSonnet();
+	fadeOut(main);
+
+	setInterval(() => {
+		main.style.opacity = 1;
+		main.innerHTML = makeSonnet();
+		fadeOut(main);
+	}, time);
+
+</script>
+</body>
+</html>
