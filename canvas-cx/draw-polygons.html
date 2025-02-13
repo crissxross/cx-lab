@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Inspired by this Franks Laboratory video tutorial: https://youtube.com/watch?v=aO1VcJ5WpKI -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw Polygons</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      overflow: hidden;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+<script>
+  const canvas = document.getElementById('canvas1');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.fillStyle = 'black';
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 3;
+  ctx.shadowOffsetX = 10;
+  ctx.shadowOffsetY = 10;
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = 'hsl(0 0% 0% / 0.5)';
+  // ctx.globalCompositeOperation = 'destination-over';
+  // ctx.globalCompositeOperation = 'lighter';
+  // ctx.globalCompositeOperation = 'hue';
+  // ctx.globalCompositeOperation = 'difference';
+
+  const radius = 60;
+  const inset = .5;
+  const n = 5;
+  let hue = 0;
+  let drawing = false;
+
+  // draw static shape for reference
+  drawShape(canvas.width-radius-10, radius+10, radius, inset, n);
+
+  // PAINTBRUSH effect
+
+  // draw without rotation
+  // window.addEventListener('mousemove', (e) => {
+  //   if (drawing) {
+  //     hue += 3;
+  //     drawShape(e.x, e.y, radius, inset, n);
+  //   }
+  // });
+
+  // draw with rotation
+  let angle = 0;
+  window.addEventListener('mousemove', (e) => {
+    if (drawing) {
+      ctx.save();
+      ctx.translate(e.x, e.y);
+      ctx.rotate(angle)
+      hue += 3;
+      // angle determines speed of rotation
+      angle += .2;
+      // x, y greater than 0 means offcenter spinning
+      drawShape(30, 30, radius, inset, n);
+      ctx.restore();
+    }
+  });
+
+  window.addEventListener('mousedown', () => {
+    drawing = true;
+  });
+  window.addEventListener('mouseup', () => {
+    drawing = false;
+  });
+
+  // DRAW SHAPE: star, triangle or polygon
+  // inset is the proportion between outer & inner radius.
+  // So inset can change shape from star (<1) to polygon (1) or back to star (>1)
+    function drawShape(x, y, radius, inset, n) {
+    ctx.fillStyle = `hsl(${hue} 70% 40%)`;
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(x,y);
+    ctx.moveTo(0, 0 - radius);
+
+    for (let i = 0; i < n; i++) {
+      ctx.rotate(Math.PI/n);
+      ctx.lineTo(0, 0 - (radius * inset));
+      ctx.rotate(Math.PI/n);
+      ctx.lineTo(0, 0 - radius);
+    }
+    ctx.restore();
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+  }
+
+</script>
+
+</body>
+</html>
