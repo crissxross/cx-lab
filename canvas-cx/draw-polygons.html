@@ -18,6 +18,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      background: linear-gradient(120deg, hsl(200 15% 10%), hsl(250 25% 25%));
     }
   </style>
 </head>
@@ -29,13 +30,13 @@
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  ctx.fillStyle = 'black';
-  ctx.strokeStyle = 'black';
+  ctx.fillStyle = 'hsl(345 15% 80%)';
+  ctx.strokeStyle = 'hsl(200 20% 20%)';
   ctx.lineWidth = 3;
   ctx.shadowOffsetX = 10;
   ctx.shadowOffsetY = 10;
   ctx.shadowBlur = 10;
-  ctx.shadowColor = 'hsl(0 0% 0% / 0.5)';
+  ctx.shadowColor = 'hsl(0 0% 0% / 0.9)';
   // ctx.globalCompositeOperation = 'destination-over';
   // ctx.globalCompositeOperation = 'lighter';
   // ctx.globalCompositeOperation = 'hue';
@@ -43,7 +44,7 @@
 
   const radius = 60;
   const inset = .5;
-  const n = 5;
+  const n = 15;
   let hue = 0;
   let drawing = false;
 
@@ -87,23 +88,24 @@
   // inset is the proportion between outer & inner radius.
   // So inset can change shape from star (<1) to polygon (1) or back to star (>1)
     function drawShape(x, y, radius, inset, n) {
-    ctx.fillStyle = `hsl(${hue} 70% 40%)`;
-    ctx.beginPath();
-    ctx.save();
-    ctx.translate(x,y);
-    ctx.moveTo(0, 0 - radius);
+      // random hue
+      // ctx.fillStyle = `hsl(${hue} 70% 40%)`;
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(x,y);
+      ctx.moveTo(0, 0 - radius);
 
-    for (let i = 0; i < n; i++) {
-      ctx.rotate(Math.PI/n);
-      ctx.lineTo(0, 0 - (radius * inset));
-      ctx.rotate(Math.PI/n);
-      ctx.lineTo(0, 0 - radius);
+      for (let i = 0; i < n; i++) {
+        ctx.rotate(Math.PI/n);
+        ctx.lineTo(0, 0 - (radius * inset));
+        ctx.rotate(Math.PI/n);
+        ctx.lineTo(0, 0 - radius);
+      }
+      ctx.restore();
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fill();
     }
-    ctx.restore();
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-  }
 
 </script>
 
