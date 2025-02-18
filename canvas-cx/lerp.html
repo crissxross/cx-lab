@@ -75,6 +75,17 @@
         osc.frequency.value = lerp(lowFreq, highFreq, t);
       }
 
+      ctx.strokeStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.font = 'bold 40px Arial';
+      ctx.setLineDash([lerp(3,130,t), 130]);
+      ctx.strokeText(`click for sound`, myCanvas.width/2, 20);
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.fillText(`click for sound`, myCanvas.width/2, 20);
+      ctx.fillText(`t = ${t.toFixed(2)}`, myCanvas.width/2, myCanvas.height-50);
+
       requestAnimationFrame(animate);
     }
 
