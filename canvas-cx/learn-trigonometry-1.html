@@ -1,0 +1,217 @@
+<!-- Based on first part of this Radu tutorial: https://youtube.com/watch?v=xK3vKWMFVgw -->
+<!-- his code - https://github.com/gniziemazity/trigonometry/blob/main/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Trigonometry</title>
+  <style>
+    * {box-sizing: border-box;}
+    body {
+      background-color: black;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"
+    width="800px" height="800px"
+    style="background-color:white">
+  </canvas>
+  <br>
+  <br>
+  <canvas id="chartCanvas"
+    width="800px" height="200px"
+    style="background-color:white">
+  </canvas>
+  <script>
+
+    // const ctx = document.getElementById('myCanvas').getContext('2d');
+    const ctx = myCanvas.getContext('2d');
+    const chartCtx = chartCanvas.getContext('2d');
+
+    const offset={
+      x:myCanvas.width/2,
+      y:myCanvas.height/2
+    }
+
+    const chartOffset={
+      x:chartCanvas.width/2,
+      y:chartCanvas.height/2
+    }
+
+
+    const A={x:0, y:0};
+    const B={x:90, y:120};
+    const C={x:B.x, y:0};
+
+    ctx.translate(offset.x, offset.y); // move origin to center of canvas
+    chartCtx.translate(chartOffset.x, chartOffset.y);
+
+    drawCoordinateSystem(chartCtx, chartOffset);
+
+    update();
+
+    document.onmousemove = (e) => {
+      B.x=e.x-offset.x;
+      B.y=e.y-offset.y;
+
+      C.x=B.x;
+
+      update();
+    }
+
+
+    function update() {
+      const c = distance(A, B);
+      const a = distance(B, C);
+      const b = distance(A, C);
+
+      const sin=a/c;
+      const cos=b/c;
+      const tan=sin/cos; // or a/b
+      // these are equivalent:
+      const theta=Math.asin(sin);
+      // const theta=Math.acos(cos);
+      // const theta=Math.atan(tan);
+
+      ctx.clearRect(-offset.x, -offset.y, myCanvas.width, myCanvas.height);
+
+      drawCoordinateSystem(ctx, offset);
+
+      drawText(
+        'sin = a/c = '+sin.toFixed(2),
+        {x:-offset.x/2, y:offset.y*0.7},
+        'red'
+      );
+
+      drawText(
+        'cos = b/c = '+cos.toFixed(2),
+        {x:-offset.x/2, y:offset.y*0.8},
+        'blue'
+      );
+
+      drawText(
+        'tan = a/b = '+tan.toFixed(2),
+        {x:-offset.x/2, y:offset.y*0.9},
+        'magenta'
+      );
+
+      drawText(
+        'ϴ = '+theta.toFixed(2)+ ' (' +
+          Math.round(toDeg(theta)).
+          toString().padStart(2, ' ')+'°)',
+        {x:offset.x/2, y:offset.y*0.7}
+      );
+
+      drawLine(A, B);
+      // drawText('c:'+Math.round(c),average(A, B));
+      drawText('c',average(A, B));
+      drawLine(A, C, 'blue');
+      // drawText('b:'+Math.round(b),average(A, C));
+      drawText('b',average(A, C), 'blue');
+      drawLine(B, C, 'red');
+      // drawText('a:'+Math.round(a),average(B, C));
+      drawText('a',average(B, C), 'red');
+
+      // theta
+      drawText('ϴ',A);
+
+      // draw angle
+      ctx.beginPath();
+      ctx.strokeStyle='black';
+      ctx.lineWidth=2;
+      const start = B.x>A.x ? 0:Math.PI;
+      const clockwise = B.y<C.y^B.x>A.x;
+      let end = B.y<C.y?-theta:theta;
+      if (B.x<A.x) {end = Math.PI-end;}
+      ctx.arc(0,0,20,start,end,!clockwise);
+      ctx.stroke();
+
+      const chartScaler = chartOffset.y;
+
+      drawPoint({
+        x:theta*chartScaler,
+        y:sin*chartScaler
+      }, 2, 'red');
+
+      drawPoint({
+        x:theta*chartScaler,
+        y:cos*chartScaler
+      }, 2, 'blue');
+
+      drawPoint({
+        x:theta*chartScaler,
+        y:tan*chartScaler
+      }, 2, 'magenta');
+
+      // drawPoint(A);
+      // drawText('A', A, 'white');
+      // drawPoint(B);
+      // drawText('B', B, 'white');
+      // drawPoint(C);
+      // drawText('C', C, 'white');
+    }
+
+    function toDeg(rad) {
+      return rad*180/Math.PI;
+    }
+
+    function average(p1, p2) {
+      return {
+        x:(p1.x+p2.x)/2,
+        y:(p1.y+p2.y)/2
+      }
+    }
+
+    function distance(p1, p2) {
+      // return Math.sqrt((p1.x-p2.x)**2 + (p1.y-p2.y)**2);
+      return Math.hypot(p1.x-p2.x, p1.y-p2.y);
+    }
+
+    function drawText(text, loc, color='black') {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = 'bold 18px Courier';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 7;
+      ctx.strokeText(text, loc.x, loc.y);
+      ctx.fillText(text, loc.x, loc.y);
+    }
+
+    function drawPoint(loc, size=20, color='black') {
+      chartCtx.beginPath();
+      chartCtx.fillStyle = color;
+      chartCtx.arc(loc.x, loc.y, size/2, 0, Math.PI*2);
+      chartCtx.fill();
+    }
+
+    function drawLine(p1, p2, color='black') {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    }
+
+    function drawCoordinateSystem(ctx, offset) {
+      ctx.beginPath();
+      ctx.moveTo(-offset.x, 0);
+      ctx.lineTo(ctx.canvas.width - offset.x, 0);
+      ctx.moveTo(0, -offset.y);
+      ctx.lineTo(0, ctx.canvas.height - offset.y);
+      ctx.setLineDash([4, 2]);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'grey';
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+  </script>
+</body>
+</html>
