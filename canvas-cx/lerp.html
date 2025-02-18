@@ -1,0 +1,72 @@
+<!-- Based on this Radu tutorial https://youtube.com/watch?v=J_puRs40GhM -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- LERP stands fo Linear Interpolation -->
+  <title>Linear Interpolation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    myCanvas.width = window.innerWidth;
+    myCanvas.height = window.innerHeight;
+
+    const A = {x: 100, y: 300};
+    const B = {x: 400, y: 100};
+
+    const ctx = myCanvas.getContext('2d');
+
+    drawDot(A, 'A');
+    drawDot(B, 'B');
+
+    const n = 10;
+    for(let i = 0; i <= n-1; i++){
+      const t = i / (n-1);
+      // const C = {
+      //   x: lerp(A.x, B.x, t),
+      //   y: lerp(A.y, B.y, t)
+      // };
+      const C = vLerp(A, B, t);
+      drawDot(C, `.${i}`);
+    }
+
+    // vector lerp
+    function vLerp(A, B, t){
+      return {
+        x: lerp(A.x, B.x, t),
+        y: lerp(A.y, B.y, t)
+      };
+    }
+
+    function lerp(a, b, t){
+      return a + (b - a) * t;
+    }
+
+    function drawDot(pos, label){
+      ctx.beginPath();
+      ctx.fillStyle = 'white';
+      ctx.strokeStyle = 'black';
+      ctx.arc(pos.x, pos.y, 10, 0, Math.PI*2);
+      ctx.stroke();
+      ctx.fill();
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = 'bold 14px Arial';
+      ctx.fillText(label, pos.x, pos.y);
+    }
+
+
+  </script>
+
+</body>
+</html>
