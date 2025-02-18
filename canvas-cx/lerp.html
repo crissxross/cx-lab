@@ -46,18 +46,20 @@
       drawDot(A, 'A');
       drawDot(B, 'B');
 
-      const {r, g, b} = orange;
+      // color can be considered a 3D point so can be lerped too
+      const {r, g, b} = vLerp(orange, blue, t);
       myCanvas.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
 
       requestAnimationFrame(animate);
     }
 
-    // vector lerp
+    // vector lerp generalization
     function vLerp(A, B, t){
-      return {
-        x: lerp(A.x, B.x, t),
-        y: lerp(A.y, B.y, t)
-      };
+      const res = {};
+      for(let attr in A){
+        res[attr] = lerp(A[attr], B[attr], t);
+      }
+      return res;
     }
 
     function lerp(a, b, t){
