@@ -62,9 +62,13 @@
       ctx.setLineDash([]);
       drawArrow({x:0, y:0}, resultAdd, 'red');
 
-      const resultSubtract = subtract(point, G);
-      drawArrow({x:0, y:0}, resultSubtract);
-      drawArrow(G, point);
+      const resultSub = subtract(point, G);
+      drawArrow({x:0, y:0}, resultSub, 'red');
+      drawArrow(G, point, 'red');
+
+      // const scaledSub = scale(resultSub, 0.5);
+      const scaledSub = scale(normalize(resultSub), 50);
+      drawArrow({x:0, y:0}, scaledSub);
     }
 
     function drawArrow(tail, tip, color='white', size=30){
@@ -88,6 +92,17 @@
       ctx.stroke();
       ctx.fillStyle = color;
       ctx.fill();
+    }
+
+    function normalize(p){
+      return scale(p, 1/magnitude(p));
+    }
+
+    function scale(p, scalar){
+      return {
+        x: p.x * scalar,
+        y: p.y * scalar
+      };
     }
 
     function add(p1, p2){
