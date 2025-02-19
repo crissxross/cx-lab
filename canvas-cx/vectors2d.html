@@ -59,23 +59,24 @@
       const {dir, mag} = toPolar(tip);
       const v1 = {dir: dir + Math.PI*0.8, mag: size/2};
       const p1 = toXY(v1);
-      const t1 = {
-        x: tip.x + p1.x,
-        y: tip.y + p1.y
-      };
+      const t1 = add(p1, tip);
       drawPoint(t1);
       const v2 = {dir: dir - Math.PI*0.8, mag: size/2};
       const p2 = toXY(v2);
-      const t2 = {
-        x: tip.x + p2.x,
-        y: tip.y + p2.y
-      };
+      const t2 = add(p2, tip);
       drawPoint(t2);
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(tip.x, tip.y);
       ctx.strokeStyle = 'white';
       ctx.stroke();
+    }
+
+    function add(p1, p2){
+      return {
+        x: p1.x + p2.x,
+        y: p1.y + p2.y
+      };
     }
 
     function toXY({mag, dir}){
