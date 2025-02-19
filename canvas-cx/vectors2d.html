@@ -52,8 +52,30 @@
       const same = toXY({mag, dir});
       drawPoint(same, 6, 'red');
 
-      // console.log('mag: ', mag);
-      // console.log('dir: ', dir);
+      drawArrow(point);
+    }
+
+    function drawArrow(tip, color='white', size=100){
+      const {dir, mag} = toPolar(tip);
+      const v1 = {dir: dir + Math.PI*0.8, mag: size/2};
+      const p1 = toXY(v1);
+      const t1 = {
+        x: tip.x + p1.x,
+        y: tip.y + p1.y
+      };
+      drawPoint(t1);
+      const v2 = {dir: dir - Math.PI*0.8, mag: size/2};
+      const p2 = toXY(v2);
+      const t2 = {
+        x: tip.x + p2.x,
+        y: tip.y + p2.y
+      };
+      drawPoint(t2);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(tip.x, tip.y);
+      ctx.strokeStyle = 'white';
+      ctx.stroke();
     }
 
     function toXY({mag, dir}){
@@ -71,8 +93,6 @@
     }
 
     function direction({x, y}){
-      // this returns from -90º to 90º (or from -π/2 to π/2)
-      // return Math.atan(y/x);
       // this returns from 0º to 360º (or from 0 to 2π)
       return Math.atan2(y, x);
     }
