@@ -28,6 +28,7 @@
     };
 
     const point = {x: 90, y: 120};
+    const G = {x: 30, y: 90};
 
     ctx.translate(offset.x, offset.y);
 
@@ -45,37 +46,61 @@
 
       drawCoordinateSystem();
 
-      drawPoint(point);
-
       const {mag, dir} = toPolar(point);
-
       const same = toXY({mag, dir});
-      drawPoint(same, 6, 'red');
 
-      drawArrow(point);
+      drawArrow({x:0, y:0}, point, 'red');
+      drawArrow({x:0, y:0}, G, 'red');
+
+      const resultAdd = add(point, G);
+      ctx.beginPath();
+      ctx.setLineDash([3, 3]);
+      ctx.moveTo(G.x, G.y);
+      ctx.lineTo(resultAdd.x, resultAdd.y);
+      ctx.lineTo(point.x, point.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      drawArrow({x:0, y:0}, resultAdd, 'red');
+
+      const resultSubtract = subtract(point, G);
+      drawArrow({x:0, y:0}, resultSubtract);
+      drawArrow(G, point);
     }
 
-    function drawArrow(tip, color='white', size=100){
-      const {dir, mag} = toPolar(tip);
+    function drawArrow(tail, tip, color='white', size=30){
+      const {dir, mag} = toPolar(subtract(tip, tail));
       const v1 = {dir: dir + Math.PI*0.8, mag: size/2};
       const p1 = toXY(v1);
       const t1 = add(p1, tip);
-      drawPoint(t1);
       const v2 = {dir: dir - Math.PI*0.8, mag: size/2};
       const p2 = toXY(v2);
       const t2 = add(p2, tip);
-      drawPoint(t2);
       ctx.beginPath();
-      ctx.moveTo(0, 0);
+      ctx.moveTo(tail.x, tail.y);
       ctx.lineTo(tip.x, tip.y);
-      ctx.strokeStyle = 'white';
+      ctx.strokeStyle = color;
       ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(tip.x, tip.y);
+      ctx.lineTo(t1.x, t1.y);
+      ctx.lineTo(t2.x, t2.y);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.fill();
     }
 
     function add(p1, p2){
       return {
         x: p1.x + p2.x,
         y: p1.y + p2.y
+      };
+    }
+
+    function subtract(p1, p2){
+      return {
+        x: p1.x - p2.x,
+        y: p1.y - p2.y
       };
     }
 
