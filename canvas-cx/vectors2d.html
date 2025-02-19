@@ -49,9 +49,6 @@
       const {mag, dir} = toPolar(point);
       const same = toXY({mag, dir});
 
-      drawArrow({x:0, y:0}, point, 'red');
-      drawArrow({x:0, y:0}, G, 'red');
-
       const resultAdd = add(point, G);
       ctx.beginPath();
       ctx.setLineDash([3, 3]);
@@ -66,9 +63,13 @@
       drawArrow({x:0, y:0}, resultSub, 'red');
       drawArrow(G, point, 'red');
 
-      // const scaledSub = scale(resultSub, 0.5);
       const scaledSub = scale(normalize(resultSub), 50);
-      drawArrow({x:0, y:0}, scaledSub);
+      drawArrow({x:0, y:0}, scaledSub, 'red');
+
+      console.log(dot(normalize(G), normalize(point)));
+
+      drawArrow({x:0, y:0}, point);
+      drawArrow({x:0, y:0}, G);
     }
 
     function drawArrow(tail, tip, color='white', size=30){
@@ -92,6 +93,16 @@
       ctx.stroke();
       ctx.fillStyle = color;
       ctx.fill();
+    }
+
+    // Here's what the dot product or normalized points/vectors can tell us:
+    // if the dot product is 0, the angle between two vectors is orthogonal (right angle)
+    // if the dot product is 1, the angle is 0º, therefore same direction
+    // if the dot product is -1, the angle is 180º, therefore opposite direction
+    // if the dot product is positive, the angle is acute
+    // if the dot product is negative, the angle is obtuse
+    function dot(p1, p2){
+      return p1.x*p2.x + p1.y*p2.y;
     }
 
     function normalize(p){
