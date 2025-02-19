@@ -95,6 +95,12 @@
       drawCoordinateSystem(ctx, offset);
 
       drawText(
+        'Use arrow keys to change ϴ (theta)',
+        {x:0, y:-offset.y+20},
+        'grey'
+      );
+
+      drawText(
         'sin = '+sin.toFixed(2),
         {x:-offset.x/2, y:offset.y*0.7},
         'red'
