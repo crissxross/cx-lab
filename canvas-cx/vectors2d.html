@@ -1,0 +1,106 @@
+<!-- Based on this Radu tutorial https://youtube.com/watch?v=nzyOCd9FcCA -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"
+    width="1000px" height="1000px"
+    style="background-color:darkred">
+  </canvas>
+
+  <script>
+
+    const ctx = myCanvas.getContext('2d');
+
+    const offset = {
+      x: myCanvas.width/2,
+      y: myCanvas.height/2
+    };
+
+    const point = {x: 90, y: 120};
+
+    ctx.translate(offset.x, offset.y);
+
+    update();
+
+    document.onmousemove = (e) => {
+      point.x = e.x - offset.x;
+      point.y = e.y - offset.y;
+
+      update();
+    }
+
+    function update(){
+      ctx.clearRect(-offset.x, -offset.y, myCanvas.width, myCanvas.height);
+
+      drawCoordinateSystem();
+
+      drawPoint(point);
+
+      const {mag, dir} = toPolar(point);
+
+      const same = toXY({mag, dir});
+      drawPoint(same, 6, 'red');
+
+      // console.log('mag: ', mag);
+      // console.log('dir: ', dir);
+    }
+
+    function toXY({mag, dir}){
+      return {
+        x: Math.cos(dir) * mag,
+        y: Math.sin(dir) * mag
+      };
+    }
+
+    function toPolar({x, y}){
+      return {
+        dir: direction({x, y}),
+        mag: magnitude({x, y})
+      }
+    }
+
+    function direction({x, y}){
+      // this returns from -90º to 90º (or from -π/2 to π/2)
+      // return Math.atan(y/x);
+      // this returns from 0º to 360º (or from 0 to 2π)
+      return Math.atan2(y, x);
+    }
+
+    function magnitude({x, y}){
+      return Math.hypot(x, y);
+    }
+
+    function drawCoordinateSystem() {
+      ctx.beginPath();
+      ctx.moveTo(-offset.x, 0);
+      ctx.lineTo(myCanvas.width-offset.x, 0);
+      ctx.moveTo(0, -offset.y);
+      ctx.lineTo(0, myCanvas.height-offset.y);
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = 'red';
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawPoint(loc, size=10, color='white'){
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(loc.x, loc.y, size, 0, 2*Math.PI);
+      ctx.fill();
+    }
+
+  </script>
+
+</body>
+</html>
