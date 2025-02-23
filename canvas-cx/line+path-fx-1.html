@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Scribbles</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    canvas {
+      border: 10px solid black;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 700;
+    canvas.height = 900;
+
+    // global settings
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = 'magenta';
+
+    class Line {
+      constructor(canvas){
+        this.canvas = canvas;
+        this.startX = Math.random() * this.canvas.width;
+        this.startY = Math.random() * this.canvas.height;
+        this.endX = Math.random() * this.canvas.width;
+        this.endY = Math.random() * this.canvas.height;
+        this.lineWidth = Math.floor(Math.random() * 15 + 1);
+        this.hue = Math.floor(Math.random() * 360);
+      }
+      draw(ctx){
+        ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
+        ctx.lineWidth = this.lineWidth;
+        ctx.beginPath();
+        ctx.moveTo(this.startX, this.startY);
+        ctx.lineTo(this.endX, this.endY);
+        ctx.stroke();
+      }
+    }
+
+    const linesArray = [];
+    const numberOfLines = 50;
+    for (let i = 0; i < numberOfLines; i++){
+      linesArray.push(new Line(canvas));
+    }
+
+    linesArray.forEach(line => {
+      line.draw(ctx);
+    });
+
+  </script>
+
+</body>
+</html>
