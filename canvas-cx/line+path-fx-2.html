@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Scribbles</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    canvas {
+      border: 10px solid black;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 700;
+    canvas.height = 900;
+
+    // global settings
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = 'magenta';
+
+    class Line {
+      constructor(canvas){
+        this.canvas = canvas;
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * this.canvas.height;
+        this.history = [{x: this.x, y: this.y}];
+        this.lineWidth = Math.floor(Math.random() * 15 + 1);
+        this.hue = Math.floor(Math.random() * 360);
+        this.maxLength = 10;
+      }
+      draw(ctx){
+        ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
+        ctx.lineWidth = this.lineWidth;
+        ctx.beginPath();
+        ctx.moveTo(this.history[0].x, this.history[0].y);
+
+        for (let i = 1; i < this.history.length; i++){
+          ctx.lineTo(this.history[i].x, this.history[i].y);
+        }
+        ctx.stroke();
+      }
+      update(){
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * this.canvas.height;
+        this.history.push({x: this.x, y: this.y});
+        if (this.history.length > this.maxLength){
+          // remove the first element which is the oldest
+          this.history.shift();
+        }
+      }
+    }
+
+    const linesArray = [];
+    const numberOfLines = 3;
+    for (let i = 0; i < numberOfLines; i++){
+      linesArray.push(new Line(canvas));
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      linesArray.forEach(line => {
+        line.draw(ctx);
+        line.update();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+  </script>
+
+</body>
+</html>
