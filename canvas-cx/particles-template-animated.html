@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #canvas1 {
+      background: black;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    // NOTE: for performance, set as many properties outside of the loop as possible
+    // setup
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.fillStyle = 'hsl(0 100 100 / 0.7)';
+    ctx.strokeStyle = 'hsl(200 100 50)';
+    ctx.lineWidth = 3;
+
+    console.log(ctx);
+
+    class Particle {
+      constructor(effect){
+        this.effect = effect;
+        this.radius = Math.random() * 50 + 5;
+        // keep particles within canvas
+        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
+        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+        // speed of particles
+        this.vx = Math.random() * 4 - 2;
+        this.vy = Math.random() * 4 - 2; // returns between -2 to 2 so particles move in all directions
+      }
+      draw(context){
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+      }
+      update(){
+        this.x += this.vx;
+        if (this.x > this.effect.width - this.radius || this.x < this.radius){
+          // sets vx to its opposite value
+          this.vx *= -1;
+        }
+        this.y += this.vy;
+        if (this.y > this.effect.height - this.radius || this.y < this.radius){
+          this.vy *= -1;
+        }
+      }
+    }
+
+    class Effect {
+      constructor(canvas){
+        this.canvas = canvas;
+        this.width = canvas.width;
+        this.height = canvas.height;
+        this.particles = [];
+        this.numberOfParticles = 50;
+        this.createParticles();
+      }
+      createParticles(){
+        for (let i = 0; i < this.numberOfParticles; i++){
+          this.particles.push(new Particle(this));
+        }
+      }
+      handleParticles(context){
+        this.particles.forEach(particle => {
+          particle.draw(context);
+          particle.update();
+        });
+      }
+    }
+    const effect = new Effect(canvas);
+    // console.log(effect);
+    effect.handleParticles(ctx);
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      effect.handleParticles(ctx);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+  </script>
+
+</body>
+</html>
