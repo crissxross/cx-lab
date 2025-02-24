@@ -1,0 +1,157 @@
+<!-- based on this Franks Laboratory tutorial https://youtube.com/watch?v=O7cUOPYducc -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Scribbles</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    canvas {
+      border: 10px solid hsl(0, 0%, 0%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: hsl(0, 0%, 10%);
+    }
+    #patternImage {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+  <img src="assets/patternImage.png" alt="" id="patternImage">
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 700;
+    canvas.height = 900;
+
+    // global settings
+    ctx.lineWidth = 10;
+
+    // canvas shadows
+    // ctx.shadowOffsetX = 2;
+    // ctx.shadowOffsetY = 2;
+    // ctx.shadowColor = 'hsl(0, 0%, 100%)';
+
+    // gradients
+    const gradient1 = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient1.addColorStop(0.2, 'hsl(300, 100%, 80%)');
+    gradient1.addColorStop(0.3, 'hsl(0, 100%, 50%)');
+    gradient1.addColorStop(0.4, 'hsl(30, 100%, 50%)');
+    gradient1.addColorStop(0.5, 'hsl(60, 100%, 50%)');
+    gradient1.addColorStop(0.7, 'hsl(150, 100%, 50%)');
+    gradient1.addColorStop(0.8, 'hsl(290, 100%, 50%)');
+    const gradient2 = ctx.createRadialGradient(canvas.width*0.5, canvas.height*0.5, 80, canvas.width*0.5, canvas.height*0.5, 200);
+    gradient2.addColorStop(0.2, 'hsl(0, 70%, 50%)');
+    gradient2.addColorStop(0.7, 'hsl(300, 70%, 50%)');
+    gradient2.addColorStop(1, 'hsl(200, 70%, 50%)');
+
+    // canvas pattern
+    const patternImage = document.getElementById('patternImage');
+    const pattern1 = ctx.createPattern(patternImage, 'no-repeat');
+
+    // ctx.strokeStyle = gradient1;
+    // ctx.strokeStyle = gradient2;
+    // ctx.strokeStyle = pattern1;
+    // ctx.strokeStyle = 'hsl(60 80% 80% / 0.75)';
+
+    // think of line as a particle
+    class Line {
+      constructor(canvas){
+        this.canvas = canvas;
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * this.canvas.height - 50; // -50 so some start off canvas
+        this.history = [{x: this.x, y: this.y}];
+        this.lineWidth = Math.floor(Math.random() * 15 + 1);
+        this.hue = Math.floor(Math.random() * 360);
+        this.saturation = Math.floor(Math.random() * 70 + 30);
+        this.lightness = Math.floor(Math.random() * 50 + 50);
+        this.alpha = Math.random() * 0.5 + 0.5;
+        this.maxLength = Math.floor(Math.random() * 150 + 10);
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = 7;
+        this.lifeSpan = this.maxLength * 2;
+        this.breakPoint = this.lifeSpan * 0.6;
+        this.timer = 0;
+        this.angle = 0;
+        // velocity of angle
+        this.va = Math.random() * 0.5 - 0.25;
+        this.curve = 0.1;
+        // vc is velocity of curve
+        // minus values will spiral in opposite direction
+        this.vc = Math.random() * 0.4 - 0.2;
+        // this.vc = 0.05; //0.25;
+      }
+      draw(ctx){
+        ctx.strokeStyle = `hsl(${this.hue} ${this.saturation} ${this.lightness} / ${this.alpha})`;
+        ctx.lineWidth = this.lineWidth;
+        ctx.beginPath();
+        ctx.moveTo(this.history[0].x, this.history[0].y);
+        for (let i = 1; i < this.history.length; i++){
+          ctx.lineTo(this.history[i].x, this.history[i].y);
+        }
+        ctx.stroke();
+      }
+      update(){
+        this.timer++;
+        this.angle += this.va; //0.1;
+        this.curve += this.vc;
+        if (this.timer < this.lifeSpan){
+          // adding chaos
+          if (this.timer > this.breakPoint){
+            this.va *= -1.12;
+          }
+          this.x += Math.sin(this.angle) * this.curve;
+          this.y += Math.cos(this.angle) * this.curve;
+          // this.y += this.speedY;
+          this.history.push({x: this.x, y: this.y});
+          if (this.history.length > this.maxLength){
+            // remove the first element which is the oldest
+            this.history.shift();
+          }
+        } else if (this.history.length <= 1){
+          this.reset();
+        } else {
+          this.history.shift();
+        }
+      }
+      reset(){
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * this.canvas.height - 50;
+        this.history = [{x: this.x, y: this.y}];
+        this.timer = 0;
+        this.angle = 0;
+        this.curve = 0;
+        this.va = Math.random() * 0.5 - 0.25;
+      }
+    }
+
+    const linesArray = [];
+    const numberOfLines = 100;
+    for (let i = 0; i < numberOfLines; i++){
+      linesArray.push(new Line(canvas));
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      linesArray.forEach(line => {
+        line.draw(ctx);
+        line.update();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+  </script>
+
+</body>
+</html>
