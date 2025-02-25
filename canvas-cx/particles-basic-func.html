@@ -1,0 +1,94 @@
+<!-- Adapted from this 2012 tutorial https://www.kirupa.com/html5/creating_basic_particle_system.htm -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Particles</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #myCanvas {
+      /* background: hsl(0 0 0); */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    // setup
+    // const canvas = document.getElementById('myCanvas');
+    const canvas = myCanvas;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const particles = [];
+
+    const Particle = function(){
+      // size
+      this.radius = Math.random() * 30 + 1;
+      // position, keep particles within canvas
+      this.x = this.radius + Math.random() * (canvas.width - this.radius * 2);
+      this.y = this.radius + Math.random() * (canvas.height - this.radius * 2);
+      // speed - velocity of x & y
+      this.vx = Math.random() * 4 - 2;
+      this.vy = Math.random() * 4 - 2;
+      // delta time
+      this.dt = 1;
+
+      // color
+      const hue = Math.random() * 360;
+      const saturation = Math.random() * 100;
+      const lightness = Math.random() * 50 + 40;
+      this.color = `hsl(${hue} ${saturation} ${lightness})`;
+
+      this.draw = function(){
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      this.update = function(){
+        this.x += this.vx * this.dt;
+        this.y += this.vy * this.dt;
+        // bounce off walls
+        if (this.x + this.radius > canvas.width || this.x - this.radius < 0){
+          this.vx *= -1; // reverse direction
+        }
+        if (this.y + this.radius > canvas.height || this.y - this.radius < 0){
+          this.vy *= -1; // reverse direction
+        }
+      }
+    }
+
+    function createParticles(number){
+      for (let i = 0; i < number; i++){
+        const particle = new Particle();
+        particles.push(particle);
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(particle => {
+        particle.draw();
+        particle.update();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    createParticles(100);
+    animate();
+
+  </script>
+
+</body>
+</html>
