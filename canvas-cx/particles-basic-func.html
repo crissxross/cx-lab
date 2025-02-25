@@ -22,10 +22,13 @@
 <body>
   <canvas id="myCanvas"></canvas>
 
+  <!-- <canvas id="canvas"></canvas> -->
+  <!-- NOTE: 👆this also works for brevity because then you don't need const canvas = myCanvas; -->
+
   <script>
     // setup
-    // const canvas = document.getElementById('myCanvas');
-    const canvas = myCanvas;
+    // const canvas = document.getElementById('myCanvas'); // safest way to get canvas
+    const canvas = myCanvas; // works because id is available globally
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -37,11 +40,11 @@
       // position, keep particles within canvas
       this.x = this.radius + Math.random() * (canvas.width - this.radius * 2);
       this.y = this.radius + Math.random() * (canvas.height - this.radius * 2);
-      // speed - velocity of x & y
+      // random velocity (direction & speed) of x & y between -2 and 2
       this.vx = Math.random() * 4 - 2;
       this.vy = Math.random() * 4 - 2;
-      // delta time
-      this.dt = 1;
+      // general speed
+      this.speed = 1;
 
       // color
       const hue = Math.random() * 360;
@@ -57,8 +60,8 @@
       }
 
       this.update = function(){
-        this.x += this.vx * this.dt;
-        this.y += this.vy * this.dt;
+        this.x += this.vx * this.speed;
+        this.y += this.vy * this.speed;
         // bounce off walls
         if (this.x + this.radius > canvas.width || this.x - this.radius < 0){
           this.vx *= -1; // reverse direction
