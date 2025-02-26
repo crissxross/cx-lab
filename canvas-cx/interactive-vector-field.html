@@ -62,7 +62,6 @@
         this.#radius = 1.9;
         this.vr = 0.03;
         this.#mapField();
-        this.timer = 0;
         this.cellSize = 10;
         this.interval = 1000/60;
         this.timer = 0;
@@ -84,8 +83,10 @@
         if (this.timer > this.interval){
           this.#ctx.clearRect(0,0,this.#width, this.#height);
           this.#radius += this.vr;
-          if (this.#radius > 5  || this.#radius < -5) this.vr *= -1
-          for (let y = 0; y < this.#height; y+= this.cellSize){
+          if (this.#radius > 5  || this.#radius < -5) {
+            this.vr *= -1
+          }
+          for (let y = 0; y < this.#height; y += this.cellSize){
             for (let x = 0; x < this.#width; x += this.cellSize){
               const angle = this.#getValue(x, y);
               this.#draw(angle,x,y);
