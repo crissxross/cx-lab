@@ -43,6 +43,7 @@
     window.addEventListener('mousemove', function(e){
       mouse.x = e.x;
       mouse.y = e.y;
+      console.log(mouse);
     });
 
     class FlowFieldEffect {
@@ -89,7 +90,7 @@
           for (let y = 0; y < this.#height; y += this.cellSize){
             for (let x = 0; x < this.#width; x += this.cellSize){
               const angle = this.#getValue(x, y);
-              this.#draw(angle,x,y);
+              this.#drawLine(angle,x,y);
             }
           }
           this.timer = 0;
@@ -102,18 +103,19 @@
       #getValue(x, y){
         return (Math.cos(mouse.y/3 * x * 0.00005) + Math.sin(mouse.x/3 * y * 0.00005)) * this.#radius;
       }
-      #draw(angle,x,y){
+      // dynamic line length based on mouse distance
+      #drawLine(angle,x,y){
         let positionX = x;
         let positionY = y;
         let dx = mouse.x - positionX;
         let dy = mouse.y - positionY;
+        // not using Math.hypot or Math.sqrt for performance reasons
         let distance = (dx * dx + dy * dy);
         let length = distance > 150000 ? distance : 150000;
         if (length > 900000) length = 900000;
         this.#ctx.beginPath();
         this.#ctx.moveTo(positionX,positionY);
         this.#ctx.lineTo(positionX+Math.cos(angle) * length/10000, positionY+Math.sin(angle) * length/10000);
-
         this.#ctx.stroke();
       }
     }

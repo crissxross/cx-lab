@@ -1,0 +1,129 @@
+<!-- ref. https://codepen.io/franksLaboratory/pen/BaZJoxR -->
+<!-- based on this Franks Laboratory tutorial https://youtube.com/watch?v=uCH1ta5OUHw -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Vector Field 3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #canvas1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+
+    let canvas;
+    let ctx;
+    let flowField;
+    let flowFieldAnimation;
+
+    window.onload = function(){
+      canvas = document.getElementById('canvas1');
+      ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      flowField = new FlowFieldEffect(ctx, canvas.width, canvas.height);
+      flowField.animate(0);
+      console.log('loaded');
+    }
+
+    window.addEventListener('resize', function(){
+      cancelAnimationFrame(flowFieldAnimation);
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      flowField = new FlowFieldEffect(ctx, canvas.width, canvas.height);
+      flowField.animate(0);
+    });
+
+    class FlowFieldEffect {
+      #ctx;
+      #width;
+      #height;
+      #count;
+      #radius;
+      #gradient; // copilot suggested private field for gradient
+
+      constructor(ctx, width, height) {
+        this.#ctx = ctx;
+        this.#ctx.lineWidth = 1; // 0.5;
+        this.#width = width;
+        this.#height = height;
+        this.#createGradient();
+        this.#ctx.strokeStyle = this.#gradient;
+        this.#radius = 1.5;
+        this.vr = 0.03; // velocity of radius change
+        this.animate();
+        // bigger cellSize means less particles so more sparse - affects performance most
+        this.cellSize = 12;
+        // these are for setting framerate & periodic events in milliseconds for cross device compatibility:
+        this.lastTime = 0;
+        this.interval = 1000/60; // 60fps
+        this.timer = 0;
+      }
+      #createGradient(){
+        this.#gradient = this.#ctx.createLinearGradient(0, 0, this.#width, this.#height);
+        this.#gradient.addColorStop("0.1", "hsl(60 100 50)");
+        this.#gradient.addColorStop("0.9", "hsl(280 100 50)");
+      }
+      #drawLine(angle, x, y){
+        const length = 30;
+        this.#ctx.beginPath();
+        this.#ctx.moveTo(x, y);
+        this.#ctx.lineTo(x + Math.cos(angle) * length, y + Math.sin(angle) * length);
+        this.#ctx.stroke();
+      }
+      // timeStamp is automatically passed by requestAnimationFrame (you can name it anything)
+      animate(timeStamp){
+        let deltaTime = timeStamp - this.lastTime;
+        this.lastTime = timeStamp;
+        // to keep animation consistent across devices
+        if (this.timer > this.interval){
+          this.#ctx.clearRect(0, 0, this.#width, this.#height);
+          this.#radius += this.vr;
+          // flip direction of radius change
+          if (this.#radius > 6  || this.#radius < -6) {
+            this.vr *= -1
+          }
+          // grid of lines (in cellSize increments)
+          for (let y = 0; y < this.#height; y += this.cellSize){
+            for (let x = 0; x < this.#width; x += this.cellSize){
+              // const angle = 100; // just to test
+              const angle = this.#getValue(x, y);
+              this.#drawLine(angle, x, y);
+            }
+          }
+          this.timer = 0;
+        } else {
+          this.timer += deltaTime;
+        }
+
+        flowFieldAnimation = requestAnimationFrame(this.animate.bind(this));
+      }
+      // these values affect how zoomed in the field is and how tightly it spirals
+      #getValue(x, y){
+        const zoom = 0.02;
+        // return (Math.cos(x * zoom) + Math.sin(y * zoom)) * Math.PI * this.#radius;
+        return (Math.cos(x * zoom) + Math.sin(y * zoom)) * this.#radius;
+        // return (Math.cos(x * zoom) + Math.sin(y * zoom)) * 3;
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
