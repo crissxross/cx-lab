@@ -1,0 +1,192 @@
+<!-- from Radu Mariescu-Istodor - https://youtube.com/watch?v=iqSlzYXdFzw and his codepen - https://codepen.io/gniziemazity/pen/rNjXqbZ?editors=0010 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pythagorean Collision</title>
+  <style>
+    body{
+      margin:0;
+      background:lightcyan;
+    }
+    canvas{
+      position:absolute;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+
+    let canvas;
+
+    let birdImage=new Image();
+    birdImage.src="../assets/bird.png";
+    let pigImage=new Image();
+    pigImage.src="../assets/pig.png";
+
+    let kiss=new Audio("../assets/kiss.mp3");
+
+    let points=[];
+    let selectedPoint=null;
+
+    let oldDistance=null;
+
+    function main(){
+      canvas=document.getElementById("myCanvas");
+      canvas.width=window.innerWidth;
+      canvas.height=window.innerHeight;
+
+      canvas.addEventListener("mousedown",doMouseDown);
+      canvas.addEventListener("mousemove",doMouseMove);
+      canvas.addEventListener("mouseup",doMouseUp);
+
+      let min=Math.min(canvas.width,canvas.height);
+      points.push(new Point(
+        canvas.width*0.5+(0.1-0.5)*min*0.5,
+        canvas.height*0.5+(0.3-0.5)*min*0.5,
+        birdImage
+      ));
+      points.push(new Point(
+        canvas.width*0.5+(0.9-0.5)*min*0.5,
+        canvas.height*0.5+(0.7-0.5)*min*0.5,
+        pigImage
+      ));
+      animate();
+    }
+
+    function doMouseDown(evt){
+      selectedPoint=getNearest({x:evt.x,y:evt.y},points);
+      selectedPoint.x=evt.x;
+      selectedPoint.y=evt.y;
+    }
+    function doMouseMove(evt){
+      if(selectedPoint!=null){
+        selectedPoint.x=evt.x;
+        selectedPoint.y=evt.y;
+      }
+    }
+
+    function doMouseUp(evt){
+      selectedPoint=null;
+    }
+
+    function getNearest(needle,haystack){
+      let minDist=Number.MAX_VALUE;
+      let closest=null;
+      for(let i=0;i<haystack.length;i++){
+        let dist=sqDistance(needle,haystack[i]);
+        if(dist<minDist){
+          minDist=dist;
+          closest=haystack[i];
+        }
+      }
+      return closest;
+    }
+
+    // Alternative way to calculate distance
+    // This is more performant because it avoids the square root calculation which is slower than simple multiplication
+    function sqDistance(p1, p2) {
+        let a = p1.x - p2.x;
+        let b = p1.y - p2.y;
+        let c = a*a + b*b;
+        return c;
+    }
+
+    function animate(){
+      const ctx= canvas.getContext("2d");
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      // using alternative way to calculate distance
+      let c=sqDistance(points[0],points[1]);
+
+      // then you need to compare with the square of the value:
+      if(c<=42 * 42){
+        let avg=average([points[0],points[1]]);
+        drawHeart(avg,42*2,ctx);
+        if(oldDistance==null || oldDistance > 42){
+          kiss.play();
+        }
+      }
+      oldDistance=c;
+
+      drawLine(points,ctx);
+      points[0].draw(ctx);
+      points[1].draw(ctx);
+
+      ctx.beginPath();
+      ctx.textBaseline="top";
+      ctx.textAlign="center";
+      ctx.font=21+"px Arial";
+      ctx.fillText(c.toFixed(1)+" px",canvas.width/2,canvas.height*0.1);
+      ctx.fillText(
+        "square root: "+Math.sqrt(c).toFixed(1)+" px",
+        canvas.width/2,
+        canvas.height*0.13
+      );
+
+
+      window.requestAnimationFrame(animate);
+    }
+
+    function drawLine(points,ctx){
+      ctx.beginPath();
+      ctx.setLineDash([5,5]);
+      ctx.lineWidth=3;
+      ctx.moveTo(points[0].x,points[0].y);
+      ctx.lineTo(points[1].x,points[1].y);
+      ctx.stroke();
+      let c=sqDistance(points[0],points[1]);
+    }
+
+    function average(arr){
+      let avg={x:0,y:0};
+      for(let i=0;i<arr.length;i++){
+        avg.x+=arr[i].x;
+        avg.y+=arr[i].y;
+      }
+      avg.x/=arr.length;
+      avg.y/=arr.length;
+      return avg;
+    }
+
+    class Point{
+      constructor(x,y,image){
+        this.x=x;
+        this.y=y;
+        this.image=image;
+      }
+
+      draw(ctx){
+        ctx.beginPath();
+        ctx.fillStyle="black";
+        ctx.arc(this.x,this.y,5,0,Math.PI*2);
+        ctx.fill();
+        ctx.drawImage(this.image,
+          0,0,this.image.width,this.image.height,
+          this.x-21,this.y-21,42,42);
+      }
+    }
+
+    function drawHeart(loc, rad,ctx) {
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.fillStyle="lightblue";
+      ctx.moveTo(loc.x,loc.y+rad*0.6);
+      ctx.bezierCurveTo(loc.x-rad,loc.y+rad*0.5,
+        loc.x-rad,loc.y-rad,
+        loc.x,loc.y-rad*0.5);
+      ctx.moveTo(loc.x,loc.y+rad*0.6);
+      ctx.bezierCurveTo(loc.x+rad,loc.y+rad*0.5,
+        loc.x+rad,loc.y-rad,
+        loc.x,loc.y-rad*0.5);
+      ctx.fill();
+    }
+
+    main();
+  </script>
+
+</body>
+</html>
