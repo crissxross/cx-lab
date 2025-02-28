@@ -1,4 +1,5 @@
 <!-- ref. https://codepen.io/franksLaboratory/pen/BaZJoxR -->
+<!-- NOTE: this version rotates the canvas (ctx) which is NOT the best way to do this - see versions 2 & 3 instead -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,7 +87,7 @@
       #draw(angle){
         // const length1 = Math.random() * 10 + 10;
         //const length2 = Math.random() * 10 + 10;
-        this.#ctx.rotate(angle);
+        this.#ctx.rotate(angle); // rotate the canvas context NOT the best way to do this
         this.#ctx.beginPath();
         this.#ctx.moveTo(0,0);
         this.#ctx.lineTo(25, 0);
