@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sine Waves</title>
+  <script type="text/javascript" src="../vendor/dat.gui.min.js"></script>
+  <link rel="stylesheet" href="../vendor/dat.gui.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #canvas1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    const gui = new dat.GUI()
+    const canvas = document.querySelector('#canvas1')
+    const ctx = canvas.getContext('2d')
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const wave = {
+      y: canvas.height / 2,
+      length: 0.01,
+      amplitude: 100,
+      frequency: 0.01
+    }
+
+    const strokeCol = {
+      h: 200,
+      s: 100,
+      l: 50
+    }
+
+    const bgCol = {
+      h: 0,
+      s: 50,
+      l: 0,
+      a: 0.1
+    }
+
+    const waveFolder = gui.addFolder('wave');
+    const strokeColFolder = gui.addFolder('strokeCol');
+    const bgColFolder = gui.addFolder('bgCol');
+
+    waveFolder.add(wave, 'y', 0, canvas.height);
+    waveFolder.add(wave, 'length', -0.01, 0.01);
+    waveFolder.add(wave, 'amplitude', -300, 300);
+    waveFolder.add(wave, 'frequency', -0.01, 1);
+    waveFolder.open();
+
+    strokeColFolder.add(strokeCol, 'h', 0, 360);
+    strokeColFolder.add(strokeCol, 's', 0, 100);
+    strokeColFolder.add(strokeCol, 'l', 0, 100);
+    strokeColFolder.open();
+
+    bgColFolder.add(bgCol, 'h', 0, 360);
+    bgColFolder.add(bgCol, 's', 0, 100);
+    bgColFolder.add(bgCol, 'l', 0, 100);
+    bgColFolder.add(bgCol, 'a', 0, 1);
+    bgColFolder.open();
+
+    let increment = wave.frequency;
+
+    function draw() {
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height * 0.5);
+      for (let i = 0; i < canvas.width; i++) {
+        ctx.lineTo(i, wave.y + Math.sin(i * wave.length + increment) * wave.amplitude * Math.sin(increment));
+      }
+      ctx.strokeStyle = `hsl(${Math.abs(strokeCol.h * Math.sin(increment))} ${strokeCol.s} ${strokeCol.l})`;
+      ctx.fillStyle = `hsl(${bgCol.h} ${bgCol.s} ${bgCol.l} / ${bgCol.a})`;
+      ctx.stroke();
+
+    }
+
+    function animate(){
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      draw();
+      increment += wave.frequency;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+  </script>
+
+</body>
+</html>
