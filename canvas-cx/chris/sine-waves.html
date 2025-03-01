@@ -79,7 +79,9 @@
       for (let i = 0; i < canvas.width; i++) {
         ctx.lineTo(i, wave.y + Math.sin(i * wave.length + increment) * wave.amplitude * Math.sin(increment));
       }
-      ctx.strokeStyle = `hsl(${Math.abs(strokeCol.h * Math.sin(increment))} ${strokeCol.s} ${strokeCol.l})`;
+      ctx.strokeStyle = `hsl(${strokeCol.h} ${strokeCol.s} ${strokeCol.l})`;
+      // or use sin for dynamic color change
+      // ctx.strokeStyle = `hsl(${Math.abs(strokeCol.h * Math.sin(increment))} ${strokeCol.s} ${strokeCol.l})`;
       ctx.fillStyle = `hsl(${bgCol.h} ${bgCol.s} ${bgCol.l} / ${bgCol.a})`;
       ctx.stroke();
 
@@ -87,6 +89,7 @@
 
     function animate(){
       // ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // or use fillRect to create a trail effect
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       draw();
       increment += wave.frequency;
