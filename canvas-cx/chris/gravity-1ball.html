@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravity</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    #canvas1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    const canvas = document.querySelector('#canvas1')
+    const ctx = canvas.getContext('2d')
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const gravity = 1;
+    const friction = 0.8; //0.99;
+
+    let ball;
+
+    function Ball(x, y, dy, radius, color){
+      this.x = x
+      this.y = y
+      this.dy = dy
+      this.radius = radius
+      this.color = color
+      // this.gravity = 1
+      // this.friction = 0.99
+
+      this.update = function(){
+        if(this.y + this.radius + this.dy > canvas.height){
+          this.dy = -this.dy * friction
+        } else {
+          this.dy += gravity
+        }
+        this.y += this.dy
+        this.draw()
+      }
+
+      this.draw = function(){
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+        ctx.fillStyle = this.color
+        ctx.fill()
+        ctx.closePath()
+      }
+    }
+
+    function init(){
+      ball = new Ball(canvas.width*0.5, canvas.height*0.5, 2, 30, 'red');
+      console.log(ball)
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ball.update()
+      requestAnimationFrame(animate)
+    }
+
+    init();
+    animate();
+
+  </script>
+
+</body>
+</html>
