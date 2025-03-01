@@ -18,6 +18,10 @@
       padding: 0.5em 2em;
       /* outline: silver solid 1px; */
     }
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -25,49 +29,60 @@
     <h1>canvas-cx index</h1>
     <h2>Samples based on tutorials</h2>
     <h3>Franks Laboratory</h3>
-    <ul>
-      <li><a href="franks/draw-polygons.html">draw-polygons</a> (using mouse)</li>
-      <li><a href="franks/line-path-fx-1.html">line-path-fx-1</a></li>
-      <li><a href="franks/line-path-fx-2.html">line-path-fx-2</a></li>
-      <li><a href="franks/line-path-fx-3-lightening.html">line-path-fx-3-lightening</a> (zig-zagging)</li>
-      <li><a href="franks/line-path-fx-4-gradient.html">line-path-fx-4-gradient</a></li>
-      <li><a href="franks/line-path-fx-5-pattern.html">line-path-fx-5-pattern</a> (from image)</li>
-      <li><a href="franks/line-path-fx-6-trig-spirals.html">line-path-fx-6-trig-spirals</a></li>
-      <li><a href="franks/line-path-fx-7-chaos-scribbles.html">line-path-fx-7-chaos-scribbles</a></li>
-    </ul>
-    <h4>Particle experiments</h4>
-    <ul>
-      <li><a href="franks/particles-template-animated.html">particles-template-animated</a> ⭐ (OOP class-based)</li>
-      <li><a href="franks/particles-basic-func.html">particles-basic-func</a> (functional approach)</li>
-      <li><a href="franks/particles-template.html">particles-template</a> (basic, static template, OOP)</li>
-      <li><a href="franks/particles-constellation.html">particles-constellation</a> (interactive, also useful starter code)</li>
-      <li><a href="franks/particles-sunrays.html">particles-sunrays</a></li>
-      <li><a href="franks/particles-bubbles.html">particles-bubbles</a></li>
-      <li><a href="franks/particles-star-sprites.html">particles-star-sprites</a></li>
-      <li><a href="franks/particles-liquid.html">particles-liquid</a></li>
-    </ul>
-    <h4>Flow fields</h4>
-    <ul>
-      <li><a href="franks/animated-vector-field.html">animated-vector-field</a> (from Frank's codepen)</li>
-      <li><a href="franks/animated-vector-field-2.html">animated-vector-field-2</a> (I adapted it to use more cos & sin)</li>
-      <li><a href="franks/animated-vector-field-3.html">animated-vector-field-3</a></li>
-      <li><a href="franks/interactive-vector-field.html">interactive-vector-field</a> (from Frank's codepen)</li>
-    </ul>
+    <details open>
+      <summary>Line & path effects</summary>
+      <ul>
+        <li><a href="franks/draw-polygons.html">draw-polygons</a> (using mouse)</li>
+        <li><a href="franks/line-path-fx-1.html">line-path-fx-1</a></li>
+        <li><a href="franks/line-path-fx-2.html">line-path-fx-2</a></li>
+        <li><a href="franks/line-path-fx-3-lightening.html">line-path-fx-3-lightening</a> (zig-zagging)</li>
+        <li><a href="franks/line-path-fx-4-gradient.html">line-path-fx-4-gradient</a></li>
+        <li><a href="franks/line-path-fx-5-pattern.html">line-path-fx-5-pattern</a> (from image)</li>
+        <li><a href="franks/line-path-fx-6-trig-spirals.html">line-path-fx-6-trig-spirals</a></li>
+        <li><a href="franks/line-path-fx-7-chaos-scribbles.html">line-path-fx-7-chaos-scribbles</a></li>
+      </ul>
+    </details>
+    <details open>
+      <summary>Particles experiments</summary>
+      <ul>
+        <li><a href="franks/particles-template-animated.html">particles-template-animated</a> ⭐ (OOP class-based)</li>
+        <li><a href="franks/particles-basic-func.html">particles-basic-func</a> (functional approach)</li>
+        <li><a href="franks/particles-template.html">particles-template</a> (basic, static template, OOP)</li>
+        <li><a href="franks/particles-constellation.html">particles-constellation</a> (interactive, also useful starter code)</li>
+        <li><a href="franks/particles-sunrays.html">particles-sunrays</a></li>
+        <li><a href="franks/particles-bubbles.html">particles-bubbles</a></li>
+        <li><a href="franks/particles-star-sprites.html">particles-star-sprites</a></li>
+        <li><a href="franks/particles-liquid.html">particles-liquid</a></li>
+      </ul>
+    </details>
+    <details open>
+      <summary>Flow fields</summary>
+      <ul>
+        <li><a href="franks/animated-vector-field.html">animated-vector-field</a> (from Frank's codepen)</li>
+        <li><a href="franks/animated-vector-field-2.html">animated-vector-field-2</a> (I adapted it to use more cos & sin)</li>
+        <li><a href="franks/animated-vector-field-3.html">animated-vector-field-3</a></li>
+        <li><a href="franks/interactive-vector-field.html">interactive-vector-field</a> (from Frank's codepen)</li>
+      </ul>
+    </details>
     <h3>Radu from Finland</h3>
-    <ul>
-      <li><a href="radu/lerp.html">lerp</a> (linear interpolation applied to movement, color & audio)</li>
-      <li><a href="radu/learn-trigonometry-1.html">learn-trigonometry-1</a></li>
-      <li><a href="radu/learn-trigonometry-2.html">learn-trigonometry-2</a> (sin, cos, tan, unit circle, draws sine waves)</li>
-      <li><a href="radu/vectors2d.html">vectors2d</a></li>
-      <li><a href="radu/pythagorean-collision.html">pythagorean-collision</a> (collision detection)</li>
-      <li><a href="radu/pythagorean-collision-2.html">pythagorean-collision-2</a> (collision detection, more performant)</li>
-    </ul>
+    <details open>
+      <summary>Maths & code</summary>
+      <ul>
+        <li><a href="radu/lerp.html">lerp</a> (linear interpolation applied to movement, color & audio)</li>
+        <li><a href="radu/learn-trigonometry-1.html">learn-trigonometry-1</a></li>
+        <li><a href="radu/learn-trigonometry-2.html">learn-trigonometry-2</a> (sin, cos, tan, unit circle, draws sine waves)</li>
+        <li><a href="radu/vectors2d.html">vectors2d</a></li>
+        <li><a href="radu/pythagorean-collision.html">pythagorean-collision</a> (collision detection)</li>
+        <li><a href="radu/pythagorean-collision-2.html">pythagorean-collision-2</a> (collision detection, more performant)</li>
+      </ul>
+    </details>
     <h3>Chris Courses</h3>
-    <ul>
-      <li><a href="chris/sine-waves.html">sine-waves</a> (with interactive GUI)</li>
-    </ul>
-    <ul>
-    </ul>
+    <details open>
+      <summary>'How to Code:...'</summary>
+      <ul>
+        <li><a href="chris/sine-waves.html">sine-waves</a> (with interactive GUI)</li>
+      </ul>
+    </details>
   </main>
 
 </body>
