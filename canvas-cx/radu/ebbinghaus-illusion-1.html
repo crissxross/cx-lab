@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ebbinghaus Illusion</title>
+</head>
+<body>
+  <canvas
+    id="myCanvas"
+    width="700" height="700"
+    style="border: 1px solid">
+  </canvas>
+
+  <script>
+
+    const ctx = myCanvas.getContext('2d');
+
+    drawFlower({
+      centerX: myCanvas.width / 2 - 150,
+      centerY: myCanvas.height / 2,
+      innerRad: 25,
+      outerRad: 100,
+      petalRadius: 45,
+      petalCount: 6
+    });
+
+    drawFlower({
+      centerX: myCanvas.width / 2 + 150,
+      centerY: myCanvas.height / 2,
+      innerRad: 25,
+      outerRad: 50,
+      petalRadius: 15,
+      petalCount: 8
+    });
+
+    function drawFlower({
+      centerX,
+      centerY,
+      innerRad,
+      outerRad,
+      petalRadius,
+      petalCount
+    }) {
+      ctx.beginPath();
+      ctx.fillStyle = 'orange';
+      ctx.arc(centerX, centerY, innerRad, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, outerRad, 0, Math.PI * 2);
+      ctx.lineWidth = petalRadius * 2;
+      ctx.lineCap = 'round';
+      const spacing = 2 * Math.PI * outerRad / petalCount;
+      ctx.setLineDash([0, spacing]);
+      ctx.stroke();
+    }
+
+
+
+  </script>
+
+</body>
+</html>

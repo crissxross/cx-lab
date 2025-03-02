@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ebbinghaus Illusion</title>
+</head>
+<body>
+  <canvas
+    id="myCanvas"
+    width="700" height="700"
+    style="border: 1px solid">
+  </canvas>
+
+  <script>
+
+    const ctx = myCanvas.getContext('2d');
+
+    animate();
+
+    function animate() {
+      ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+      // because Math.sin oscillates between -1 and 1 we square it: ** 2
+      // raising to the power of 2 makes it oscillate between 0 and 1
+      t = Math.sin(new Date().getTime() / 1000) ** 2;
+
+      drawFlower({
+        centerX: myCanvas.width / 2,
+        centerY: myCanvas.height / 2,
+        innerRad: 25,
+        outerRad: lerp(100, 50, t),
+        petalRadius: lerp(45, 15, t),
+        petalCount: 6
+      });
+      requestAnimationFrame(animate);
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function drawFlower({
+      centerX,
+      centerY,
+      innerRad,
+      outerRad,
+      petalRadius,
+      petalCount
+    }) {
+      ctx.beginPath();
+      ctx.fillStyle = 'orange';
+      ctx.arc(centerX, centerY, innerRad, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, outerRad, 0, Math.PI * 2);
+      ctx.lineWidth = petalRadius * 2;
+      ctx.lineCap = 'round';
+      const spacing = 2 * Math.PI * outerRad / petalCount;
+      ctx.setLineDash([0, spacing]);
+      ctx.stroke();
+    }
+
+
+
+  </script>
+
+</body>
+</html>
