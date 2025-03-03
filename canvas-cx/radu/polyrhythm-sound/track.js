@@ -9,6 +9,7 @@ class Track {
   getPosition(offset) {
     return {
       x: this.center.x + Math.cos(offset) * this.radius,
+      // Math.abs is used to change negative values to positive
       y: this.center.y - Math.abs(Math.sin(offset)) * this.radius,
       round: Math.floor(offset / this.period),
       progress: (offset % this.period) / this.period
