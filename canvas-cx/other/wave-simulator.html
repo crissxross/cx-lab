@@ -1,0 +1,151 @@
+<!-- from this Mr. P Solver tutorial https://youtube.com/watch?v=5THnWDz9G0Y -->
+<!-- his source code: https://github.com/lukepolson/youtube_channel/tree/main/Javascript%20Simulations/js1 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wave Simulator</title>
+</head>
+<body>
+  <canvas id="cw"></canvas>
+
+  <!-- Uses differential equations -->
+  <script>
+    const canvas = document.getElementById('cw');
+    const ctx = canvas.getContext('2d');
+    let mouseX = 0;
+    let mouseY = 0;
+    let isDragging = false;
+    let MODE = 'DRAG_FROM_MOUSE_POS';
+    // let MODE = 'MOVE_LEFT_END';
+
+    function update(i, y_t0, y_t1, c, gam, l, dx, dt) {
+      return 1 / (1 / (c*dt)**2 + gam/(2*dt))
+          * (1/dx**2 * (y_t1[i+1] - 2*y_t1[i] +  y_t1[i-1])
+             - 1/(c*dt)**2 * (y_t0[i] - 2*y_t1[i] )
+             + gam/(2*dt) * y_t0[i]
+             - (l/ dx**2)**2 * (y_t1[i-2] - 4*y_t1[i-1] + 6*y_t1[i] -4*y_t1[i+1] + y_t1[i+2]))
+    }
+
+    class String {
+      // N is the number of points on the string
+      constructor(N) {
+        this.N = N;
+        // x is the array of this.N number of points on the string from 0 to 1
+        this.x = [...Array(this.N)].map((_, i) => i/this.N);
+        // each y point is initialized to 0
+        this.y_t0 = this.x.map(xi => 0);
+        // just for testing - creates ripples at center
+        // this.y_t0[50] = 0.5;
+        // each y point at time t1 (initially a copy of y point at time t0)
+        this.y_t1 = structuredClone(this.y_t0);
+        // each y point at time t2 will be updated in move()
+        this.y_t2 = structuredClone(this.y_t0);
+        // gamma is the damping factor
+        this.gam = 200;
+        // l is the tension (stress, strain) in the string
+        this.l = 0.002;
+        // spacing between points (delta x) on the string
+        this.dx = this.x[1] - this.x[0];
+        // wave speed (note: if speed is too high, the wave will not be stable)
+        this.c = 1/100;
+        // time step, spacing between time points (delta t)
+        this.dt = 0.2;
+        console.log((this.c * this.dt / this.dx)**2);
+      }
+      move(draw) {
+        // Boundary conditions
+        this.y_t2[0] = this.y_t1[0];
+        this.y_t2[1] = this.y_t1[1];
+        this.y_t2[this.N-2] = this.y_t1[this.N-2];
+        this.y_t2[this.N-1] = this.y_t1[this.N-1];
+
+        // Partial Differential Equation
+        for (let i = 2; i < this.y_t1.length -2; i++) {
+          this.y_t2[i] = update(i, this.y_t0, this.y_t1, this.c, this.gam, this.l, this.dx, this.dt);
+          if (draw) drawString(this, i);
+        }
+        this.y_t0 = structuredClone(this.y_t1);
+        this.y_t1 = structuredClone(this.y_t2);
+      };
+    }
+
+    // Draw line between i-1 and ith point of the string
+    function drawString(s, i) {
+      ctx.beginPath();
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = 'red';
+      let {x_cnv: x_cnv0, y_cnv: y_cnv0} = strng2cnv_coords(s.x[i-1], s.y_t2[i-1]);
+      let {x_cnv: x_cnv1, y_cnv: y_cnv1} = strng2cnv_coords(s.x[i], s.y_t2[i]);
+      ctx.moveTo(x_cnv0, y_cnv0);
+      ctx.lineTo(x_cnv1, y_cnv1);
+      ctx.stroke();
+    }
+
+    // convert string points to canvas coordinates and vice versa
+    function strng2cnv_coords(x_str, y_str) {
+      return {
+        x_cnv: x_str * canvas.width,
+        y_cnv: y_str * canvas.width + canvas.height/2
+      };
+    }
+    function cnv2strng_coords(x_cnv, y_cnv) {
+      return {
+        x_str: x_cnv / canvas.width,
+        y_str: (y_cnv - canvas.height/2) / canvas.width
+      };
+    }
+
+    function dragString(s) {
+      let {x_str, y_str} = cnv2strng_coords(mouseX, mouseY);
+      if (MODE === 'MOVE_LEFT_END') {
+        s.y_t1[0] = s.y_t1[1] = y_str;
+      }
+      if (MODE === 'DRAG_FROM_MOUSE_POS') {
+        s.y_t1[Math.round(s.N * x_str)] = y_str;
+      }
+    }
+
+    addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    addEventListener('mousedown', (e) => {
+      isDragging = true;
+    });
+
+    addEventListener('mouseup', (e) => {
+      isDragging = false;
+    });
+
+    addEventListener('resize', (e) => setSize());
+    function setSize() {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    }
+
+    function anim() {
+      requestAnimationFrame(anim);
+      ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // draws the string on every update
+      // s.move(draw = true);
+      // if (isDragging) dragString(s);
+
+      // draws the string only after 5 updates
+      for (let i = 5; i--;) {
+        s.move(draw = (i === 0));
+        if (isDragging) dragString(s);
+      }
+    }
+
+    s = new String(200);
+    setSize();
+    anim();
+
+  </script>
+
+</body>
+</html>
