@@ -1,0 +1,74 @@
+<!-- from Radu tutorial video https://youtube.com/watch?v=MiySO3VWrag -->
+<!-- original illusion by Oscar Reutersvard -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impossible Triangle Illusion (Oscar Reutersvard)</title>
+  <style>
+    p {
+      font-family: system-ui, sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <p>Click to draw cubes in a triangle formation. To create an impossible triangle, right-click to draw the top part of a cube behind another cube.</p>
+  <canvas
+    id="myCanvas"
+    width="700"
+    height="700"
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid;">
+  </canvas>
+
+  <script>
+
+    const ctx = myCanvas.getContext('2d');
+
+    myCanvas.addEventListener('pointerdown', (e) => {
+      // default behavior, draws the cube on top of the previous one
+      ctx.globalCompositeOperation = 'source-over';
+      // if right-click (e.button === 2), draws the cube behind the previous one (see topPartInBack below)
+      drawCube(e.offsetX, e.offsetY, 100, e.button === 2);
+    });
+
+    myCanvas.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    // simulate a cube by drawing a hexagon
+    function drawCube(centerX, centerY, size, topPartInBack = false) {
+      ctx.beginPath();
+      const radius = size / 2;
+      for (let i = 0; i <= 6; i++) {
+        const angle = (Math.PI / 3) * i - Math.PI / 6;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        if (i == 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        if (i % 2 == 0) {
+          if (i == 6 && topPartInBack) {
+            ctx.globalCompositeOperation = 'destination-over';
+          }
+          ctx.lineTo(centerX, centerY);
+          ctx.fillStyle = ['#888', '#444', '#aaa'][i / 2 - 1];
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+        }
+      }
+    }
+
+  </script>
+
+</body>
+</html>
