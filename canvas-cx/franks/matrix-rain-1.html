@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix Rain</title>
+  <style>
+    html {
+    background: black;
+    height: 100%;
+    overflow: hidden;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    canvas {
+      position: absolute;
+      top:0;
+      left: 0;
+    }
+    #canvas2 {
+      filter: blur(1px);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Symbol {
+      constructor(x, y, fontSize, canvasHeight) {
+        this.characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890iɨʉɯuɪʏʊeøɘɵɤoəɛœɜɞʌɔæɐaɶäɑɒ';
+        this.x = x;
+        this.y = y;
+        this.fontSize = fontSize;
+        this.canvasHeight = canvasHeight;
+      }
+      draw(ctx) {
+        this.text = this.characters.charAt(Math.floor(Math.random() * this.characters.length));
+        ctx.fillText(this.text, this.x * this.fontSize, this.y * this.fontSize);
+        if (this.y * this.fontSize > this.canvasHeight && Math.random() > 0.98) {
+          this.y = 0;
+        } else {
+          this.y += 1;
+        }
+      }
+    }
+
+    class Effect {
+      constructor(canvasWidth, canvasHeight) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+        this.fontSize = 25;
+        this.columns = this.canvasWidth / this.fontSize;
+        this.symbols = [];
+        this.#initialize();
+        // console.log(this.symbols);
+      }
+      #initialize() {
+        for (let i = 0; i < this.columns; i++) {
+          this.symbols[i] = new Symbol(i, 0, this.fontSize, this.canvasHeight);
+        }
+      }
+      resize(width, height) {
+        this.canvasWidth = width;
+        this.canvasHeight = height;
+        this.columns = this.canvasWidth / this.fontSize;
+        this.symbols = [];
+        this.#initialize();
+      }
+    }
+
+    const effect = new Effect(canvas.width, canvas.height);
+    let lastTime = 0;
+    const fps = 15;
+    const nextFrame = 1000 / fps;
+    let timer = 0;
+
+    function animate(timeStamp){
+      const deltaTime = timeStamp - lastTime;
+      lastTime = timeStamp;
+      if (timer > nextFrame) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.textAlign = 'center';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'hsl(100 100 50)';
+        ctx.font = effect.fontSize + 'px monospace';
+        effect.symbols.forEach(symbol => {
+          symbol.draw(ctx);
+        });
+      } else {
+        timer += deltaTime;
+      }
+      // requestAnimationFrame automatically passes the timeStamp
+      requestAnimationFrame(animate);
+    }
+    animate(0);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      effect.resize(canvas.width, canvas.height);
+    });
+
+
+  </script>
+
+</body>
+</html>
