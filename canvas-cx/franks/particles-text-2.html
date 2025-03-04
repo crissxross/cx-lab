@@ -1,0 +1,162 @@
+<!-- from Franks Laboratory https://youtube.com/watch?v=XGioNBHrFU4 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles Text</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      overflow: hidden;
+      background: black;
+    }
+    /* body bg is black because it's IMPORTANT that canvas is transparent for this effect to work */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particlesArray = [];
+    // adjustX and adjustY are used to adjust the position of the text on canvas
+    let adjustX = 12;
+    let adjustY = 2;
+
+    // handle mouse
+    const mouse = {
+      x: null,
+      y: null,
+      radius: 160
+    }
+
+    window.addEventListener('mousemove', (event) =>{
+      mouse.x = event.x;
+      mouse.y = event.y;
+      // console.log(mouse.x, mouse.y);
+    });
+
+    ctx.fillStyle = 'white';
+    ctx.font = '30px Verdana';
+    ctx.fillText('A', 0, 40);
+    const textCoordinates = ctx.getImageData(0, 0, 100, 100);
+
+    class Particle {
+      constructor(x, y){
+        this.x = x;
+        this.y = y;
+        this.size = 2;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        // determines how heavy the particles are (their mass)
+        this.density = (Math.random() * 40) + 5;
+      }
+      draw(){
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+      // Explanatory NOTE:
+      // particles current speed * 0.8 = particle movement is 20% slower
+      update(){
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.hypot(dx, dy);
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+        let maxDistance = mouse.radius;
+        // force slows down the particles when they are further away from the mouse
+        let force = (maxDistance - distance) / maxDistance;
+        let directionX = forceDirectionX * force * this.density;
+        let directionY = forceDirectionY * force * this.density;
+
+        if (distance < mouse.radius){
+          this.x -= directionX;
+          this.y -= directionY;
+        } else {
+          // particles return to their original position
+          if (this.x !== this.baseX){
+            let dx = this.x - this.baseX;
+            this.x -= dx / 10;
+          }
+          if (this.y !== this.baseY){
+            let dy = this.y - this.baseY;
+            this.y -= dy / 10;
+          }
+        }
+      }
+    }
+
+    // console.log(textCoordinates.data);
+    function init(){
+      particlesArray = [];
+      // analyze the textCoordinates pixels row by row
+      for (let y = 0, y2 = textCoordinates.height; y < y2; y++){
+        for (let x = 0, x2 = textCoordinates.width; x < x2; x++){
+          // if the alpha value (which is 4th value of rgba) of the pixel is greater than 128, then it's a color filled pixel
+          if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128){
+            // capture the position of the pixel
+            let positionX = x + adjustX;
+            let positionY = y + adjustY;
+            // create particles at the position of the pixel (* 10 to make them bigger)
+            particlesArray.push(new Particle(positionX * 20, positionY * 20));
+          }
+        }
+      }
+    }
+    init();
+    // console.log(particlesArray);
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++){
+        particlesArray[i].draw();
+        particlesArray[i].update();
+      }
+      connect();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // for constellation effect
+    function connect(){
+      let opacityValue = 1;
+      for (let a = 0; a < particlesArray.length; a++){
+        for (let b = a; b < particlesArray.length; b++){
+          let dx = particlesArray[a].x - particlesArray[b].x;
+          let dy = particlesArray[a].y - particlesArray[b].y;
+          let distance = Math.hypot(dx, dy);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
+          opacityValue = 1 - (distance / 50);
+
+          if (distance < 50){
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+  </script>
+
+</body>
+</html>
