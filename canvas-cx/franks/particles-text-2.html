@@ -142,8 +142,8 @@
           let dx = particlesArray[a].x - particlesArray[b].x;
           let dy = particlesArray[a].y - particlesArray[b].y;
           let distance = Math.hypot(dx, dy);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
           opacityValue = 1 - (distance / 50);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacityValue})`;
 
           if (distance < 50){
             ctx.lineWidth = 2;
