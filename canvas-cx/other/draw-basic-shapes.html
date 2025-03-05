@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw Basic Shapes</title>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    // reference: https://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html#TOC
+
+    // setup
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    ctx.lineWidth = 5;
+
+    // rectangle
+    ctx.fillStyle = 'hsl(0 100 50)';
+    ctx.fillRect(20, 20, 150, 100);
+
+    // rectangle
+    ctx.strokeStyle = 'hsl(230 100 50)';
+    ctx.strokeRect(200, 20, 150, 100);
+
+    // triangle
+    function drawTriangle(x, y, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + w, y + h);
+      ctx.lineTo(x - w, y + h);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'hsl(0 100 50)';
+    drawTriangle(500, 20, 100, 100);
+
+
+    // right triangle
+    function drawRightTriangle(x, y, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x, y + h);
+      ctx.lineTo(x + w, y + h);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'hsl(130 50 50)';
+    drawRightTriangle(640, 20, 100, 100);
+
+
+    // circle
+    // arc (x, y, r, start, end, anticlockwise)
+    ctx.fillStyle = 'hsl(60 100 45)';
+    ctx.beginPath();
+    ctx.arc(100, 250, 50, 0, Math.PI * 2);
+    ctx.fill();
+
+
+    // semi-circle
+    ctx.fillStyle = 'hsl(180 100 40)';
+    ctx.beginPath();
+    ctx.arc(250, 250, 50, 0, Math.PI);
+    ctx.fill();
+
+    // semi-circle top
+    ctx.fillStyle = 'hsl(200 100 50)';
+    ctx.beginPath();
+    ctx.arc(400, 250, 50, 0, Math.PI, true);
+    ctx.fill();
+
+    // arc as a piece of a path
+    // arc (x, y, r, start, end, anticlockwise)
+    ctx.strokeStyle = 'hsl(280 100 50)';
+    ctx.beginPath();
+    ctx.moveTo(70, 350);
+    ctx.arc(70, 450, 50, 0, Math.PI);
+    ctx.lineTo(70, 350); // close the path
+    // ctx.closePath();
+    ctx.stroke();
+
+    // arc as a piece of a path
+    // arc (x, y, r, start, end, anticlockwise)
+    ctx.strokeStyle = 'hsl(20 100 50)';
+    ctx.beginPath();
+    ctx.moveTo(200, 350);
+    ctx.arc(200, 500, 50, -0.3, Math.PI +0.3, true);
+    // ctx.lineTo(200, 350); // close the path
+    ctx.closePath();
+    ctx.stroke();
+
+    // quadraticCurveTo (cpx, cpy, x, y)
+    // i.e. control point x, control point y, end point x, end point y
+    ctx.strokeStyle = 'hsl(160 100 50)';
+    ctx.beginPath();
+    ctx.moveTo(280, 450); // start point
+    ctx.quadraticCurveTo(400, 350, 380, 450);
+    ctx.stroke();
+
+
+    // ellipse drawn with quadraticCurveTo
+    // quadraticCurveTo (cpx, cpy, x, y)
+    function drawQuadraticCurveToEllipse(x, y, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + h/2); // start point
+      ctx.quadraticCurveTo(x, y, x + w/2, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + h/2);
+      ctx.quadraticCurveTo(x + w, y + h, x + w/2, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h/2);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'hsl(250 100 50)';
+    drawQuadraticCurveToEllipse(420, 350, 150, 100);
+
+    // ellipse drawn with bezierCurveTo
+    // bezierCurveTo (cp1x, cp1y, cp2x, cp2y, x, y)
+    function drawBezierCurveToEllipse(x, y, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + h/2); // start point
+      ctx.bezierCurveTo(x, y, x + w, y, x + w, y + h/2);
+      ctx.bezierCurveTo(x + w, y + h, x, y + h, x, y + h/2);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'hsl(300 100 50)';
+    drawBezierCurveToEllipse(620, 350, 150, 100);
+
+
+    // draw round bottom and pointed top shape
+    function drawRoundBottomPointedTop(x, y, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(x + w/2, y); // top point
+      ctx.quadraticCurveTo(x + w*0.75, y + h*0.25, x + w, y + h/2); // top right curve
+      ctx.quadraticCurveTo(x + w, y + h, x + w/2, y + h); // bottom right curve
+      ctx.quadraticCurveTo(x, y + h, x, y + h/2); // bottom left curve
+      ctx.quadraticCurveTo(x + w*0.25, y + h*0.25, x + w/2, y); // top left curve
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'hsl(330 100 50)';
+    drawRoundBottomPointedTop(50, 600, 100, 150);
+
+
+    // FIXME: this does not draw the shape correctly
+    // draw round bottom and pointed top shape with bezierCurveTo
+    function drawRoundBottomPointedTopBezier(x, y, w, h) {
+      ctx.beginPath();
+      ctx.moveTo(x + w/2, y); // top point
+      ctx.bezierCurveTo(x + w*0.9, y + h*0.4, x + w, y + h*0.6, x + w/2, y + h); // right curve
+      ctx.bezierCurveTo(x + w*0.25, y + h, x, y + h*0.6, x, y + h*0.5); // bottom left curve
+      ctx.bezierCurveTo(x, y + h*0.4, x + w*0.1, y + h*0.4, x + w/2, y); // left curve back to top
+      ctx.stroke();
+    }
+    ctx.strokeStyle = 'hsl(30 50 50)';
+    drawRoundBottomPointedTopBezier(250, 600, 100, 150);
+
+  </script>
+
+</body>
+</html>
