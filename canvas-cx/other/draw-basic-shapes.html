@@ -75,13 +75,15 @@
 
     // arc as a piece of a path
     // arc (x, y, r, start, end, anticlockwise)
+    function drawArcBottomToPointedTop(x, y, r, h) {
+      ctx.beginPath();
+      ctx.moveTo(x, y); // top point
+      ctx.arc(x, y + h, r, 0, Math.PI);
+      ctx.lineTo(x, y); // back to top
+      ctx.stroke();
+    }
     ctx.strokeStyle = 'hsl(280 100 50)';
-    ctx.beginPath();
-    ctx.moveTo(70, 350);
-    ctx.arc(70, 450, 50, 0, Math.PI);
-    ctx.lineTo(70, 350); // close the path
-    // ctx.closePath();
-    ctx.stroke();
+    drawArcBottomToPointedTop(80, 350, 50, 100);
 
     // arc as a piece of a path
     // arc (x, y, r, start, end, anticlockwise)
@@ -154,7 +156,48 @@
       ctx.stroke();
     }
     ctx.strokeStyle = 'hsl(30 50 50)';
-    drawRoundBottomPointedTopBezier(250, 600, 100, 150);
+    drawRoundBottomPointedTopBezier(220, 600, 100, 150);
+
+
+    // drawing a (single) Bezier Curve
+
+    // define the points as {x, y}
+    let start = {x: 400, y: 700};
+    let cp1 = {x: 450, y: 650};
+    let cp2 = {x: 550, y: 750};
+    let end = {x: 600, y: 700};
+    ctx.strokeStyle = 'hsl(0 0 50)';
+
+    // Cubic Bezier curve
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
+    ctx.stroke();
+
+    // start & end points
+    ctx.fillStyle = 'hsl(230 100 50)';
+    ctx.beginPath();
+    ctx.arc(start.x, start.y, 5, 0, 2 * Math.PI); // Start point
+    ctx.arc(end.x, end.y, 5, 0, 2 * Math.PI); // End point
+    ctx.fill();
+
+    // Control points
+    ctx.fillStyle = 'hsl(0 100 50)';
+    ctx.beginPath();
+    ctx.arc(cp1.x, cp1.y, 5, 0, 2 * Math.PI); // Control point one
+    ctx.arc(cp2.x, cp2.y, 5, 0, 2 * Math.PI); // Control point two
+    ctx.fill();
+    // draw lines from control points to the curve
+    ctx.strokeStyle = 'hsl(0 80 50)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.lineTo(cp1.x, cp1.y);
+    ctx.moveTo(end.x, end.y);
+    ctx.lineTo(cp2.x, cp2.y);
+    ctx.stroke();
+    ctx.setLineDash([]); // reset line dash
 
   </script>
 
