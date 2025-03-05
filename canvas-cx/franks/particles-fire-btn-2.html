@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles Fire Buttons</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: black;
+    }
+    .buttons {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width:100vw;
+      text-align: center;
+    }
+    .btn {
+      position: relative;
+      min-width: 25%;
+      min-height: 120px;
+      margin: 10px;
+      display: inline-block;
+      background: transparent;
+      border-radius: 20px;
+      border: 5px solid hsl(0 100 100 / 0.5);
+      color: hsl(0 100 100);
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+    .btn:hover {
+      border-color: hsl(0 100 50 / 0.5);
+      color: hsl(0 100 50);
+    }
+    #canvas1 {
+      background: black;
+      filter: blur(7px) contrast(5);
+    }
+  </style>
+
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+  <div class="buttons">
+    <button class="btn btn1" data-num="0">FIRE</button>
+    <button class="btn btn2" data-num="1">FLAMES</button>
+  </div>
+
+  <script>
+    // setup
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // measure buttons so particles can be created at the right position
+    const buttons = document.querySelectorAll('.btn');
+    let buttonMeasurements = [];
+    function measureButtons(){
+      buttonMeasurements = [];
+      buttons.forEach(button => {
+        buttonMeasurements.push(button.getBoundingClientRect());
+      });
+    }
+    measureButtons();
+    // console.log(buttonMeasurements);
+
+    let particles = [];
+    class Particle {
+      constructor(x, y, size){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.weight = Math.random() * 3 -1.5 + 1.5;
+        this.directionX = Math.random() * 2;
+      }
+      update(){
+        this.y -= this.weight;
+        this.x += this.directionX;
+        if (this.size >= 0.3) {
+          this.size -= 0.2
+        };
+      }
+      draw(shape = 'flame'){
+        switch(shape) {
+          case 'triangle':
+            // triangular particles
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - this.size);
+            ctx.lineTo(this.x - this.size*0.5, this.y + this.size*0.5);
+            ctx.lineTo(this.x + this.size*0.5, this.y + this.size*0.5);
+            ctx.closePath();
+            break;
+          case 'flame':
+          default:
+            // flame-like shape with a pointed top and using arcTo for a curved bottom
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - this.size*1.5); // top point
+            ctx.lineTo(this.x - this.size, this.y); // left point
+            ctx.arcTo(this.x - this.size, this.y + this.size, this.x, this.y + this.size, this.size); // left bottom curve
+            ctx.arcTo(this.x + this.size, this.y + this.size, this.x + this.size, this.y, this.size); // right bottom curve
+            ctx.lineTo(this.x + this.size, this.y); // right point
+            ctx.lineTo(this.x, this.y - this.size*1.5); // back to top
+            break;
+        }
+        ctx.fillStyle = 'orange';
+        ctx.fill();
+      }
+    }
+
+    let activeButton = -1;
+    buttons.forEach(button => button.addEventListener('mouseenter', () => {
+      activeButton = button.dataset.num;
+    }));
+    buttons.forEach(button => button.addEventListener('mouseleave', () => {
+      activeButton = -1;
+    }));
+
+    function handleParticles(){
+      for (let i = 0; i < particles.length; i++){
+        particles[i].update();
+        particles[i].draw();
+        // particles[i].draw('triangle');
+        if (particles[i].size <= 0.3){
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+
+    function createParticles(){
+      if (activeButton > -1) {
+        let size = Math.random() * 40 + 10;
+        let x = Math.random() * buttonMeasurements[activeButton].width + buttonMeasurements[activeButton].x;
+        let y = buttonMeasurements[activeButton].y + buttonMeasurements[activeButton].height - size;
+        particles.push(new Particle(x, y, size));
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      createParticles();
+      handleParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      measureButtons();
+    });
+
+  </script>
+
+</body>
+</html>
