@@ -1,0 +1,45 @@
+<!-- from Radu https://youtube.com/watch?v=PFHZGJzHU9w -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brightness Contrast Illusion</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(to right, #222, #ddd);
+    }
+    .circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #888;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div id="circle" class="circle"></div>
+  <div id="leftCircle" class="circle"></div>
+  <div id="rightCircle" class="circle"></div>
+
+  <script>
+    leftCircle.style.left = window.innerWidth * 0.2 + 'px';
+    rightCircle.style.left = window.innerWidth * 0.8 + 'px';
+    // sine wave animation
+    setInterval(() => {
+      circle.style.left =
+        window.innerWidth / 2 +
+        Math.sin(new Date().getTime() / 1000) *
+        window.innerWidth * 0.3 + 'px';
+    }, 30);
+  </script>
+
+</body>
+</html>
