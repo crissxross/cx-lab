@@ -1,0 +1,92 @@
+<!-- from Radu https://youtube.com/watch?v=jvqomjmMsPI -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distance from Point to Segment</title>
+  <style>
+    body {
+      text-align: center;
+    }
+    canvas {
+      margin: 5px;
+      background-color: black;
+    }
+  </style>
+
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="600"></canvas>
+
+  <script src="../utils/math.js"></script>
+  <script src="../utils/draw.js"></script>
+  <script>
+
+    const A = { x: 100, y: 200 };
+    const B = { x: 400, y: 300 };
+    const M = { x: 250, y: 250 };
+
+    myCanvas.addEventListener('mousemove', (event) => {
+      M.x = event.offsetX;
+      M.y = event.offsetY;
+      redrawAll();
+    });
+
+    myCanvas.addEventListener('click', (event) => {
+      A.x = event.offsetX;
+      A.y = event.offsetY;
+      redrawAll();
+    });
+    // right click
+    myCanvas.addEventListener('contextmenu', (event) => {
+      B.x = event.offsetX;
+      B.y = event.offsetY;
+      redrawAll();
+      event.preventDefault();
+    });
+
+    redrawAll();
+
+    function redrawAll() {
+      clear();
+      drawDot(A, 'A');
+      drawDot(B, 'B');
+      drawDot(M, 'M');
+      drawSegment(A, B);
+      const res = distanceFromPointToSegment(M, A, B);
+      drawText(res.value);
+      drawArrow(res.point, M);
+    }
+
+    function distanceFromPointToSegment(M, A, B) {
+      const { P, t } = projectPointToSegment(M, A, B);
+      if (t >= 0 && t <= 1) {
+        return {point: P, value: distance(M, P)};
+      } else {
+        const distToA = distance(M, A);
+        const distToB = distance(M, B);
+        if (distToA < distToB) {
+        return {point: A, value: distToA};
+        } else {
+          return {point: B, value: distToB};
+        }
+      }
+    }
+
+    function projectPointToSegment(M, A, B) {
+      const AB = subtract(B, A);
+      const AM = subtract(M, A);
+      const nAB = normalize(AB);
+      // dot product
+      const t = dot(AM, nAB) / distance(A, B);
+      const scaler = dot(AM, nAB);
+      const P = add(A, scale(nAB, scaler));
+      return { P, t };
+
+    }
+
+  </script>
+
+</body>
+</html>
