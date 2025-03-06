@@ -1,0 +1,75 @@
+<!-- from Radu https://youtube.com/watch?v=jvqomjmMsPI -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distance from Point to Segment</title>
+  <style>
+    body {
+      text-align: center;
+    }
+    canvas {
+      margin: 5px;
+      background-color: black;
+    }
+  </style>
+
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="600"></canvas>
+
+  <script src="../utils/math.js"></script>
+  <script src="../utils/draw.js"></script>
+  <script>
+
+    const A = { x: 100, y: 200 };
+    const B = { x: 400, y: 300 };
+    const M = { x: 250, y: 250 };
+
+    myCanvas.addEventListener('mousemove', (event) => {
+      M.x = event.offsetX;
+      M.y = event.offsetY;
+      redrawAll();
+    });
+
+    redrawAll();
+
+    function redrawAll() {
+      clear();
+      drawDot(A, 'A');
+      drawDot(B, 'B');
+      drawDot(M, 'M');
+      drawSegment(A, B);
+
+      projectPointToSegment(M, A, B);
+    }
+
+    function projectPointToSegment(M, A, B) {
+      const AB = subtract(B, A);
+      // const tail = { x: 100, y: 100 };
+      // drawArrow(tail);
+      drawArrow(add(AB, A), A);
+
+      const AM = subtract(M, A);
+      drawArrow(add(AM, A), A);
+
+      const nAB = normalize(AB);
+      const nAM = normalize(AM);
+
+      // dot product
+      const t = dot(AM, nAB) / distance(A, B);
+      const scaler = dot(AM, nAB);
+      drawText(t);
+
+      // const P = lerp2D(A, B, t);
+      // alternative to lerp2D
+      const P = add(A, scale(nAB, scaler));
+      drawDot(P, 'P');
+
+    }
+
+  </script>
+
+</body>
+</html>
