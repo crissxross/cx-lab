@@ -1,0 +1,103 @@
+<!-- JOEL - Joy Of Electronic Literature - recipe test -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL test 1</title>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    // setup
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let hue = 200;
+    let saturation = 100;
+    let lightness = 50;
+    let color1 = `hsl(${hue} ${saturation} ${lightness+40})`;
+    let color2 = `hsl(${hue} ${saturation} ${lightness-40})`;
+    const gradient = ctx.createLinearGradient(0,0,0, canvas.height);
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(1, color2);
+    ctx.fillStyle = gradient;
+    ctx.lineWidth = 5;
+    // fill canvas with gradient
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // initialize shapes
+    ctx.strokeStyle = 'hsl(0 10 50)';
+    drawTriangle(500, 120, 80, 100);
+    drawCircle(500, 220, 60);
+    drawSemiCircle(500, 420, 60);
+    drawRectangle(500, 520, 80, 100);
+
+    window.addEventListener('mousemove', (event) => {
+      // console.log('event.x', event.x, 'event.y', event.y);
+      // round to whole numbers with Math.floor
+      const percentX = Math.floor((event.x / width) * 100);
+      const percentY = Math.floor((event.y / height) * 100);
+      console.log('percentY', percentY, 'percentX', percentX);
+      hue = Math.floor(percentX * 3.6); // map percentX to hue range 0-360
+      saturation = 100 - percentY;
+      lightness = 100 - percentY;
+      console.log('hue', hue, 'saturation', saturation, 'lightness', lightness);
+      color1 = `hsl(${hue} ${saturation} ${lightness})`;
+      color2 = `hsl(${hue} ${saturation} ${lightness-40})`;
+      gradient.addColorStop(0, color1);
+      gradient.addColorStop(1, color2);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      drawRectangle(width/2, 520, 80, 100, color1);
+      drawTriangle(width/2, 120, 80, 100, color2);
+      drawCircle(width/2, 220, 60);
+      drawSemiCircle(width/2, 420, 60);
+    });
+
+    function drawCircle(x, y, r) {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    function drawSemiCircle(x, y, r) {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI, true);
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    function drawRectangle(x, y, w, h, color) {
+      x = x - w / 2;
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeRect(x, y, w, h);
+      ctx.restore();
+    }
+
+    // upside down triangle
+    function drawTriangle(x, y, w, h, color) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - w, y - h);
+      ctx.lineTo(x + w, y - h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+  </script>
+
+</body>
+</html>
