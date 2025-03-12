@@ -1,0 +1,41 @@
+<!-- Example Recipe: Text Generator -->
+<!-- https://docs.google.com/document/d/1PdOe-kvPnTkyLUWM4QZRJjfRiF0GaT8zFlxdWYSOXfg/edit?tab=t.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Literary Dish Generator</title>
+</head>
+<body>
+  <h1>Literary Dish Generator</h1>
+  <button onclick="generateDish()">Generate Dish</button>
+  <h2 id="dishDisplay"></h2>
+
+
+  <script>
+      // Arrays of words to use in dish names, replace these
+    const adjectives = ["Spicy", "Sweet", "Forbidden", "Tangy", "Diabolical", "Fancy", "Flaming"];
+    const literaryforms = ["Haiku", "Sonnet", "Villanelle", "Novella", "Opera", "Novel", "Quarto"];
+    const abstracts = ["Time", "Secrets", "Memory", "Loss", "Woe", "Ecstasy", "Regret"];
+
+
+      function generateDish() {
+        // Randomly pick words from the arrays
+        const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const literaryform = literaryforms[Math.floor(Math.random() * literaryforms.length)];
+        const abstract = abstracts[Math.floor(Math.random() * abstracts.length)];
+
+
+        // Combine the words to create a dish
+      const dish = `${adjective} ${literaryform} of ${abstract}`;
+        // Note that the symbol is not a single quotation mark
+        // It is a backtick. It is to the left of 1 on your keyboard
+
+
+        // Display the dish on the webpage
+      document.getElementById('dishDisplay').innerText = dish;
+    }
+  </script>
+</body>
+</html>
