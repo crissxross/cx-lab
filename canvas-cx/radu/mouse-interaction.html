@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Interaction</title>
+  <style>
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"
+    width="400" height="400"
+    style="background-color: silver;"
+  ></canvas>
+
+  <script>
+
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const minRad = 10;
+    const rangeRad = 20;
+    let percent = 0;
+
+    let x = 200;
+    let y = 200;
+
+    animate();
+
+    function animate() {
+      percent = percent + 0.02;
+      if (percent > 1) {
+        percent = 0;
+      }
+      const rad = minRad + rangeRad * percent;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.arc(x, y, rad, 0, Math.PI * 2);
+      ctx.stroke();
+
+      requestAnimationFrame(animate);
+    }
+
+    myCanvas.addEventListener('mousemove', function (event) {
+      // event.offsetX and event.offsetY are relative to the canvas
+      x = event.offsetX;
+      y = event.offsetY;
+    });
+
+  </script>
+
+</body>
+</html>
