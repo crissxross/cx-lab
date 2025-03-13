@@ -1,0 +1,62 @@
+<!-- from Radu - https://youtube.com/watch?v=M2E65swxbIs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Basics</title>
+  <style>
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"
+    width="400" height="400"
+    style="border: 1px solid black;"
+  ></canvas>
+
+  <script>
+
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const minX = 100;
+  const rangeX = 200;
+  let percent = 0;
+  let sign = 1; // 1 or -1
+
+  animate();
+
+  function animate() {
+    const x = minX + rangeX * percent;
+    percent = percent + 0.02 * sign;
+    // alternate direction:
+    // if (percent > 1) {
+    //   sign = -1;
+    // }
+    // if (percent < 0) {
+    //   sign = 1;
+    // }
+
+    // or write the above more concisely:
+    if (percent > 1 || percent < 0) {
+      sign = sign * -1;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(x, 200, 20, 0, Math.PI * 2);
+    ctx.stroke();
+
+    requestAnimationFrame(animate);
+  }
+
+  </script>
+
+</body>
+</html>
