@@ -87,7 +87,9 @@
 
       // upside down triangle
     function drawTriangle(x, y, w, h, color) {
+      // save the (global) context
       ctx.save();
+      // from here on, styles will only apply to this triangle
       ctx.fillStyle = color;
       ctx.beginPath();
       ctx.moveTo(x, y); // center point
@@ -95,7 +97,7 @@
       ctx.lineTo(x + w, y - h);
       ctx.closePath();
       ctx.fill();
-      // ctx.stroke();
+      // restore the saved (global) context
       ctx.restore();
     }
 
