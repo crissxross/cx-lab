@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text and Image</title>
+  <style>
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"
+    width="400" height="400"
+    style="background-color: pink;"
+  ></canvas>
+
+  <script>
+
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const pigImage = new Image();
+    pigImage.src = '../assets/pig.png';
+
+    const maxY = 90;
+    const rangeY = 90;
+    let percent = 0;
+
+    animate();
+
+    function animate() {
+      percent = percent + 0.02;
+      if (percent > 1) {
+        percent = 0;
+      }
+      const y = maxY - Math.abs(Math.sin(percent * Math.PI) * rangeY);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // because animating, image will be load on maybe 2nd or 3rd frame so don't need onload function here
+      ctx.drawImage(pigImage, 100, y, 200, 200);
+
+      ctx.font = '30px Arial';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'darkgreen';
+      ctx.fillText('Hello World', 200, 300);
+
+      requestAnimationFrame(animate);
+    }
+
+  </script>
+
+</body>
+</html>
