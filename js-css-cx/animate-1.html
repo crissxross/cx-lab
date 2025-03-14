@@ -1,0 +1,100 @@
+<!-- adapted from example here - https://developer.mozilla.org/en-US/docs/Web/API/Element/animate -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>animate</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      font-size: 2rem;
+      background-color: black;
+    }
+    .headline {
+      max-width: 18ch;
+      padding: 1rem;
+      text-transform: uppercase;
+      text-align: center;
+      background-color: white;
+      cursor: pointer;
+    }
+    .rect {
+      background-color: red;
+      border-radius: 10px;
+      width: 100px;
+      height: 150px;
+    }
+    .circle {
+      background-color: cyan;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="headline">Spinning headline if you click me</div>
+  <div class="rect"></div>
+  <div class="circle"></div>
+
+  <script>
+
+    const headline = document.querySelector(".headline");
+    const rect = document.querySelector(".rect");
+    const circle = document.querySelector(".circle");
+
+    // keyframes
+    const headlineSpinning = [
+      // from
+      { transform: "rotate(0) scale(1)" },
+      // to
+      { transform: "rotate(360deg) scale(0)" },
+    ];
+    // timing options
+    const headlineTiming = {
+      duration: 2000,
+      iterations: 2,
+      direction: "alternate",
+      easing: "ease-in-out",
+    };
+
+    headline.addEventListener("click", () => {
+      headline.animate(headlineSpinning, headlineTiming);
+    });
+
+    // keyframes, 'from' 0deg is implied
+    let rotate360 = [{ transform: "rotate(360deg)" }];
+    let rotationTiming = {
+      duration: 4000,
+      iterations: Infinity,
+    };
+    rect.animate(rotate360, rotationTiming);
+
+    circle.animate(
+      // keyframes
+      [
+        { transform: "translateX(-200px)" },
+        { transform: "translateX(200px)" }
+
+      ],
+      // options
+      {
+        duration: 2000,
+        iterations: Infinity,
+        direction: "alternate",
+        easing: "ease-in-out",
+      }
+    );
+
+  </script>
+
+</body>
+</html>
