@@ -1,0 +1,133 @@
+<!-- JOEL - Joy Of Electronic Literature - recipe test -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL test 3</title>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let percentX = 50;
+    let percentY = 10;
+
+    let hue = 200;
+    let saturation = 100;
+    let lightness = 50;
+    let offset = 40;
+    let color1 = `hsl(${hue} ${saturation} ${lightness + offset})`;
+    let color2 = `hsl(${hue} ${saturation} ${lightness - offset})`;
+    const gradient = ctx.createLinearGradient(0,0,0, canvas.height);
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(1, color2);
+    ctx.fillStyle = gradient;
+    // // fill canvas with gradient
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // texts
+    ctx.font = '10vw Arial';
+    const wordsPos = ['joy to the world', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    const wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+
+    update();
+
+    window.addEventListener('mousemove', function (event) {
+      // round to whole numbers with Math.floor
+      percentX = Math.floor((event.x / width) * 100);
+      percentY = Math.floor((event.y / height) * 100);
+      update();
+      // console.log('mouse event.x', event.x, 'mouse event.y', event.y);
+      console.log('percentY', percentY, 'percentX', percentX);
+    });
+
+    function update() {
+      // map percentX to hue range 0-360
+      hue = Math.floor(percentX * 3.6);
+      saturation = 100 - percentY;
+      lightness = 100 - percentY;
+      color1 = `hsl(${hue} ${saturation} ${lightness})`;
+      color2 = `hsl(${hue} ${saturation} ${lightness - offset})`;
+      gradient.addColorStop(0, color1);
+      gradient.addColorStop(1, color2);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      console.log('hue', hue, 'saturation', saturation, 'lightness', lightness);
+      console.log('color1', color1, 'color2', color2);
+
+      drawCircle(width*0.45, height*0.5, width*0.25, color1);
+      drawTriangle(width*0.55, height*0.75, width*0.25, height*0.25, color2);
+
+      // positive words
+      drawText(width*0.2, height*0.2, wordsPos[percentX % wordsPos.length], color1);
+      // negative words
+      drawText(width*0.8, height*0.8, wordsNeg[percentY % wordsNeg.length], color2, 'right');
+    }
+
+    function drawText(x, y, text, color, align) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.textAlign = align || 'left';
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+    function drawCircle(x, y, radius, color) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+      // ctx.stroke();
+      ctx.restore();
+    }
+
+      // upside down triangle
+    function drawTriangle(x, y, w, h, color) {
+      // save the (global) context
+      ctx.save();
+      // from here on, styles will only apply to this triangle
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(x, y); // center point
+      ctx.lineTo(x - w, y - h);
+      ctx.lineTo(x + w, y - h);
+      ctx.closePath();
+      ctx.fill();
+      // restore the saved (global) context
+      ctx.restore();
+    }
+
+
+// NOT USING THESE FUNCTIONS ----------------------------
+
+    function drawSemiCircle(x, y, radius) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI, true);
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    function drawRectangle(x, y, w, h, color) {
+      x = x - w / 2;
+      y = y - h / 2;
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeRect(x, y, w, h);
+      ctx.restore();
+    }
+
+  </script>
+
+</body>
+</html>
