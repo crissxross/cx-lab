@@ -1,0 +1,112 @@
+<!-- adapted from the following sourceS: -->
+<!-- https://mainmatter.com/blog/2021/01/29/web-animations-intro/ (some of this article is out of date now) -->
+<!-- https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>animate</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      font-size: 2rem;
+      background-color: black;
+      overflow: hidden;
+    }
+    .circle {
+      background-color: hotpink;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding-block: 2rem;
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button onclick="animateLeft()">Left</button>
+    <button onclick="animateRight()">Right</button>
+    <button onclick="pauseAnimation()">Pause</button>
+    <button onclick="playAnimation()">Resume</button>
+    <button onclick="reverseAnimation()">Reverse</button>
+    <button onclick="cancelAnimation()">Cancel</button>
+  </div>
+  <div class="circle" id="circ"></div>
+
+  <script>
+
+    const circle = document.querySelector("#circ");
+
+    let diameter = circle.offsetWidth;
+    let distance = window.innerWidth - diameter;
+    let currentAnimation;
+
+    // NOTE see https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats#implicit_tofrom_keyframes
+    // Implicit to/from keyframes - if the first keyframe is omitted, the animation will start from the current computed values
+    function move(transformStart, transformEnd) {
+      currentAnimation = circle.animate(
+        // [{ transform: transformStart }, { transform: transformEnd }],
+        [{ transform: transformEnd }],
+        {
+          duration: 2000,
+          easing: "linear",
+          fill: "forwards",
+        }
+      );
+
+      currentAnimation.onfinish = () => console.log("animation finished!");
+      currentAnimation.oncancel = () => console.error("animation cancelled.");
+    }
+
+    function animateRight() {
+      move(`translateX(0)`, `translateX(${distance}px)`);
+    }
+
+    function animateLeft() {
+      move(`translateX(${distance}px)`, `translateX(0)`);
+    }
+
+    function cancelAnimation() {
+      currentAnimation.cancel();
+    }
+
+    function pauseAnimation() {
+      currentAnimation.pause();
+      console.log('animation paused');
+    }
+
+    function playAnimation() {
+      currentAnimation.play();
+      console.log('animation resume PLAYING');
+    }
+
+    function reverseAnimation() {
+      currentAnimation.reverse();
+      console.log('animation reverse');
+    }
+
+
+  </script>
+
+</body>
+</html>
