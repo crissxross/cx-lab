@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>animate</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      /* display: grid;
+      place-items: center; */
+      position: relative;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      font-size: 2rem;
+      background-color: black;
+      overflow: hidden;
+    }
+    .circle {
+      background-color: cyan;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="circle"></div>
+
+  <script>
+
+    const circle = document.querySelector(".circle");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    let x;
+    let y;
+    let percentX;
+    let percentY;
+    let radius = circle.offsetWidth/2;
+
+    document.addEventListener('mousemove', function (event) {
+      // event.x and event.y are relative to the window/viewport (aliases for event.clientX and event.clientY)
+      x = event.x;
+      y = event.y;
+      console.log('mouse x', x, 'mouse y', y);
+      // round to whole numbers with Math.floor
+      // percentX = Math.floor((event.x / width) * 100);
+      // percentY = Math.floor((event.y / height) * 100);
+      percentX = (event.x / width);
+      percentY = (event.y / height);
+      console.log('percentX', percentX, 'percentY', percentY);
+
+      update();
+    });
+
+    function update() {
+      circle.animate(
+        // keyframes - note: the first keyframe can be omitted
+        [
+          // { transform: `translate(0, 0)` },
+          // { transform: `translate(${percentX*2}%, ${percentY*2}%)` },
+          { transform: `translate(${x - radius}%, ${y - radius}%)` },
+        ],
+        // options
+        {
+          duration: 2000,
+          easing: "ease-in-out",
+          fill: "forwards",
+          // iterations: 2,
+          // direction: "alternate",
+        }
+      );
+    }
+
+  </script>
+
+</body>
+</html>
