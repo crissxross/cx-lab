@@ -1,0 +1,105 @@
+<!-- source: https://css-tricks.com/playing-with-particles-using-the-web-animations-api/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles using WAAPI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      font-size: 2rem;
+      /* background-color: silver; */
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      /* background-color: white; */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* custom tag */
+    particle {
+      border-radius: 50%;
+      left: 0;
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      opacity: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <button id="button">Click on me</button>
+
+  <script>
+    document.querySelector('#button').addEventListener('click', pop);
+
+    // The pop() function is called on every click
+    function pop(e) {
+      // Loop to generate 30 particles at once
+      for (let i = 0; i < 30; i++) {
+        // We pass the mouse coordinates to the createParticle() function
+        createParticle(e.clientX, e.clientY);
+      }
+    }
+
+    function createParticle(x, y) {
+      // Create a custom particle element
+      const particle = document.createElement('particle');
+      // Append the element into the body
+      document.body.appendChild(particle);
+      // Calculate a random size from 5px to 25px
+      const size = Math.floor(Math.random() * 20 + 5);
+      // Apply the size on each particle
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      // Generate a random color in a blue/purple palette
+      particle.style.background = `hsl(${Math.random() * 90 + 180}, 70%, 60%)`;
+
+      // ANIMATE EACH PARTICLE
+      // Generate a random x & y destination within a distance of 75px from the mouse
+      const destinationX = x + (Math.random() - 0.5) * 2 * 75;
+      const destinationY = y + (Math.random() - 0.5) * 2 * 75;
+
+      // Store the animation in a variable because we will need it later
+      const animation = particle.animate([
+        {
+          // Set the origin position of the particle
+          // We offset the particle with half its size to center it around the mouse
+          transform: `translate(${x - (size / 2)}px, ${y - (size / 2)}px)`,
+          opacity: 1
+        },
+        {
+          // We define the final coordinates as the second keyframe
+          transform: `translate(${destinationX}px, ${destinationY}px)`,
+          opacity: 0
+        }
+      ], {
+        // Set a random duration from 500 to 1500ms
+        duration: 500 + Math.random() * 1000,
+        easing: 'cubic-bezier(0, .9, .57, 1)',
+        // Delay every particle with a random value from 0ms to 200ms
+        delay: Math.random() * 200
+      });
+
+      // When the animation is finished, remove the element from the DOM
+      animation.onfinish = () => {
+        particle.remove();
+      };
+    }
+
+  </script>
+
+</body>
+</html>
