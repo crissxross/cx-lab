@@ -1,0 +1,83 @@
+<!-- adapted from: https://danielcwilson.com/blog/2020/10/additive-css-animations/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform with composite add</title>
+  <style>
+    body {
+      height: 100vh;
+      background: #16161c;
+      overflow: hidden;
+      display: flex;
+    }
+    div {
+      width: 50vmin;
+      height: 50vmin;
+      background: hsl(173, 90%, 54%);
+      border-radius: 50%;
+      font-size: 30vmin;
+      font-family: system-ui, sans-serif;
+      display: grid;
+      place-content: center;
+      margin: auto;
+      transform: rotate(0.25turn);
+    }
+    #saddy {
+      width: 40vmin;
+      height: 40vmin;
+      background: hsl(220, 50%, 50%);
+      transform: rotate(0.25turn);
+    }
+  </style>
+</head>
+<body>
+  <div id="saddy">:(</div>
+  <div id="smiley">:)</div>
+
+  <script>
+
+    smiley.animate(
+      { transform: ["rotate(0deg)", "rotate(360deg)"] },
+      {
+        duration: 3000,
+        iterations: Infinity,
+        composite: "add" // *** this is the important line (although it's not needed here)
+      }
+    );
+
+    smiley.animate(
+      { transform: ["translateX(0px)", "translateX(30vmin)"] },
+      {
+        duration: 4300,
+        iterations: Infinity,
+        direction: "alternate",
+        easing: "ease-in-out",
+        composite: "add" // *** this is the important line
+      }
+    );
+
+    saddy.animate(
+      { opacity: [0, 0.8] },
+      {
+        duration: 2000,
+        iterations: Infinity,
+        direction: "alternate",
+        easing: "ease-in-out",
+      }
+    );
+    saddy.animate(
+      { opacity: [0, 0.2] },
+      {
+        duration: 2000,
+        iterations: Infinity,
+        direction: "alternate",
+        composite: "add" // *** this is the important line
+      }
+    );
+
+  </script>
+
+</body>
+</html>
