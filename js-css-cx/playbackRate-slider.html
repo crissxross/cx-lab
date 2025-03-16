@@ -1,0 +1,98 @@
+<!-- based on Joe Maddalone's https://codepen.io/joemaddalone/pen/mdemprL -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>currentTime-scrubber</title>
+  <style>
+    body {
+      background-color: #222;
+      font-family: 'system-ui', sans-serif;
+      color: #fff;
+    }
+    main {
+      display: grid;
+      place-content: center;
+      gap: 2rem;
+      min-height: 100vh;
+    }
+    .circle {
+      min-width: 200px;
+      min-height: 200px;
+      border-radius: 100%;
+      border: 10px solid #fff;
+      border-top: 10px solid red;
+    }
+    #playback {
+      display: grid;
+      place-items: center;
+    }
+    #current {
+      font-size: 2rem;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding-block: 1rem;
+    }
+    button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="controls">
+      <button class="pause">Pause</button>
+      <button class="play">Play</button>
+      <button class="reverse">Reverse</button>
+    </div>
+    <div class="circle"></div>
+    </div>
+    <div id="playback">
+      <div>
+        <input value="1" id="range" type="range" min="0.25" max="5" step="0.25" />
+      </div>
+      <div id="current">1</div>
+      <p>playback rate</p>
+  </main>
+
+  <script>
+    const circle = document.querySelector('.circle');
+    const range = document.getElementById('range');
+    const current = document.getElementById('current');
+
+    const circleAnimation = circle.animate(
+      [
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(360deg)' }
+      ],
+      {
+        duration: 1000,
+        iterations: Infinity,
+      }
+    );
+
+    document.querySelector(".pause")
+      .addEventListener("click", () => circleAnimation.pause());
+
+    document.querySelector(".play")
+      .addEventListener("click", () => circleAnimation.play());
+
+    document.querySelector(".reverse")
+      .addEventListener("click", () => circleAnimation.reverse());
+
+    range.addEventListener('input', (e) => {
+      circleAnimation.playbackRate = e.target.value;
+      current.textContent = e.target.value;
+    });
+
+  </script>
+
+</body>
+</html>
