@@ -1,0 +1,69 @@
+<!-- adapted from this Kirupa tutorial https://www.kirupa.com/animations/creating_pulsing_circle_animation.htm -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulsing Circle</title>
+  <style>
+    main {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      /* background-color: black; */
+      font-size: 5rem;
+    }
+    main > * {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .item {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="item">🌺</div>
+    <div class="item">🌼</div>
+    <div class="item">🌸</div>
+    <div class="item">🌹</div>
+    <div class="item">🪻</div>
+    <div class="item">🌻</div>
+    <div class="smiley">😀</div>
+  </main>
+
+  <script>
+
+    const items = document.querySelectorAll('.item');
+
+    const keyframes = [
+      { transform: 'rotate(0) translate(160px)' },
+      { transform: 'rotate(360deg) translate(160px)' }
+    ];
+
+    const options = {
+      duration: 6000,
+      iterations: Infinity,
+      // easing: `linear`,
+      composite: 'add',
+    };
+
+    items.forEach((item, index) => {
+      // a negative delay means items are already rotating when the page loads
+      options.delay = (index * 1000) * -1;
+      item.animate(keyframes, options);
+      item.animate(
+        { transform: 'rotate(360deg)' },
+        { duration: 3000,
+          iterations: Infinity,
+          // easing: 'linear',
+          composite: 'add',
+        }
+      );
+    });
+
+  </script>
+
+</body>
+</html>
