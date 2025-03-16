@@ -1,0 +1,63 @@
+<!-- adapted from this Kirupa tutorial https://www.kirupa.com/animations/creating_pulsing_circle_animation.htm -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulsing Circle</title>
+  <style>
+    main {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      /* background-color: black; */
+      font-size: 5rem;
+    }
+    .circle {
+      border-radius: 50%;
+      background-color: hsl(250 100 50);
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      opacity: 0;
+    }
+    .item {
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="item">🌺</div>
+  </main>
+
+  <script>
+
+    const circles = document.querySelectorAll('.circle');
+
+    const keyframes = [
+      { transform: 'scale(0.1)', opacity: 0.5 },
+      { transform: 'scale(2.5)', opacity: 0 }
+    ];
+
+    const options = {
+      duration: 4000,
+      iterations: Infinity,
+      easing: `cubic-bezier(0.36, 0.11, 0.89, 0.32)`,
+      fill: 'forwards'
+    };
+
+    circles.forEach((circle, index) => {
+      // a negative delay means circles are already pulsing when the page loads
+      options.delay = (index * 1000) * -1;
+      circle.animate(keyframes, options);
+    });
+
+  </script>
+
+</body>
+</html>
