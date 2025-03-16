@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles field</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    /* custom tag */
+    particle {
+      border-radius: 50%;
+      left: 0;
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Create particles at random intervals
+    function createRandomParticle() {
+      createParticle(Math.random() * width, Math.random() * height);
+    }
+
+    // Initial particles
+    for (let i = 0; i < 20; i++) {
+      createParticle(Math.random() * width, Math.random() * height);
+    }
+
+    // Create new particles periodically at random intervals
+    setInterval(() => {
+      const particlesToAdd = Math.floor(Math.random() * 5) + 1; // 1-5 particles
+      for (let i = 0; i < particlesToAdd; i++) {
+      createRandomParticle();
+      }
+    }, 1000); // Every second
+
+
+    function createParticle(x, y) {
+      // Create a custom particle element
+      const particle = document.createElement('particle');
+      // Calculate a random size from 10px to 30px
+      const size = Math.floor(Math.random() * 30 + 10);
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      // Generate a random color in a pink-purple palette
+      particle.style.background = `hsl(${Math.random() * 90 + 250}, 70%, 60%)`;
+      // Append the element into the body
+      document.body.appendChild(particle);
+
+      // ANIMATE EACH PARTICLE
+      // Generate a random x & y destination within a distance of 100px from its origin
+      const destinationX = x + (Math.random() - 0.5) * 2 * 100;
+      const destinationY = y + (Math.random() - 0.5) * 2 * 100;
+
+      particle.animate([
+        {
+          // from origin position of the particle
+          transform: `translate(${x}px, ${y}px)`,
+          opacity: 1
+        },
+        {
+          // to
+          transform: `translate(${destinationX}px, ${destinationY}px)`,
+          opacity: 0.1
+        }
+      ], {
+        // Set a random duration from 500 to 1500ms
+        duration: 500 + Math.random() * 1000,
+        easing: 'cubic-bezier(0, .9, .57, 1)',
+        iterations: Infinity,
+        direction: 'alternate',
+        // Delay every particle with a random value from 0ms to 200ms
+        delay: Math.random() * 200
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
