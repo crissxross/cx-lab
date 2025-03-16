@@ -1,0 +1,76 @@
+<!-- based on Joe Maddalone's https://codepen.io/joemaddalone/pen/OJymQgV -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>currentTime-scrubber</title>
+  <style>
+    body {
+      background-color: #222;
+      font-family: 'system-ui', sans-serif;
+      color: #fff;
+    }
+    main {
+      display: grid;
+      place-content: center;
+      gap: 2rem;
+      min-height: 100vh;
+    }
+    .circle {
+      min-width: 200px;
+      min-height: 200px;
+      border-radius: 100%;
+      border: 10px solid #fff;
+      border-top: 10px solid red;
+    }
+    #playback {
+      display: grid;
+      place-items: center;
+    }
+    #current {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="circle"></div>
+    </div>
+    <div id="playback">
+      <div>
+        <input value="0" id="range" type="range" min="0" max="1000" step="1" />
+      </div>
+      <div id="current">0</div>
+      <p>milliseconds</p>
+  </main>
+
+  <script>
+    const circle = document.querySelector('.circle');
+    const range = document.getElementById('range');
+    const current = document.getElementById('current');
+
+    const circleAnimation = circle.animate(
+      [
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(360deg)' }
+      ],
+      {
+        duration: 1000,
+        iterations: Infinity,
+        easing: 'linear'
+      }
+    );
+
+    circleAnimation.pause();
+
+    range.addEventListener('input', (e) => {
+      circleAnimation.currentTime = e.target.value;
+      current.textContent = e.target.value;
+    });
+
+
+  </script>
+
+</body>
+</html>
