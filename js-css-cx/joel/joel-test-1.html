@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL test</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      /* display: grid;
+      place-items: center; */
+      position: relative;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      font-size: 6rem;
+      overflow: hidden;
+      background-color: hsl(0 0 80);
+    }
+    .neg {
+      /* position: absolute;
+      top: 80%;
+      left: 50%; */
+      text-align: center;
+      padding-top: 80%;
+    }
+    .circle {
+      background-color: grey;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="circle"></div>
+  <div class="pos">positive</div>
+  <div class="neg">negative</div>
+
+  <script>
+
+    const body = document.querySelector("body");
+    const pos = document.querySelector(".pos");
+    const neg = document.querySelector(".neg");
+    const circle = document.querySelector(".circle");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    const wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+
+    let x;
+    let y;
+    let percentX;
+    let percentY;
+    let radius = circle.offsetWidth/2;
+
+    // helper function to generate a random number between min and max
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    document.addEventListener('mousemove', function (event) {
+      x = event.clientX;
+      y = event.clientY;
+      // console.log('mouse x', x, 'mouse y', y);
+      // round to whole numbers with Math.floor
+      // percentX = Math.floor((event.x / width) * 100);
+      // percentY = Math.floor((event.y / height) * 100);
+      percentX = event.x / width;
+      percentY = event.y / height;
+      // console.log('percentX', percentX, 'percentY', percentY);
+      update();
+    });
+
+    pos.animate(
+        [
+          // from
+          { transform: `translate(${random(0, width)}px, ${random(0, height/2)}px)` },
+          // to
+          { transform: `translate(${random(100, width)}px, ${random(100, height/2)}px)` },
+        ],
+        {
+          duration: 2000,
+          easing: "ease-in-out",
+          fill: "forwards",
+          iterations: 4,
+          direction: "alternate",
+        }
+      );
+
+    function update() {
+      body.style.backgroundColor = `hsl(${percentX*360} ${100-percentY*100} ${100-percentY*100})`;
+
+      neg.style.opacity = percentY;
+
+      if (percentY < 0.5) {
+        circle.style.backgroundColor = `hsl(200 100 70)`;
+        neg.style.color = `hsl(200 100 70)`;
+      } else {
+        circle.style.backgroundColor = `hsl(0 80 50)`;
+        neg.style.color = `hsl(0 80 50)`;    }
+
+      pos.textContent = wordsPos[random(1, wordsPos.length)];
+      // pos.textContent = wordsPos[0];
+      neg.textContent = wordsNeg[Math.floor(percentX * wordsNeg.length)];
+
+      circle.animate(
+        [{ transform: `translate(${x - radius}px, ${y - radius}px)` }],
+        {
+          duration: 2000,
+          easing: "ease-in-out",
+          fill: "forwards",
+        }
+      );
+    }
+
+  </script>
+
+</body>
+</html>
