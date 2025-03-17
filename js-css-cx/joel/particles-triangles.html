@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles triangles</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background-color: hsl(220 50 40);
+    }
+    /* custom tag */
+    particle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    for (let i = 0; i < 200; i++) {
+      createParticle(Math.random() * width, Math.random() * height);
+    }
+
+    function createParticle(x, y) {
+      const particle = document.createElement('particle');
+      document.body.appendChild(particle);
+      let size = Math.floor(Math.random() * 30 + 10);
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundImage = 'url("../../assets/triangle-v.svg")';
+      let rotation = Math.random() * 90 - 45;
+      let delay = Math.random() * 200;
+      // particle.style.backgroundColor = `hsl(${Math.random() * 60}, 70%, 60%)`;
+
+      let destinationX = (Math.random() - 0.5) * 300;
+      let destinationY = (Math.random() - 0.5) * 300;
+
+      particle.animate([
+        // from
+        {
+          transform: `translate(${x}px, ${y}px) rotate(${rotation-30}deg)`,
+          opacity: 0
+        },
+        // to
+        {
+          transform: `translate(${x + destinationX}px, ${y + destinationY}px) rotate(${rotation}deg)`,
+          opacity: 0.7
+        }
+      ],
+      {
+        duration: Math.random() * 500 + 500,
+        easing: 'ease-in',
+        iterations: Infinity,
+        direction: 'alternate',
+        delay: Math.random() * 500
+      });
+    }
+
+  </script>
+
+
+</body>
+</html>
