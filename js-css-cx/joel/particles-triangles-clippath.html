@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Particles triangles clip-path</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background-color: hsl(300 45 80);
+    }
+    /* custom tag */
+    particle {
+      position: fixed;
+      /* top: 0;
+      left: 0; */
+      opacity: 0;
+      pointer-events: none;
+      /* triangle shape */
+      aspect-ratio: 1/cos(30deg);
+      clip-path: polygon(50% 100%,100% 0,0 0);
+      background-color: hsl(250 100 30);
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // helper function to generate a random number between min and max
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    for (let i = 0; i < 200; i++) {
+      createParticle(random(0, width), random(0, height));
+    }
+
+    function createParticle(x, y) {
+      const particle = document.createElement('particle');
+      document.body.appendChild(particle);
+      let size = Math.floor(random(10, 40));
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      let rotation = random(-90, 90);
+      let delay = random(0, 200);
+      particle.style.backgroundColor = `hsl(${random(200, 260)}, 100%, 50%)`;
+
+      let destinationX = random(-150, 150);
+      let destinationY = random(-150, 150);
+
+      particle.animate([
+        // from
+        {
+          transform: `translate(${x}px, ${y}px) rotate(${rotation-45}deg)`,
+          opacity: 0
+        },
+        // to
+        {
+          transform: `translate(${x + destinationX}px, ${y + destinationY}px) rotate(${rotation}deg)`,
+          opacity: 0.7
+        }
+      ],
+      {
+        duration: random(500, 1000),
+        easing: 'ease-in',
+        iterations: Infinity,
+        direction: 'alternate',
+        delay: random(0, 500),
+      });
+    }
+
+  </script>
+
+</body>
+</html>
