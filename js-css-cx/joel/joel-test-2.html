@@ -75,7 +75,7 @@
       // percentY = Math.floor((event.y / height) * 100);
       percentX = event.x / width;
       percentY = event.y / height;
-      // console.log('percentX', percentX, 'percentY', percentY);
+      console.log('percentX', percentX, 'percentY', percentY);
       update();
     });
 
@@ -86,16 +86,22 @@
       pos.style.opacity = 1 - percentY;
 
       if (percentY < 0.5) {
-        spot.style.backgroundColor = `hsl(200 100 70)`;
-        spot.style.clipPath = `circle(50%)`;
         neg.style.color = `hsl(200 100 70)`;
         pos.style.color = `hsl(200 100 50)`;
       } else {
-        spot.style.backgroundColor = `hsl(0 80 50)`;
-        spot.style.borderRadius = '0';
-        spot.style.clipPath = 'polygon(50% 100%,100% 0,0 0)';
         neg.style.color = `hsl(0 80 50)`;
         pos.style.color = `hsl(200 50 30)`;
+      }
+
+      if (percentY < 0.49) {
+        spot.style.backgroundColor = `hsl(200 100 70)`;
+        spot.style.clipPath = `circle(50%)`;
+      } else if (percentY > 0.51) {
+        spot.style.backgroundColor = `hsl(0 80 50)`;
+        spot.style.clipPath = 'polygon(50% 100%,100% 0,0 0)';
+      } else {
+        spot.style.backgroundColor = `hsl(280 30 60)`;
+        spot.style.clipPath = `initial`;
       }
 
       pos.textContent = wordsPos[Math.floor(percentX * wordsPos.length)];
