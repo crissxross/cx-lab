@@ -40,16 +40,16 @@
   </div>
 
   <script>
+    // Note: using let for simplicity
+    let body = document.querySelector("body");
+    let pos = document.querySelector(".pos");
+    let neg = document.querySelector(".neg");
+    let spot = document.querySelector(".spot");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
 
-    const body = document.querySelector("body");
-    const pos = document.querySelector(".pos");
-    const neg = document.querySelector(".neg");
-    const spot = document.querySelector(".spot");
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    const wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
-    const wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+    let wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    let wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
 
     let x;
     let y;
@@ -92,7 +92,6 @@
         pos.style.color = `hsl(200 100 50)`;
       } else {
         spot.style.backgroundColor = `hsl(0 80 50)`;
-        spot.style.borderRadius = '0';
         spot.style.clipPath = 'polygon(50% 100%,100% 0,0 0)';
         neg.style.color = `hsl(0 80 50)`;
         pos.style.color = `hsl(200 50 30)`;
