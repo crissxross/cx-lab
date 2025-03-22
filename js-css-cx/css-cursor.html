@@ -1,0 +1,41 @@
+<!-- Based on this https://codepen.io/astrit/pen/QWbZgpR?editors=1100 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS custom cursor</title>
+  <style>
+    body {
+      display: grid;
+      place-items: center;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: hsl(230 50 50);
+    }
+
+    .card {
+      width: 200px;
+      height: 120px;
+      background: white;
+      border-radius: 8px;
+    }
+
+    /* Now the styling for the cursor  */
+
+    body {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'><rect rx='20' width='100%' height='100%' fill='black' /><text x='50%' y='50%' font-family='sans-serif' font-weight='bold' font-size='14' dominant-baseline='middle' text-anchor='middle' fill='white'>Cursor</text></svg>") 16 0, auto;
+    }
+
+    .card {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='40'><rect rx='20' width='100%' height='100%' fill='darkviolet' /><text x='50%' y='50%' font-family='sans-serif' font-weight='bold' font-size='14' dominant-baseline='middle' text-anchor='middle' fill='white'>Over the card</text></svg>") 16 0, auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card"></div>
+
+</body>
+</html>
