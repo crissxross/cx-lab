@@ -1,0 +1,45 @@
+<!-- based on 'Animating Gradients in CSS' https://www.jomaendle.com/blog/animations -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS animated gradient</title>
+  <style>
+
+    @property --color {
+      syntax: '<color>';
+      inherits: false;
+      initial-value: red;
+    }
+
+    @property --color-second {
+      syntax: '<color>';
+      inherits: false;
+      initial-value: blue;
+    }
+
+    body {
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      animation: animate-color 3s ease-in-out infinite alternate;
+      background: linear-gradient(var(--color), var(--color-second));
+    }
+
+    @keyframes animate-color {
+      from {
+        --color: red;
+        --color-second: blue;
+      }
+      to {
+        --color: yellow;
+        --color-second: dodgerblue;
+      }
+    }
+  </style>
+</head>
+<body>
+
+</body>
+</html>
