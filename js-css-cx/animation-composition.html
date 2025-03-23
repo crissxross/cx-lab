@@ -1,0 +1,119 @@
+<!-- from codepen: https://codepen.io/web-dot-dev/pen/VwGRBVX?editors=1100 for this article: https://developer.chrome.com/docs/css-ui/css-animation-composition-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>animation-composition</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding-inline: 20vw;
+      /* overflow: hidden; */
+      font-family: system-ui, sans-serif;
+      display: grid;
+			place-content: safe center;
+			gap: 3rem;
+      line-height: 1.5;
+    }
+    html, body {
+			height: 100%;
+		}
+    main {
+      display: grid;
+      place-content: center;
+      gap: 5em;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 0.1em 0.3em;
+      border-radius: 0.2em;
+    }
+    .box {
+      /* display: block; */
+      width: 5em;
+      aspect-ratio: 1;
+      display: grid;
+      position: relative;
+
+      place-content: center;
+      outline: 1px dashed #333;
+      margin: 0 auto;
+    }
+
+    .box::after, .box::before {
+      content: '';
+      display: block;
+      width: 5em;
+      aspect-ratio: 1;
+      position: absolute;
+
+      transform-origin: 50% 50%;
+      transform: translateX(50px) rotate(45deg);
+      z-index: -1; /* Make sure text is on top */
+    }
+
+    .box::after {
+      background: lightseagreen;
+      animation: adjust 5s linear infinite alternate;
+    }
+
+    .box::before {
+      background: #ccc;
+    }
+
+    @keyframes adjust {
+      to {
+        transform: translateX(100px);
+      }
+    }
+
+    .box[data-method="replace"]::after {
+      animation-composition: replace;
+    }
+
+    .box[data-method="add"]::after {
+      animation-composition: add;
+    }
+
+    .box[data-method="accumulate"]::after {
+      animation-composition: accumulate;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="box" data-method="replace">replace</div>
+    <div class="box" data-method="add">add</div>
+    <div class="box" data-method="accumulate">accumulate</div>
+  </main>
+  <div>
+    <ul>
+      <li><code>replace</code>: The effect value replaces the underlying value. (default)
+        <ul>
+            <li>In its end position, the original <code>translateX(50px) rotate(45deg)</code> value for transform is simply replaced by <code>translateX(100px)</code>.</li>
+        </ul>
+      </li>
+      <li><code>add</code>: The effect value is added to the underlying value.
+        <ul>
+            <li>In its end position, the <code>translateX(100px)</code> is added to the original <code>translateX(50px) rotate(45deg)</code>, resulting in <code>translateX(50px) rotate(45deg) translateX(100px)</code>. This moves the box by 50px, then turns it 45deg, and then moves it 100px.</li>
+        </ul>
+      </li>
+      <li><code>accumulate</code>: The effect value is combined with the underlying value.
+        <ul>
+          <li>In its end position, the <code>translateX(100px)</code> will be mathematically added to the <code>translateX(50px)</code> from the original transform, resulting in a transformation of <code>translateX(150px) rotate(45deg)</code>.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+
+  </script>
+
+</body>
+</html>
