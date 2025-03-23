@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL words test 4</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      font-size: 4rem;
+      overflow: hidden;
+      background-color: hsl(120 10 80);
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    // Note: using let for simplicity
+    let body = document.querySelector("body");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    let wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    let wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+
+    // helper function to generate a random number between min and max
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    document.addEventListener('click', function() {
+      // x and y coordinates of the pointer (e.g. mouse, touch)
+      let x = event.clientX;
+      let y = event.clientY;
+      // the pointer coordinates as a percentage of the viewport width and height
+      let percentX = x / width;
+      let percentY = y / height;
+
+      changeBackgroundColor(percentX, percentY);
+
+      if (percentY < 0.5) {
+        createWord(x, y, true); // positive words
+      } else {
+        createWord(x, y, false); // negative words
+      }
+    });
+
+    function createWord(x, y, positive) {
+      // let randomIndex = random(0, positive ? wordsPosLength : wordsNegLength) | 0;
+      let randomIndex = Math.floor(random(0, wordsPosLength));
+      let word = document.createElement('div');
+      if (positive) {
+        word.textContent = wordsPos[randomIndex];
+        word.style.color = 'hsl(120 50% 50%)';
+      } else {
+        word.textContent = wordsNeg[randomIndex];
+        word.style.color = 'hsl(0 50% 50%)';
+      }
+      word.style.position = 'absolute';
+      word.style.left = `${x}px`;
+      word.style.top = `${y}px`;
+      word.style.opacity = 0;
+      document.body.appendChild(word);
+
+      let destinationX = random(-20, 20);
+      let destinationY = random(-20, 20);
+      let rotation = random(-20, 20);
+
+      let animation = word.animate([
+        {
+          transform: `translate(${destinationX}px, ${destinationY}px) rotate(${rotation}deg)`,
+          opacity: 0.9
+        }
+      ],
+      {
+        duration: random(1000, 2000),
+        easing: 'ease-out',
+        iterations: 4,
+        fill: 'forwards',
+        direction: 'alternate',
+      });
+
+      animation.onfinish = function() {
+        word.remove();
+      };
+
+    }
+
+    function changeBackgroundColor(x, y) {
+      let hue = x * 360;
+      let saturation = 100 - y * 100; // invert the percentage
+      let lightness = 100 - y * 100;
+      body.animate([
+        { backgroundColor: `hsl(${hue} ${saturation} ${lightness})` }
+      ],
+      {
+        duration: 1000,
+        easing: 'ease-out',
+        iterations: 1,
+        fill: 'forwards',
+      });
+    }
+
+  </script>
+
+</body>
+</html>
