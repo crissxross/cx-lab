@@ -5,42 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JOEL test</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
     body {
-      height: 100vh;
       font-family: system-ui, sans-serif;
       font-size: 15vw;
+      height: 100vh;
+      margin: 0;
       overflow: hidden;
-      background-color: hsl(120 10 80);
     }
-    .words {
+    .container {
       display: grid;
-      grid-template-rows: 1fr 1fr;
-      min-height: 100%;
       place-items: center;
+      min-height: 100%;
     }
     .spot {
+      width: 8vw;
+      height: 8vw;
       position: absolute;
-      /* width: 60px;
-      height: 60px; */
-      width: 6vw;
-      height: 6vw;
     }
   </style>
 </head>
 <body>
   <div class="spot"></div>
-  <div class="words">
+  <div class="container">
     <div class="pos"></div>
     <div class="neg"></div>
   </div>
 
   <script>
-    // Note: using let for simplicity
+    // Note: using let throughout for simplicity
     let body = document.querySelector("body");
     let pos = document.querySelector(".pos");
     let neg = document.querySelector(".neg");
@@ -54,15 +46,16 @@
     let wordsPosLength = wordsPos.length;
     let wordsNegLength = wordsNeg.length;
 
+    let hue;
+    let saturation;
+    let lightness;
+
     // set initial values
     let x = width/2;
     let y = height/2;
     let percentX = x / width;
     let percentY = y / height;
     let radius = spot.offsetWidth/2;
-    let hue;
-    let saturation;
-    let lightness;
     createPosWord();
     update();
 
@@ -142,7 +135,7 @@
       };
     }
 
-    // animate the divs containing the words to move randomly - these animations are ongoing so don't need to be in the update function
+    // animate the divs containing the words - these animations are ongoing so don't need to be in the update function
 
     pos.animate(
       [{ transform: `translate(${random(-100, 100)}px, ${random(-40, 40)}px)` }],
