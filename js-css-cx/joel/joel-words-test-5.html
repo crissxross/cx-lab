@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JOEL words test 4</title>
+  <title>JOEL words test 5</title>
   <style>
     * {
       box-sizing: border-box;
@@ -49,33 +49,26 @@
       changeBackgroundColor(percentX, percentY);
 
       if (percentY < 0.5) {
-        createWord(x, y, true); // positive words
+        createPosWord(x, y);
       } else {
-        createWord(x, y, false); // negative words
+        createNegWord(x, y);
       }
     });
 
-    function createWord(x, y, positive) {
-      // let randomIndex = random(0, positive ? wordsPosLength : wordsNegLength) | 0;
+    function createPosWord(x, y) {
       let word = document.createElement('div');
       let randomIndex = Math.floor(random(0, wordsPosLength));
+      word.textContent = wordsPos[randomIndex];
       word.style.position = 'absolute';
       word.style.left = `${x}px`;
       word.style.top = `${y}px`;
       word.style.opacity = 0;
-      if (positive) {
-        word.textContent = wordsPos[randomIndex];
-        word.style.color = 'hsl(120 50% 50%)';
-      } else {
-        word.textContent = wordsNeg[randomIndex];
-        word.style.color = 'hsl(0 50% 50%)';
-      }
+      word.style.color = 'hsl(120 50% 50%)';
       document.body.appendChild(word);
-
+      // properties for animation
       let destinationX = random(-20, 20);
-      let destinationY = random(-20, 20);
+      let destinationY = random(-20, -40);
       let rotation = random(-20, 20);
-
       let animation = word.animate([
         {
           transform: `translate(${destinationX}px, ${destinationY}px) rotate(${rotation}deg)`,
@@ -89,11 +82,41 @@
         fill: 'forwards',
         direction: 'alternate',
       });
-
       animation.onfinish = function() {
         word.remove();
       };
+    }
 
+    function createNegWord(x, y) {
+      let word = document.createElement('div');
+      let randomIndex = Math.floor(random(0, wordsNegLength));
+      word.textContent = wordsNeg[randomIndex];
+      word.style.position = 'absolute';
+      word.style.left = `${x}px`;
+      word.style.top = `${y}px`;
+      word.style.opacity = 0;
+      word.style.color = 'hsl(0 50% 50%)';
+      document.body.appendChild(word);
+      // properties for animation
+      let destinationX = random(-60, 20);
+      let destinationY = random(20, 40);
+      let rotation = random(-30, 20);
+      let animation = word.animate([
+        {
+          transform: `translate(${destinationX}px, ${destinationY}px) rotate(${rotation}deg)`,
+          opacity: 0.9
+        }
+      ],
+      {
+        duration: random(300, 800),
+        easing: 'linear',
+        iterations: 4,
+        fill: 'forwards',
+        direction: 'alternate',
+      });
+      animation.onfinish = function() {
+        word.remove();
+      };
     }
 
     function changeBackgroundColor(x, y) {
