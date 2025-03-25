@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL test</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 15vw;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .container {
+      display: grid;
+      place-items: center;
+      min-height: 100%;
+    }
+    .spot {
+      width: 8vw;
+      height: 8vw;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="spot"></div>
+  <div class="container">
+    <div class="pos"></div>
+    <div class="neg"></div>
+  </div>
+
+  <script>
+    // Note: using let throughout for simplicity
+    let body = document.querySelector("body");
+    let pos = document.querySelector(".pos");
+    let neg = document.querySelector(".neg");
+    let spot = document.querySelector(".spot");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    let wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    let wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+    // calculate the length of the arrays once rather than on every update (see below)
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+    let hue;
+    let saturation;
+    let lightness;
+
+    // set initial values
+    let x = width/2;
+    let y = height/2;
+    let percentX = x / width;
+    let percentY = y / height;
+    let radius = spot.offsetWidth/2;
+    updateColor();
+    updatePosNegDivs();
+    createPosWord();
+    updateNegWord();
+    updateSpot();
+
+    // helper function to generate a random number between min and max
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    document.addEventListener('pointermove', function (event) {
+      // x and y coordinates of the pointer (e.g. mouse, touch)
+      x = event.clientX;
+      y = event.clientY;
+      // the pointer coordinates as a percentage of the viewport width and height
+      percentX = x / width;
+      percentY = y / height;
+      // call the update functions every time the pointer moves
+      updateColor();
+      updatePosNegDivs();
+      updateNegWord();
+      updateSpot();
+    });
+
+    function updateColor() {
+      hue = percentX * 360;
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body based on the pointer position
+      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+    }
+
+    function updatePosNegDivs() {
+      // change opacity of words based on the pointer's vertical position
+      neg.style.opacity = percentY;
+      pos.style.opacity = 1 - percentY;
+
+      // change the styles based on the pointer being in the upper or lower half of the screen/viewport
+      if (percentY < 0.5) {
+        // pos color has a different hue to body background
+        pos.style.color = `hsl(${hue-120} 100 40)`;
+        neg.style.color = `hsl(200 100 70)`;
+      } else {
+        pos.style.color = `hsl(200 50 30)`;
+        neg.style.color = `hsl(0 80 50)`;
+      }
+    }
+
+    function updateSpot() {
+      // change spot style based on the pointer being in the upper or lower half of the screen/viewport
+      if (percentY < 0.5) {
+        spot.style.clipPath = `circle(50%)`;
+        // spot color has a different hue to body background
+        spot.style.backgroundColor = `hsl(${hue-100} 100 70)`;
+      } else {
+        spot.style.clipPath = 'polygon(50% 100%,100% 0,0 0)';
+        spot.style.backgroundColor = `hsl(0 100 40)`;
+      }
+      // animate the spot to follow the pointer x and y coordinates
+      spot.animate(
+        [{ transform: `translate(${x - radius}px, ${y - radius}px)` }],
+        {
+          duration: 1000,
+          easing: "ease-in-out",
+          fill: "forwards",
+        }
+      );
+    }
+
+    function updateNegWord() {
+      // get an index for the array of neg words based on pointer's horizontal position - round to whole numbers with Math.floor
+      let wordsNegIndex = Math.floor(percentX * wordsNegLength);
+      // set the text content of the neg element
+      neg.textContent = wordsNeg[wordsNegIndex];
+    }
+
+    // the following function does not depend on the pointer position - it's an alternative (& smoother) way to display the words
+    function createPosWord() {
+      // create a span element for the positive word
+      let word = document.createElement('span');
+      let randomIndex = Math.floor(random(0, wordsPosLength));
+      // set the text content of the span element to a random positive word
+      word.textContent = wordsPos[randomIndex];
+      // append the span element to the pos div
+      pos.appendChild(word);
+      let animation = word.animate(
+        [
+          {opacity: 0, offset: 0},
+          {opacity: 1, offset: 0.25},
+          {opacity: 1, offset: 0.75},
+          {opacity: 0, offset: 1}
+        ],
+        {
+          duration: random(3000, 5000),
+          easing: 'ease-in-out',
+        }
+      );
+      animation.onfinish = function() {
+        word.remove();
+        createPosWord();
+      };
+    }
+
+    // animate the divs containing the words - these animations do not depend on the pointer position
+
+    pos.animate(
+      [{ transform: `translate(${random(-100, 100)}px, ${random(-40, 40)}px)` }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    neg.animate(
+      [{ transform: `translate(${random(-100, 50)}px, ${random(-40, 40)}px)` }],
+      {
+        duration: 400,
+        // easing: "ease-in",
+        easing: "cubic-bezier(.28, -0.62, .61, 1.55)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+  </script>
+
+</body>
+</html>
