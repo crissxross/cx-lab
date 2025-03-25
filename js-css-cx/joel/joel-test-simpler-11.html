@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL test simpler</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 15vw;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="word">?</div>
+
+  <script>
+    // Note: using let throughout for simplicity
+    let body = document.querySelector("body");
+    let word = document.querySelector(".word");
+    let spot = document.querySelector(".spot");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    let wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    let wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+    // calculate the length of the arrays once rather than on every update (see below)
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+    let hue;
+    let saturation;
+    let lightness;
+
+    // set initial values
+    let x = width/2;
+    let y = height/2;
+    let percentX = x / width;
+    let percentY = y / height;
+
+    let posAnimation = word.animate(
+      [{ transform: `translate(-40px, -40px)` }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    let negAnimation = word.animate(
+      [{ transform: `translate(30px, 15px)` }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    posAnimation.pause();
+    negAnimation.pause();
+
+    document.addEventListener('pointermove', function (event) {
+      // x and y coordinates of the pointer (e.g. mouse, touch)
+      x = event.clientX;
+      y = event.clientY;
+      // the pointer coordinates as a percentage of the viewport width and height
+      percentX = x / width;
+      percentY = y / height;
+      // call the update/change functions every time the pointer moves
+      updateColor();
+      updateWord();
+      changeAnimation();
+    });
+
+    function updateColor() {
+      // hue based on horizontal pointer position
+      hue = percentX * 360;
+      // saturation and lightness based on vertical pointer position
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body element
+      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+    }
+
+    function updateWord() {
+      // get an index for the arrays of words based on pointer's horizontal position - round to whole numbers with Math.floor
+      let wordsNegIndex = Math.floor(percentX * wordsNegLength);
+      let wordsPosIndex = Math.floor(percentX * wordsPosLength);
+      // set the text content of the word element based on the pointer being in the upper or lower half of the screen/viewport
+      if (percentY < 0.5) {
+        word.textContent = wordsPos[wordsPosIndex];
+        word.style.color = `hsl(${hue-120} 100 40)`;
+      } else {
+        word.textContent = wordsNeg[wordsNegIndex];
+        word.style.color = `hsl(${hue+120} ${saturation} 40)`;
+      }
+    }
+
+    function changeAnimation() {
+      // change the animation based on the pointer being in the upper or lower half of the screen/viewport
+      if (percentY < 0.5) {
+        negAnimation.cancel();
+        posAnimation.play();
+      } else {
+        posAnimation.cancel();
+        negAnimation.play();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
