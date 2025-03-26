@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOEL test simpler 12</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 8vw;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="phrase">?</div>
+
+  <script>
+    // Note: using let throughout for simplicity
+    let body = document.querySelector("body");
+    let phrase = document.querySelector(".phrase");
+
+    // Arrays of words to use in the phrase div element, replace these
+    let things = ["tears", "sighs", "whispers", "shouts", "silences", "songs", "signs", "gestures", "glances", "touches", "hints", "talk", "guarantees"];
+    let wordsPos = ["joy", "happiness", "relaxation", "comfort", "peace", "satisfaction", "contentment", "calm", "serenity", "tranquility", "quietness", "stillness"];
+    let wordsNeg = ["sadness", "anger", "anxiety", "nervousness", "tension", "worry", "stress", "distress", "frustration", "irritability", "annoyance", "agitation"];
+
+    // for better performance, calculate the length of the arrays and the width & height of the viewport/window once rather than on every update (see below)
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+    let thingsLength = things.length;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let percentX;
+    let percentY;
+    let hue;
+    let saturation;
+    let lightness;
+    let thingsIndex = 0;
+
+    // define the animations
+    let posAnimation = phrase.animate(
+      [{ transform: "translate(-40px, -40px)" }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    let negAnimation = phrase.animate(
+      [{ transform: "translate(30px, 15px)" }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    // pause the animations initially
+    posAnimation.pause();
+    negAnimation.pause();
+
+    document.addEventListener("pointermove", function (event) {
+      // the X and Y coordinates of the pointer as a percentage of the viewport width and height
+      percentX = event.clientX / width;
+      percentY = event.clientY / height;
+      // call the update functions every time the pointer moves
+      updateWord();
+      updateColor();
+      updateAnimation();
+    });
+
+    // update the things index randomly (every 500ms) to give the phrase variety
+    setInterval(() => {
+      thingsIndex = Math.floor(Math.random() * thingsLength);
+      console.log(things[thingsIndex]);
+    }, 500);
+
+    function updateWord() {
+      // assign an index for the arrays of words based on pointer's horizontal position - round to whole numbers with Math.floor
+      let wordsNegIndex = Math.floor(percentX * wordsNegLength);
+      let wordsPosIndex = Math.floor(percentX * wordsPosLength);
+      // set the text content of the phrase element based on the pointer being in the upper or lower half of the viewport
+      if (percentY < 0.5) {
+        phrase.textContent = `${things[thingsIndex]} of ${wordsPos[wordsPosIndex]}`;
+        phrase.style.color = `hsl(${hue-120} 100 40)`;
+      } else {
+        phrase.textContent = `${things[thingsIndex]} of ${wordsNeg[wordsNegIndex]}`;
+        phrase.style.color = `hsl(${hue+120} ${saturation} 40)`;
+      }
+    }
+
+    function updateColor() {
+      // hue based on horizontal pointer position
+      hue = percentX * 360;
+      // saturation and lightness based on vertical pointer position
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body element
+      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+    }
+
+    function updateAnimation() {
+      // change the animation based on the pointer being in the upper or lower half of the viewport
+      if (percentY < 0.5) {
+        negAnimation.cancel();
+        posAnimation.play();
+      } else {
+        posAnimation.cancel();
+        negAnimation.play();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
