@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JOEL test simpler</title>
+  <title>JOEL test simpler 10</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
@@ -34,14 +34,16 @@
     let body = document.querySelector("body");
     let word = document.querySelector(".word");
     let spot = document.querySelector(".spot");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
 
+    // Arrays of words to use in the word div element, replace these
     let wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
     let wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
-    // calculate the length of the arrays once rather than on every update (see below)
+
+    // for better performance, calculate the length of the arrays and the width & height of the viewport/window once rather than on every update (see below)
     let wordsPosLength = wordsPos.length;
     let wordsNegLength = wordsNeg.length;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
     let hue;
     let saturation;
     let lightness;
@@ -54,11 +56,6 @@
     let radius = spot.offsetWidth/2;
     updateSpot();
 
-    // helper function to generate a random number between min and max
-    function random(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
     document.addEventListener('pointermove', function (event) {
       // x and y coordinates of the pointer (e.g. mouse, touch)
       x = event.clientX;
@@ -67,23 +64,13 @@
       percentX = x / width;
       percentY = y / height;
       // call the update functions every time the pointer moves
-      updateColor();
       updateWord();
+      updateColor();
       updateSpot();
     });
 
-    function updateColor() {
-      // hue based on horizontal pointer position
-      hue = percentX * 360;
-      // saturation and lightness based on vertical pointer position
-      saturation = 100 - percentY * 100; // invert the percentage
-      lightness = 100 - percentY * 100;
-      // change the background color of the body based on the pointer position
-      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
-    }
-
     function updateWord() {
-      // get an index for the arrays of words based on pointer's horizontal position - round to whole numbers with Math.floor
+      // assign an index for the arrays of words based on pointer's horizontal position - round to whole numbers with Math.floor
       let wordsNegIndex = Math.floor(percentX * wordsNegLength);
       let wordsPosIndex = Math.floor(percentX * wordsPosLength);
       // set the text content of the word element based on the pointer being in the upper or lower half of the screen/viewport
@@ -94,6 +81,16 @@
         word.textContent = wordsNeg[wordsNegIndex];
         word.style.color = `hsl(${hue+120} ${saturation} 40)`;
       }
+    }
+
+    function updateColor() {
+      // hue based on horizontal pointer position
+      hue = percentX * 360;
+      // saturation and lightness based on vertical pointer position
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body based on the pointer position
+      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
     }
 
     function updateSpot() {
