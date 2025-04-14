@@ -51,7 +51,8 @@ using typographical quotes “” and apostrophes ‘’.
 	</h1>
 </header>
 <!-- All poem code goes here... -->
-<!-- NOTE: sonnet-17 is the version of my original taper14 submission -->
+<!-- NOTE: sonnet-18 is (1st) REVISED version of my submission -->
+<!-- TODO: FINISH REVISIONS -->
 <style>
 	@keyframes in {
 		from {
@@ -68,22 +69,10 @@ using typographical quotes “” and apostrophes ‘’.
 		background-color: #333;
 	}
 	main {
-		/* width: clamp(280px, 45%, 500px); */
-		width: clamp(320px, 50%, 500px);
+		width: clamp(320px, 55%, 500px);
 		margin: 1.5vh auto 0;
 		color: #ffffff9c;
 		/* NOTE: font-size is set dynamically on syllable depending on window.innerHeight */
-		/* 20px at 360 width, 36px at 1240 width */
-		/* font-size: clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem); */
-
-		/* 20px at 360 width, 34px at 1240 width */
-		/* font-size: clamp(1.25rem, 0.892rem + 1.5909vw, 2.125rem); */
-
-		/* 20px at 360 width, 32px at 1240 width */
-		/* font-size: clamp(1.25rem, 0.9432rem + 1.3636vw, 2rem); */
-
-		/* 20px at 360 width, 30px at 1240 width */
-		/* font-size: clamp(1.25rem, 0.9943rem + 1.1364vw, 1.875rem); */
 	}
 	.syl9 {color: #fff;}
 </style>
@@ -95,6 +84,8 @@ using typographical quotes “” and apostrophes ‘’.
 	const quaVs = 'iʉɨuʏɘɤəoɛɵɜ';
 	// first pair are for couplet
 	const vs = `ɑɒœɶæɐøɞʌɔɪeɯyʊaä${quaVs}`.split('');
+	// TODO: remove after TESTING
+	// const vs = `ɑɒœɶæɐøɞʌɔɪeɯyʊaäɯɯɯɯɯɯɯɯ${quaVs}`.split('');
 
 	const c = (h, s, l, a) => `hsla(${h} ${s}% ${l}% / ${a})`;
 
@@ -108,11 +99,19 @@ using typographical quotes “” and apostrophes ‘’.
 					: 'clamp(1.25rem, 0.84rem + 1.82vw, 2.25rem)';
 	// TODO: remove console.log
 	// console.log(`innerHeight:`, window.innerHeight, 'fz:', fz);
+	// console.log(`innerWidth:`, window.innerWidth);
 
+	// TODO: uncomment these after TESTING
 	const sylT = 180; //90; //180;
 	const pD = 720; //360; //720;
 	const liT = pD * 5;
-	const T = liT*8;
+	const T = liT*10; //previously liT*8;
+
+	// TODO: remove after TESTING
+	// const sylT = 90;
+	// const pD = 360; //720;
+	// const liT = pD * 5;
+	// const T = liT*7;
 
 	const rhyB = (i,l) => i === 9 && {
 		bdr: l % 2 ? `${r(30,50)}% ${r(10,15)}%` : `${r(10,20)}% ${r(40,50)}%`,
@@ -164,7 +163,7 @@ using typographical quotes “” and apostrophes ‘’.
 		for (let z=0; z<3; z++) {
 			snt += mkStz(4, z);
 		}
-		snt += `<div id="cup" style="transform:translateX(1em);"></div>`;
+		snt += `<div id="cup" style="transform:translateX(${fz});"></div>`;
 		setTimeout(() => {
 			document.querySelector('#cup').innerHTML = mkStz(2, 3, true);
 		}, liT*4 + pD);
