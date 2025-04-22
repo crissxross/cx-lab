@@ -1,0 +1,75 @@
+<!-- source tutorial: https://www.kirupa.com/canvas/easily_draw_any_polygon.htm -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw a polygon</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, sans-serif;
+    }
+    canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+  <canvas width="500" height="500" id="canvas1"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+
+    // Parameters for the polygon
+    const sides = 5;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 200;
+    const style = {
+      fillStyle: 'hsl(0 100 50 / 0.5)',
+      strokeStyle: 'hsl(0 100 50)',
+      lineWidth: 5,
+    };
+    const rotation = Math.PI * 0.3;
+
+    // Draw the polygon
+    drawPolygon(ctx, centerX, centerY, sides, radius, style, rotation);
+
+    // Function to draw a polygon whose points/vertices are on a virtual circle with a given radius
+    // rotation is the optional angle to rotate the polygon
+    function drawPolygon(ctx, centerX, centerY, sides, radius, style, rotation = 0) {
+
+      ctx.beginPath();
+
+      for (let i = 0; i < sides; i++) {
+        // Calculate the angle between each point
+        const angle = (i * (Math.PI * 2) / sides) + rotation;
+
+        // position of each point/vertex on the virtual circle
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        if (i === 0) {
+          ctx.moveTo(x, y); // Move to the first point
+        } else {
+          ctx.lineTo(x, y); // Draw line to the next point
+        }
+      }
+
+      ctx.fillStyle = style.fillStyle;
+      ctx.lineWidth = style.lineWidth;
+      ctx.strokeStyle = style.strokeStyle;
+
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+  </script>
+
+</body>
+</html>
