@@ -1,0 +1,98 @@
+<!-- from https://www.kirupa.com/canvas/from_pixels_to_objects.htm -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Pixels to Objects</title>
+  <style>
+    body {
+      margin: 0px;
+      padding: 50px;
+    }
+
+    #myCanvas {
+      border: 1px #CCC solid;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <canvas id="myCanvas" width="550" height="350">
+
+    </canvas>
+  </div>
+
+  <script>
+    const mainCanvas = document.querySelector("#myCanvas");
+    const mainContext = mainCanvas.getContext("2d");
+
+    class Circle {
+      constructor(xPos, yPos, radius, color) {
+        this.radius = radius;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.color = color;
+      }
+
+      static clearAll(canvas, context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      setPosition(xPos, yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+      }
+
+      setRadius(radius) {
+        this.radius = radius;
+      }
+
+      setColor(color) {
+        this.color = color;
+      }
+
+      draw() {
+        mainContext.beginPath();
+
+        mainContext.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, true);
+        mainContext.closePath();
+
+        mainContext.fillStyle = this.color;
+        mainContext.fill();
+      }
+    }
+
+    const circles = [];
+
+    function drawCircle() {
+      for (let i = 0; i < 40; i++) {
+        const radius = Math.round(15 + Math.random() * 150);
+
+        const xPos = Math.round(Math.random() * mainCanvas.width);
+        const yPos = Math.round(Math.random() * mainCanvas.height);
+
+        const newCircle = new Circle(xPos, yPos, radius, "rgba(41, 170, 255, .1)");
+        newCircle.draw();
+
+        circles.push(newCircle);
+      }
+    }
+    drawCircle();
+
+    mainCanvas.addEventListener("mousedown", changeColor, false);
+
+    function changeColor() {
+      Circle.clearAll(mainCanvas, mainContext);
+
+      for (var i = 0; i < circles.length; i++) {
+        var circle = circles[i];
+
+        circle.setColor("rgba(251, 80, 18, .3)");
+        circle.draw();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
