@@ -1,0 +1,58 @@
+<!-- from Radu's tutorial https://youtube.com/watch?v=O1bJ4lGsxqc -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Straight Circle</title>
+  <style>
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+    }
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="1050" height="850"></canvas>
+
+  <script>
+    const N = 200;
+    const { width, height } = myCanvas;;
+    const ctx = myCanvas.getContext('2d');
+    // move coordinates to the center of the canvas
+    ctx.translate(width / 2, height / 2);
+
+    animate();
+
+    function animate() {
+      ctx.clearRect(-width / 2, -height / 2, width, height);
+
+      for (let i = 0; i < N; i++) {
+        // 1 + Math.sin(Date.now() / 1000) creates a value between 0 and 2:
+        const s = 1 + Math.sin(Date.now() / 1000);
+        const offset = Date.now() / 1000 + s * i * Math.PI / N;
+        const x = Math.sin(offset) * height / 2;
+        ctx.save();
+        ctx.rotate(i * Math.PI / N);
+        drawCircle(x, 0);
+        // if (i == N/2) ctx.fill();
+        if (i == 0) ctx.fill();
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function drawCircle(x, y, radius = 20) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+  </script>
+
+</body>
+</html>
