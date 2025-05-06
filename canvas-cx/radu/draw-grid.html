@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missing Square</title>
+  <style>
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+    }
+    canvas {
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    const rows = 15;
+    const columns = 15;
+    const cellSize = 50;
+
+    const ctx = myCanvas.getContext('2d');
+
+    drawGrid(ctx, rows, columns, cellSize, true, true);
+    drawGridlines(ctx, rows, columns, cellSize);
+
+    function drawGrid(ctx, rows, columns, cellSize, fill = true, checkered = false) {
+      ctx.canvas.width = columns * cellSize;
+      ctx.canvas.height = rows * cellSize;
+      ctx.scale(cellSize, cellSize);
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+          if (fill) {
+            ctx.fillStyle = `hsl(${Math.random() * 360} 80% 50%)`;
+            if (checkered) {
+              if ((y + x) % 2 === 0) {
+                ctx.fillRect(x, y, 1, 1);
+              }
+            } else {
+              ctx.fillRect(x, y, 1, 1);
+            }
+          }
+        }
+      }
+    }
+
+    function drawGridlines(ctx, rows, columns, cellSize, color = 'white') {
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1 / cellSize;
+          ctx.strokeRect(x, y, 1, 1);
+        }
+      }
+    }
+
+  </script>
+
+</body>
+</html>
