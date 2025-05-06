@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>intertwining-illusion</title>
+  <style>
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+    }
+    canvas {
+      background-color: gray;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="700" height="700"></canvas>
+
+  <script>
+    const ctx = myCanvas.getContext('2d');
+
+    for (let rad = 50; rad < 300; rad += 50) {
+      drawCircleofSquares(
+        myCanvas.width / 2,
+        myCanvas.height / 2,
+        rad,
+        20,
+        // alternate the offset to create the intertwining illusion
+        rad % 100 == 0 ? 0.3 : -0.3
+      );
+    }
+
+
+    function drawCircleofSquares(x, y, radius, squareSize, offset) {
+      // radius * 0.6 then multiply by 2 to get an even number of squares (alter 0.6 to change number of squares)
+      const squareCount = Math.floor(Math.PI * radius * 0.6 / squareSize) * 2;
+      const angleSpacing = (Math.PI * 2) / squareCount;
+      // Math.PI * 2 - angleSpacing / 2 to avoid drawing the last square twice
+      for (let a = 0; a < Math.PI * 2 - angleSpacing / 2; a += angleSpacing) {
+        const squareX = x + Math.cos(a) * radius;
+        const squareY = y + Math.sin(a) * radius;
+        ctx.strokeStyle = ctx.strokeStyle == "#000000" ? "#FFFFFF" : "#000000";
+
+        ctx.save();
+        ctx.translate(squareX, squareY);
+        // rotate the square, the offset creates the spiral illusion
+        ctx.rotate(a + offset);
+        ctx.beginPath();
+        ctx.rect(-squareSize / 2, -squareSize / 2, squareSize, squareSize);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
