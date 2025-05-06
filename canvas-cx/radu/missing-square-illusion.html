@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missing Square</title>
+  <style>
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+    }
+    canvas {
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    const rows = 11;
+    const columns = 13;
+    const cellSize = 50;
+
+    const ctx = myCanvas.getContext('2d');
+
+    drawGrid(ctx, rows, columns, cellSize);
+
+    const poly1 = [
+      [0, 0],
+      [0, 3],
+      [8, 3]
+    ]
+    const poly2 = [
+      [0, 0],
+      [0, 2],
+      [5, 2]
+    ]
+    const poly3 = [
+      [0, 0],
+      [0, 2],
+      [2, 2],
+      [2, 1],
+      [5, 1],
+      [5, 0]
+    ]
+    const poly4 = [
+      [0, 1],
+      [0, 2],
+      [5, 2],
+      [5, 0],
+      [2, 0],
+      [2, 1]
+    ]
+
+    // uncomment to check there's no overlap
+    // ctx.globalAlpha = 0.5;
+
+    drawPoly(ctx, poly1, 'red', [5, 2]);
+    drawPoly(ctx, poly2, 'cyan', [0, 0]);
+    drawPoly(ctx, poly3, 'yellow', [0, 2]);
+    drawPoly(ctx, poly4, 'green', [0, 3]);
+
+    // draw the polygons again in different positions & notice the missing square illusion
+    drawPoly(ctx, poly1, 'red', [0, 6]);
+    drawPoly(ctx, poly2, 'cyan', [8, 9]);
+    drawPoly(ctx, poly3, 'yellow', [0, 9]);
+    drawPoly(ctx, poly4, 'green', [3, 9]);
+
+
+    function drawGrid(ctx, rows, columns, cellSize, color = 'white') {
+      ctx.canvas.width = columns * cellSize;
+      ctx.canvas.height = rows * cellSize;
+      ctx.scale(cellSize, cellSize);
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1 / cellSize;
+          ctx.strokeRect(x, y, 1, 1);
+        }
+      }
+    }
+
+    function drawPoly(ctx, poly, color, offset = [0, 0]) {
+      ctx.beginPath();
+      for (let i = 0; i < poly.length; i++) {
+        ctx.lineTo(poly[i][0] + offset[0], poly[i][1] + offset[1]);
+      }
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+
+
+    // AN ALTERNATIVE GRID PATTERN -----------------------------
+
+    // drawAlternativeGrid(ctx, rows, columns, cellSize);
+
+    function drawAlternativeGrid(ctx, rows, columns, cellSize) {
+      ctx.canvas.width = columns * cellSize;
+      ctx.canvas.height = rows * cellSize;
+      ctx.scale(cellSize, cellSize);
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+          ctx.fillStyle = `hsl(${Math.random() * 360} 90% 50%)`;
+          // ctx.fillRect(x, y, 1, 1);
+          // checkered pattern
+          if ((y + x) % 2 === 0) {
+            ctx.fillRect(x, y, 1, 1);
+          }
+        }
+      }
+    }
+
+  </script>
+
+</body>
+</html>
