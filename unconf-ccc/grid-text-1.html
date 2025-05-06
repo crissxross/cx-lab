@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grid text 1</title>
+  <style>
+    body {
+      /* margin: 0; */
+      display: grid;
+      place-items: center;
+      font-family: system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <main></main>
+
+  <script>
+    const main = document.querySelector('main');
+    const rows = 15;
+    const columns = 15;
+
+    main.style.display = 'grid';
+    main.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    main.style.gap = '0.4em';
+
+
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
+        const span = document.createElement('span');
+        // const hue = Math.random() * 360
+        // note: 360/15 = 24
+        // const hue = y + x * 24
+        // const hue = y * 24 + x * 24;
+        const hue = y * 13 + x * 13;
+        span.textContent = `${y + 1}, ${x + 1} (${hue}º)`;
+        span.style.backgroundColor = `hsl(${hue} 70% 40%)`;
+        span.style.color = 'white';
+        span.style.padding = '0.3em';
+        span.style.borderRadius = '0.3em';
+        main.append(span);
+      }
+    }
+
+  </script>
+
+</body>
+</html>
