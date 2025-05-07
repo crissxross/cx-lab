@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grid text 4</title>
+  <style>
+    body {
+      /* margin: 0; */
+      display: grid;
+      place-items: center;
+      font-family: system-ui, sans-serif;
+      font-size: 1.5rem;
+    }
+    main {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4em;
+      cursor: pointer;
+    }
+    button {
+      cursor: pointer;
+    }
+    div {
+      color: white;
+      padding: 0.5em 0.3em;
+      border-radius: 0.3em;
+      text-align: center;
+      opacity: 0;
+      /* animation: 1s ease-in-out .2s 1 forwards fadeIn; */
+    }
+    span {
+      display: block;
+      margin-top: 0.5em;
+      font-size: 0.7rem;
+    }
+    @keyframes fadeIn {
+		from {
+			transform: translateY(-5rem);
+			scale: .1;
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+			scale: 1;
+		}
+	}
+  </style>
+</head>
+<body>
+  <main></main>
+  <button onclick="regenerateWordGrid()">Reset</button>
+
+  <script>
+    // Note: using let throughout for simplicity
+    let main = document.querySelector('main');
+
+    // Arrays of words to use in the word div element, replace these
+    let adjectives = ['happy', 'sad', 'angry', 'confused', 'excited', 'brave', 'clever', 'generous', 'mysterious', 'elegant', 'graceful', 'cheerful', 'gentle', 'curious', 'energetic'];
+    let nouns = ['cat', 'dog', 'bird', 'fish', 'turtle', 'elephant', 'lion', 'monkey', 'tiger', 'panda', 'dolphin', 'wolf', 'fox', 'rabbit', 'bear'];
+    let verbs = ['jumps', 'runs', 'sleeps', 'eats', 'plays', 'swims', 'dances', 'sings', 'climbs', 'flies', 'dives', 'crawls', 'hides', 'chases', 'thinks'];
+
+    // Generate the grid of words
+    generateWordGrid(5, 3);
+
+    function regenerateWordGrid() {
+      main.innerHTML = '';
+      generateWordGrid(5, 3);
+    }
+
+    main.addEventListener('click', function() {
+      main.innerHTML = '';
+      generateWordGrid(5, 3);
+    });
+
+    function pickWord(wordArray) {
+      return wordArray[Math.floor(Math.random() * wordArray.length)];
+    }
+
+    function generateWordGrid(rows, columns) {
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+          // Set the hue dynamically. Note: 360/15=24 360/6=60
+          // let hue = Math.random() * 360
+          // let hue = (y + x) * 24
+          let hue = (y + x) * 60
+          let div = document.createElement('div');
+          div.style.backgroundColor = `hsl(${hue} 70% 40%)`;
+          // animation delay based on row position
+          div.style.animation = `1s ease-in-out ${y/10}s 1 forwards fadeIn`;
+          if (x === 0) {
+            div.textContent = `${pickWord(adjectives)} `;
+          } else if (x === 1) {
+            div.textContent = `${pickWord(nouns)} `;
+          } else {
+            div.textContent = `${pickWord(verbs)} `;
+          }
+          // Uncomment span stuff FOR DEBUGGING
+          // let span = document.createElement('span');
+          // span.textContent = `${y}, ${x}, (hue ${hue}º)`;
+          // div.append(span);
+          main.append(div);
+        }
+      }
+    }
+
+  </script>
+
+</body>
+</html>
