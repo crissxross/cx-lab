@@ -10,34 +10,37 @@
       place-items: center;
       font-family: system-ui, sans-serif;
     }
+    main {
+      display: grid;
+      gap: 0.4em;
+    }
+    span {
+      color: white;
+      padding: 0.3em;
+      border-radius: 0.3em;
+    }
   </style>
 </head>
 <body>
   <main></main>
 
   <script>
-    const main = document.querySelector('main');
-    const rows = 15;
-    const columns = 15;
+    // Note: using let throughout for simplicity
+    let main = document.querySelector('main');
+    let rows = 15;
+    let columns = 15;
 
-    main.style.display = 'grid';
     main.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-    main.style.gap = '0.4em';
-
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < columns; x++) {
-        const span = document.createElement('span');
-        // const hue = Math.random() * 360
-        // note: 360/15 = 24
-        // const hue = y + x * 24
-        // const hue = y * 24 + x * 24;
-        const hue = y * 13 + x * 13;
+        let span = document.createElement('span');
+        // Set the hue dynamically. Note: 360/15 = 24
+        // let hue = Math.random() * 360
+        // let hue = (y + x) * 24
+        let hue = (y + x) * 13; // i.e. 12+1 because starting at 0
         span.textContent = `${y + 1}, ${x + 1} (${hue}º)`;
         span.style.backgroundColor = `hsl(${hue} 70% 40%)`;
-        span.style.color = 'white';
-        span.style.padding = '0.3em';
-        span.style.borderRadius = '0.3em';
         main.append(span);
       }
     }
