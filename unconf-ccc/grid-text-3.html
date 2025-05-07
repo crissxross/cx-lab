@@ -13,46 +13,51 @@
     }
     main {
       display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.4em;
+      cursor: pointer;
+    }
+    button {
       cursor: pointer;
     }
     div {
       color: white;
-      padding: 0.3em;
+      padding: 0.5em 0.3em;
       border-radius: 0.3em;
       text-align: center;
     }
     span {
-      font-size: 0.7rem;
       display: block;
       margin-top: 0.5em;
+      font-size: 0.7rem;
     }
   </style>
 </head>
 <body>
   <main></main>
-  <!-- <button onclick="generateGridWords()">Reset</button> -->
+  <button onclick="regenerateWordGrid()">Reset</button>
 
   <script>
     // Note: using let throughout for simplicity
     let main = document.querySelector('main');
-    let rows = 5;
-    let columns = 3;
 
     // Arrays of words to use in the word div element, replace these
     let adjectives = ['happy', 'sad', 'angry', 'confused', 'excited', 'brave', 'clever', 'generous', 'mysterious', 'elegant', 'graceful', 'cheerful', 'gentle', 'curious', 'energetic'];
     let nouns = ['cat', 'dog', 'bird', 'fish', 'turtle', 'elephant', 'lion', 'monkey', 'tiger', 'panda', 'dolphin', 'wolf', 'fox', 'rabbit', 'bear'];
-    let verbs = ['jumps', 'runs', 'sleeps', 'eats', 'plays', 'swims', 'dances', 'sings', 'climbs', 'flies', 'dives', 'crawls', 'hides', 'chases', 'reads'];
+    let verbs = ['jumps', 'runs', 'sleeps', 'eats', 'plays', 'swims', 'dances', 'sings', 'climbs', 'flies', 'dives', 'crawls', 'hides', 'chases', 'thinks'];
 
-    main.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    // Generate the grid of words
+    generateWordGrid(5, 3);
+
+    function regenerateWordGrid() {
+      main.innerHTML = '';
+      generateWordGrid(5, 3);
+    }
 
     main.addEventListener('click', function() {
       main.innerHTML = '';
-      generateWordGrid(rows, columns);
+      generateWordGrid(5, 3);
     });
-
-    // Generate the grid of words
-    generateWordGrid(rows, columns);
 
     function pickWord(wordArray) {
       return wordArray[Math.floor(Math.random() * wordArray.length)];
@@ -66,7 +71,6 @@
           // let hue = (y + x) * 24
           let hue = (y + x) * 60
           let div = document.createElement('div');
-          let span = document.createElement('span');
           div.style.backgroundColor = `hsl(${hue} 70% 40%)`;
           if (x === 0) {
             div.textContent = `${pickWord(adjectives)} `;
@@ -75,8 +79,10 @@
           } else {
             div.textContent = `${pickWord(verbs)} `;
           }
-          span.textContent = `${y}, ${x}, (hue ${hue}º)`;
-          div.append(span);
+          // Uncomment FOR DEBUGGING
+          // let span = document.createElement('span');
+          // span.textContent = `${y}, ${x}, (hue ${hue}º)`;
+          // div.append(span);
           main.append(div);
         }
       }
