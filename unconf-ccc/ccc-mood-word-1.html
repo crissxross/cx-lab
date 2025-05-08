@@ -1,0 +1,151 @@
+<!-- Based on js-css-cx/joel/joel-test-simpler-11.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ccc mood word 1</title>
+
+<!-- NOTES (comments):
+
+All the JavaScript (JS) code is inside the <script> tags (below). Comments are lines of text in the code that are ignored by the browser. Here they're used to help explain the code. In JavaScript, comments start with //
+
+Meaning of symbols used in the code:
+
+  let - keyword to declare a variable (note: there are others but this code uses let throughout for simplicity)
+
+  Assignment operator: =
+    The assignment operator is used to assign a value to a variable. For example, let x = 5; assigns the value 5 to the variable x.
+
+  Greater than: >
+  Greater than or equal to: >=
+  Less than: <
+  Less than or equal to: <=
+  Strictly equal to: ===
+  Strictly not equal to: !==
+
+  ` ` - syntax for template strings (text), used for multi-line strings and string interpolation (inserting a variable into a string)
+
+  ${ } - syntax to insert a variable (or expression) into a string
+
+COLOR
+  There are a number of ways to specify colors in CSS & JavaScript. This code uses the HSL (Hue, Saturation, Lightness) color model:
+    - Hue: the color type (0-360 degrees on the color wheel)
+    - Saturation: the intensity of the color (0-100%)
+    - Lightness: the brightness of the color (0-100%)
+  For example:
+    - hsl(0 100 40) is a shade of red
+    - hsl(120 100 40) is a shade of green
+    - hsl(240 100 40) is a shade of blue
+  (note: you can also use this syntax, e.g. hsl(0, 100%, 40%) )
+
+-->
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 15vw;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="word">?</div>
+
+  <script>
+    let body = document.querySelector("body");
+    let word = document.querySelector(".word");
+
+    // Arrays of words to use in the word div element, replace these
+    let wordsPos = ["joy", "happy", "relaxed", "comfortable", "peaceful", "satisfied", "content", "calm", "serene", "tranquil", "quiet", "still"];
+    let wordsNeg = ["sad", "angry", "anxious", "nervous", "tense", "worried", "stressed", "upset", "frustrated", "irritated", "annoyed", "agitated"];
+
+    // for better performance, calculate the length of the arrays and the width & height of the viewport/window once rather than on every update (see below)
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let percentX;
+    let percentY;
+    let hue;
+    let saturation;
+    let lightness;
+
+    // define the animations
+    let posAnimation = word.animate(
+      [{ transform: "translate(-40px, -40px)" }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    let negAnimation = word.animate(
+      [{ transform: "translate(30px, 15px)" }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    // pause the animations initially
+    posAnimation.pause();
+    negAnimation.pause();
+
+    document.addEventListener("pointermove", function (event) {
+      // the X and Y coordinates of the pointer as a percentage of the viewport width and height
+      percentX = event.clientX / width;
+      percentY = event.clientY / height;
+      // call the update functions every time the pointer moves
+      updateWord();
+      updateColor();
+      updateAnimation();
+    });
+
+    function updateWord() {
+      // assign an index for the arrays of words based on pointer's horizontal position - round to whole numbers with Math.floor
+      let wordsNegIndex = Math.floor(percentX * wordsNegLength);
+      let wordsPosIndex = Math.floor(percentX * wordsPosLength);
+      // set the text content of the word element based on the pointer being in the upper or lower half of the viewport
+      if (percentY < 0.5) {
+        word.textContent = wordsPos[wordsPosIndex];
+        word.style.color = `hsl(${hue-120} 100 40)`;
+      } else {
+        word.textContent = wordsNeg[wordsNegIndex];
+        word.style.color = `hsl(${hue+120} ${saturation} 40)`;
+      }
+    }
+
+    function updateColor() {
+      // hue based on horizontal pointer position
+      hue = percentX * 360;
+      // saturation and lightness based on vertical pointer position
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body element
+      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+    }
+
+    function updateAnimation() {
+      // change the animation based on the pointer being in the upper or lower half of the viewport
+      if (percentY < 0.5) {
+        negAnimation.cancel();
+        posAnimation.play();
+      } else {
+        posAnimation.cancel();
+        negAnimation.play();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
