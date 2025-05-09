@@ -1,0 +1,107 @@
+<!-- Based on js-css-cx/joel/joel-test-simpler-11.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ccc mood color only</title>
+
+<!-- NOTES (comments):
+
+All the JavaScript (JS) code is inside the <script> tags (below). Comments are lines of text in the code that are ignored by the browser. Here they're used to help explain the code. In JavaScript, comments start with //
+
+Meaning of symbols used in the code:
+
+  let - keyword to declare a variable (note: there are others but this code uses let throughout for simplicity)
+
+  Assignment operator: =
+    The assignment operator is used to assign a value to a variable. For example, let x = 5; assigns the value 5 to the variable x.
+
+  Greater than: >
+  Greater than or equal to: >=
+  Less than: <
+  Less than or equal to: <=
+  Strictly equal to: ===
+  Strictly not equal to: !==
+
+  ` ` - syntax for template strings (text), used for multi-line strings and string interpolation (inserting a variable into a string)
+
+  ${ } - syntax to insert a variable (or expression) into a string
+
+COLOR
+  There are a number of ways to specify colors in CSS & JavaScript. This code uses the HSL (Hue, Saturation, Lightness) color model:
+    - Hue: the color type (0-360 degrees on the color wheel)
+    - Saturation: the intensity of the color (0-100%)
+    - Lightness: the brightness of the color (0-100%)
+  For example:
+    - hsl(0 100% 40%) is a shade of red
+    - hsl(120 100% 40%) is a shade of green
+    - hsl(240 100% 40%) is a shade of blue
+  (note: you can also use this syntax, e.g. hsl(0 100 40) )
+
+-->
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 4vw;
+      word-spacing: 1vw;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="word">HSL ?</div>
+
+  <script>
+    let body = document.querySelector("body");
+    let word = document.querySelector(".word");
+
+    // for better performance, calculate the width & height of the viewport/window once rather than on every update (see below)
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let percentX;
+    let percentY;
+    let hue;
+    let saturation;
+    let lightness;
+
+
+    document.addEventListener("pointermove", function (event) {
+      // the X and Y coordinates of the pointer as a percentage of the viewport width and height
+      percentX = event.clientX / width;
+      percentY = event.clientY / height;
+      // call the update functions every time the pointer moves
+      updateColor();
+      updateWord();
+    });
+
+    function updateColor() {
+      // hue based on horizontal pointer position
+      hue = percentX * 360;
+      // saturation and lightness based on vertical pointer position
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body element
+      body.style.backgroundColor = `hsl(${hue} ${saturation}% ${lightness}%)`;
+    }
+
+    function updateWord() {
+      // display the HSL value of the background color
+      word.textContent = `hsl(${Math.floor(hue)} ${Math.floor(saturation)}% ${Math.floor(lightness)}%)`;
+      // change word color depending on background color for readability
+      if (percentY < 0.5) {
+        word.style.color = `hsl(0 0% 0%)`; // black
+      } else {
+        word.style.color = `hsl(0 100% 100%)`; // white
+      }
+    }
+
+  </script>
+
+</body>
+</html>
