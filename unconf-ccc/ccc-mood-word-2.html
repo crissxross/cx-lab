@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ccc mood word 1</title>
+  <title>ccc mood word</title>
 
 <!-- NOTES (comments):
 
@@ -34,10 +34,10 @@ COLOR
     - Saturation: the intensity of the color (0-100%)
     - Lightness: the brightness of the color (0-100%)
   For example:
-    - hsl(0 100 40) is a shade of red
-    - hsl(120 100 40) is a shade of green
-    - hsl(240 100 40) is a shade of blue
-  (note: you can also use this syntax, e.g. hsl(0, 100%, 40%) )
+    - hsl(0 100% 40%) is a shade of red
+    - hsl(120 100% 40%) is a shade of green
+    - hsl(240 100% 40%) is a shade of blue
+  (note: you can also use this syntax, e.g. hsl(0 100 40) )
 
 -->
 
@@ -122,10 +122,10 @@ COLOR
       // set the text content of the word element based on the pointer being in the upper or lower half of the viewport
       if (percentY < 0.5) {
         word.textContent = wordsPos[posIndex];
-        word.style.color = `hsl(${hue-120} 100 40)`;
+        word.style.color = `hsl(${hue-120} 100% 40%)`;
       } else {
         word.textContent = wordsNeg[negIndex];
-        word.style.color = `hsl(${hue+120} ${saturation} 40)`;
+        word.style.color = `hsl(${hue+120} ${saturation}% 40%)`;
       }
     }
 
@@ -136,7 +136,7 @@ COLOR
       saturation = 100 - percentY * 100; // invert the percentage
       lightness = 100 - percentY * 100;
       // change the background color of the body element
-      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+      body.style.backgroundColor = `hsl(${hue} ${saturation}% ${lightness}%)`;
     }
 
     function updateAnimation() {
