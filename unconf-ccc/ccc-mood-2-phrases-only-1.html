@@ -1,0 +1,157 @@
+<!-- Based on js-css-cx/joel/joel-test-generator-12.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ccc mood phrase</title>
+
+<!-- NOTES (comments):
+
+All the JavaScript (JS) code is inside the <script> tags (below). Comments are lines of text in the code that are ignored by the browser. Here they're used to help explain the code. In JavaScript, comments start with //
+
+Meaning of symbols used in the code:
+
+  let - keyword to declare a variable (note: there are others but this code uses let throughout for simplicity)
+
+  Assignment operator: =
+    The assignment operator is used to assign a value to a variable. For example, let x = 5; assigns the value 5 to the variable x.
+
+  Greater than: >
+  Greater than or equal to: >=
+  Less than: <
+  Less than or equal to: <=
+  Strictly equal to: ===
+  Strictly not equal to: !==
+
+  ` ` - syntax for template strings (text), used for multi-line strings and string interpolation (inserting a variable into a string)
+
+  ${ } - syntax to insert a variable (or expression) into a string
+
+COLOR
+  There are a number of ways to specify colors in CSS & JavaScript. This code uses the HSL (Hue, Saturation, Lightness) color model:
+    - Hue: the color type (0-360 degrees on the color wheel)
+    - Saturation: the intensity of the color (0-100%)
+    - Lightness: the brightness of the color (0-100%)
+  For example:
+    - hsl(0 100% 40%) is a shade of red
+    - hsl(120 100% 40%) is a shade of green
+    - hsl(240 100% 40%) is a shade of blue
+  (note: you can also use this syntax, e.g. hsl(0 100 40) )
+
+-->
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 8vw;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="phrase-pos">?</div>
+  <div id="phrase-neg">?</div>
+
+  <script>
+    let body = document.querySelector("body");
+    let phrasePos = document.querySelector("#phrase-pos");
+    let phraseNeg = document.querySelector("#phrase-neg");
+
+    // Arrays of words to use in the phrase div element, replace these
+    let thingsPos = ["whispers", "sighs", "songs", "signs", "gestures", "glances", "touches", "hints", "talk", "guarantees"];
+    let thingsNeg = ["tears", "groans", "shouts", "screams", "signs", "glares", "blows", "hints", "quarrels", "warnings"];
+    let wordsPos = ["joy", "happiness", "relaxation", "comfort", "peace", "satisfaction", "contentment", "calm", "serenity", "tranquility", "quietness", "stillness"];
+    let wordsNeg = ["sadness", "anger", "anxiety", "nervousness", "tension", "worry", "stress", "distress", "frustration", "irritability", "annoyance", "agitation"];
+
+    // for better performance, calculate the length of the arrays and the width & height of the viewport/window once rather than on every update (see below)
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+    let thingsPosLength = thingsPos.length;
+    let thingsNegLength = thingsNeg.length;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let percentX;
+    let percentY;
+
+       // define the animations
+    let posAnimation = phrasePos.animate(
+      [{ transform: "translate(-40px, -40px)" }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    let negAnimation = phraseNeg.animate(
+      [{ transform: "translate(-15px, 30px)" }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    // pause the animations initially
+    posAnimation.pause();
+    negAnimation.pause();
+
+    document.addEventListener("pointermove", function (event) {
+      posAnimation.play();
+      negAnimation.play();
+      // the X and Y coordinates of the pointer as a percentage of the viewport width and height
+      percentX = event.clientX / width;
+      percentY = event.clientY / height;
+      // call the update functions every time the pointer moves
+      updatePhrase();
+      updateAnimation();
+    });
+
+    function updatePhrase() {
+      // assign an index for the arrays of words based on pointer's horizontal or vertical position - round to whole numbers with Math.floor
+      let wordsPosIndex = Math.floor(percentX * wordsPosLength);
+      let wordsNegIndex = Math.floor(percentX * wordsNegLength);
+      let thingsPosIndex = Math.floor((percentY * 1.6) * thingsPosLength);
+      // this maps the range of 0.4-1.0 to 0-1 before using it with the array length (thingsNegLength)
+      let thingsNegIndex = percentY <= 0.4 ? 0 : Math.floor(((percentY - 0.4) / 0.6) * thingsNegLength);
+      // set the negative &/or positive tone of the phrase (element) based on the pointer's vertical position
+      if (percentY < 0.4) {
+        phrasePos.textContent = `${thingsPos[thingsPosIndex]} of ${wordsPos[wordsPosIndex]}`;
+      } else if (percentY > 0.6) {
+        phraseNeg.textContent = `${thingsNeg[thingsNegIndex]} of ${wordsNeg[wordsNegIndex]}`;
+      } else {
+        phrasePos.textContent = `${thingsPos[thingsPosIndex]} of ${wordsPos[wordsPosIndex]}`;
+        phraseNeg.textContent = `${thingsNeg[thingsNegIndex]} of ${wordsNeg[wordsNegIndex]}`;
+      }
+
+      // add dynamic styles to the elements based on the pointer position
+      // Exponential opacity change using Math.pow
+      // Values below 1 for the exponent make the transition more gradual near the edges
+      // Values above 1 make the transition more dramatic in the middle
+      let exponent = 2; // Adjust this value to control how dramatic the exponential curve is
+      phrasePos.style.opacity = Math.pow(1 - percentY, exponent) + 0.05;
+      phraseNeg.style.opacity = Math.pow(percentY, exponent) + 0.05;
+    }
+
+    function updateAnimation() {
+      // change the speed of the animations based on the pointer being in the upper or lower half of the viewport/screen
+      if (percentY < 0.5) {
+        posAnimation.playbackRate = 1;
+        negAnimation.playbackRate = 0.75;
+      } else {
+        posAnimation.playbackRate = 0.5;
+        negAnimation.playbackRate = 1.5;
+      }
+    }
+  </script>
+
+</body>
+</html>
