@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ccc mood circle triangle</title>
+
+<!-- NOTES (comments):
+
+All the JavaScript (JS) code is inside the <script> tags (below). Comments are lines of text in the code that are ignored by the browser. Here they're used to help explain the code. In JavaScript, comments start with //
+
+Meaning of symbols used in the code:
+
+  let - keyword to declare a variable (note: there are others but this code uses let throughout for simplicity)
+
+  Assignment operator: =
+    The assignment operator is used to assign a value to a variable. For example, let x = 5; assigns the value 5 to the variable x.
+
+  Greater than: >
+  Greater than or equal to: >=
+  Less than: <
+  Less than or equal to: <=
+  Strictly equal to: ===
+  Strictly not equal to: !==
+
+  ` ` - syntax for template strings (text), used for multi-line strings and string interpolation (inserting a variable into a string)
+
+  ${ } - syntax to insert a variable (or expression) into a string
+
+COLOR
+  There are a number of ways to specify colors in CSS & JavaScript. This code uses the HSL (Hue, Saturation, Lightness) color model:
+    - Hue: the color type (0-360 degrees on the color wheel)
+    - Saturation: the intensity of the color (0-100%)
+    - Lightness: the brightness of the color (0-100%)
+  For example:
+    - hsl(0 100% 40%) is a shade of red
+    - hsl(120 100% 40%) is a shade of green
+    - hsl(240 100% 40%) is a shade of blue
+  (note: you can also use this syntax, e.g. hsl(0 100 40) )
+
+-->
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      cursor: pointer;
+    }
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 15vw;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background-color: hsl(120 10% 80%);
+    }
+    body > * {
+      grid-area: 1 / 1;
+    }
+    .container {
+      position: relative;
+      width: min(90vw, 90vh);
+      height: min(90vw, 90vh);
+    }
+    #shape {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="shape"></div>
+  </div>
+  <div id="word"></div>
+
+  <script>
+    let body = document.querySelector("body");
+    let word = document.querySelector("#word");
+    let shape = document.querySelector("#shape");
+
+    let wordsPos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'];
+    let wordsNeg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'];
+
+    // for better performance, calculate the length of the arrays and the width & height of the viewport/window once rather than on every update (see below)
+    let wordsPosLength = wordsPos.length;
+    let wordsNegLength = wordsNeg.length;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    // set initial values
+    let x = width/2;
+    let y = height/2;
+    let percentX = x / width;
+    let percentY = y / height;
+    let hue;
+    let saturation;
+    let lightness;
+
+    // set the initial words
+    updateWord();
+
+    // respond to pointer (e.g. mouse, touch) movement
+    document.addEventListener('pointermove', function (event) {
+      // the pointer coordinates converted to a percentage of the viewport width and height
+      percentX = event.clientX / width;
+      percentY = event.clientY / height;
+      // call the update functions every time the pointer moves
+      updateColor();
+      updateShape();
+      updateWord();
+      updateAnimation();
+    });
+
+    function updateColor() {
+      // hue based on horizontal pointer position
+      hue = percentX * 360;
+      // saturation and lightness based on vertical pointer position
+      saturation = 100 - percentY * 100; // invert the percentage
+      lightness = 100 - percentY * 100;
+      // change the background color of the body element
+      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+    }
+
+    function updateWord() {
+      // indexes for the arrays of words - round to whole numbers with Math.floor
+      let posIndex = Math.floor(percentX * wordsPosLength);
+      let negIndex = Math.floor(percentX * wordsNegLength);
+
+      // change the styles based on the pointer being in the upper or lower half of the viewport
+      if (percentY < 0.5) {
+        // upper half of the viewport
+        word.textContent = wordsPos[posIndex];
+        // pos color is a complimentary hue to background hue
+        word.style.color = `hsl(${hue-120} 100% 40%)`;
+      } else {
+        // lower half of the viewport
+        word.textContent = wordsNeg[negIndex];
+        word.style.color = `hsl(${hue+120} ${saturation}% 40%)`;
+      }
+    }
+
+    function updateShape() {
+      // change the styles based on the pointer being in the upper or lower half of the viewport/screen
+      if (percentY <= 0.5) {
+        // upper half of the viewport
+        shape.style.clipPath = `circle(50%)`;
+        shape.style.backgroundColor = `hsl(${hue-100} 100 70)`;
+      } else {
+        // lower half of the viewport - triangle
+        shape.style.clipPath = 'polygon(50% 100%,100% 0,0 0)';
+        shape.style.backgroundColor = `hsl(0 100 40)`;
+      }
+    }
+
+    // define the animations
+    let posAnimation = word.animate(
+      [{ transform: "translate(-40px, -40px)" }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    let negAnimation = word.animate(
+      [{ transform: "translate(30px, 15px)" }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    // pause the animations initially
+    posAnimation.pause();
+    negAnimation.pause();
+
+    function updateAnimation() {
+      // change the animation based on the pointer being in the upper or lower half of the viewport
+      if (percentY < 0.5) {
+        negAnimation.cancel();
+        posAnimation.play();
+      } else {
+        posAnimation.cancel();
+        negAnimation.play();
+      }
+    }
+
+  </script>
+
+</body>
+</html>
