@@ -75,31 +75,6 @@ COLOR
     let saturation;
     let lightness;
 
-    // define the animations
-    let posAnimation = word.animate(
-      [{ transform: "translate(-40px, -40px)" }],
-      {
-        duration: 2000,
-        easing: "ease-in-out",
-        iterations: Infinity,
-        direction: "alternate",
-      }
-    );
-
-    let negAnimation = word.animate(
-      [{ transform: "translate(30px, 15px)" }],
-      {
-        duration: 400,
-        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
-        iterations: Infinity,
-        direction: "alternate",
-      }
-    );
-
-    // pause the animations initially
-    posAnimation.pause();
-    negAnimation.pause();
-
     document.addEventListener("pointermove", function (event) {
       // the X and Y coordinates of the pointer as a percentage of the viewport width and height
       percentX = event.clientX / width;
@@ -133,6 +108,31 @@ COLOR
       // change the background color of the body element
       body.style.backgroundColor = `hsl(${hue} ${saturation}% ${lightness}%)`;
     }
+
+    // define the animations
+    let posAnimation = word.animate(
+      [{ transform: "translate(-40px, -40px)" }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    let negAnimation = word.animate(
+      [{ transform: "translate(30px, 15px)" }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.3, -0.9, .5, 1.6)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    // pause the animations initially
+    posAnimation.pause();
+    negAnimation.pause();
 
     function updateAnimation() {
       // change the animation based on the pointer being in the upper or lower half of the viewport
