@@ -82,10 +82,10 @@ COLOR
       percentX = event.clientX / width;
       percentY = event.clientY / height;
       // call the update functions every time the pointer moves
-      updateWord();
+      updatePhrase();
     });
 
-    function updateWord() {
+    function updatePhrase() {
       // assign an index for the arrays of words based on pointer's horizontal or vertical position - round to whole numbers with Math.floor
       let wordsPosIndex = Math.floor(percentX * wordsPosLength);
       let wordsNegIndex = Math.floor(percentX * wordsNegLength);
