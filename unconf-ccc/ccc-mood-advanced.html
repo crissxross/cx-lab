@@ -171,9 +171,9 @@ COLOR
       );
     }
 
-    // animate the words to move randomly - these animations are ongoing so don't need to be in an update function
+    // these animations are ongoing so don't need to be in an update function
     posWord.animate(
-      [{ transform: `translate(${random(-100, 100)}px, ${random(-40, 40)}px)` }],
+      [{ transform: `translate(-40px, -40px)` }],
       {
         duration: 2000,
         easing: "ease-in-out",
@@ -183,7 +183,7 @@ COLOR
     );
 
     negWord.animate(
-      [{ transform: `translate(${random(-100, 50)}px, ${random(-40, 40)}px)` }],
+      [{ transform: `translate(20px, -30px)` }],
       {
         duration: 400,
         easing: "cubic-bezier(.28,-0.62,.61,1.55)",
@@ -191,11 +191,6 @@ COLOR
         direction: "alternate",
       }
     );
-
-    // helper function to generate a random number between min and max
-    function random(min, max) {
-      return Math.random() * (max - min) + min;
-    }
 
   </script>
 
