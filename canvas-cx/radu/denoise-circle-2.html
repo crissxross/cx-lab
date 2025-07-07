@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Denoise Circle</title>
+</head>
+<body>
+  <canvas
+    id="myCanvas"
+    width="1000" height="800"
+  ></canvas>
+  <script>
+    const ctx = myCanvas.getContext("2d");
+    const { width, height } = myCanvas;
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, width, height);
+
+    let paused = false;
+    myCanvas.addEventListener("click", () => {
+      paused = !paused;
+      if (!paused) {
+        animate();
+      }
+    });
+
+    animate();
+
+    function animate() {
+      const oldImageData = ctx.getImageData(0, 0, width, height);
+      const oldData = oldImageData.data;
+
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = "black";
+
+      const radius = 100;
+      // ** 2 is used to turn the sine wave into a positive value
+      const percent = Math.sin(Date.now() / 1000) ** 2;
+      const x = lerp(
+        radius,
+        width - radius,
+        percent
+      );
+      const y = height / 2;
+
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      const newImageData = ctx.getImageData(0, 0, width, height);
+      const newData = newImageData.data;
+
+      // imageData.data is a flat array of RGBA values that come in groups of 4
+      for (let i = 0; i < newData.length; i += 4) {
+        // if image data is black (0), replace it with a random black or white pixel
+        if (newData[i] == 0) {
+          const randBW = Math.random() < 0.5 ? 255 : 0;
+          newData[i] = randBW;     // R
+          newData[i + 1] = randBW; // G
+          newData[i + 2] = randBW; // B
+        } else {
+          newData[i] = oldData[i];
+          newData[i + 1] = oldData[i + 1];
+          newData[i + 2] = oldData[i + 2];
+        }
+      }
+
+      ctx.putImageData(newImageData, 0, 0);
+
+      if (!paused) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+  </script>
+
+</body>
+</html>

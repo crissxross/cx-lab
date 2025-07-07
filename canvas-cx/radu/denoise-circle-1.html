@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Denoise Circle</title>
+</head>
+<body>
+  <canvas
+    id="myCanvas"
+    width="1000" height="800"
+    style="background-color: orange;"
+  ></canvas>
+  <script>
+    const ctx = myCanvas.getContext("2d");
+    const { width, height } = myCanvas;
+
+    animate();
+
+    function animate() {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = "black";
+
+      const radius = 100;
+      // ** 2 is used to turn the sine wave into a positive value
+      const percent = Math.sin(Date.now() / 1000) ** 2;
+      const x = lerp(
+        radius,
+        width - radius,
+        percent
+      );
+      const y = height / 2;
+
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+
+      // imageData.data is a flat array of RGBA values that come in groups of 4
+      for (let i = 0; i < data.length; i += 4) {
+        // if image data is black (0), replace it with a random black or white pixel
+        if (data[i] == 0) {
+          const randBW = Math.random() < 0.5 ? 255 : 0;
+          data[i] = randBW;     // R
+          data[i + 1] = randBW; // G
+          data[i + 2] = randBW; // B
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+
+      requestAnimationFrame(animate);
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+  </script>
+
+</body>
+</html>
