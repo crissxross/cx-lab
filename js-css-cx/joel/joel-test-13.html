@@ -1,4 +1,3 @@
-<!-- Recipe test sample for JOEL by Christine Wilks, Mar 2025 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +35,8 @@
     let height = window.innerHeight;
     let percentX;
     let percentY;
-    let hue;
+    let hues = [60, 250, 100, 300, 20, 200, 0, 180, 40, 220];
+    let hueIndex = 0;
     let saturation;
     let lightness;
 
@@ -77,26 +77,27 @@
 
     function updateWord() {
       // assign an index for the arrays of words based on pointer's horizontal position - round to whole numbers with Math.floor
-      let negIndex = Math.floor(percentX * wordsNegLength);
-      let posIndex = Math.floor(percentX * wordsPosLength);
+      let wordsNegIndex = Math.floor(percentX * wordsNegLength);
+      let wordsPosIndex = Math.floor(percentX * wordsPosLength);
       // set the text content of the word element based on the pointer being in the upper or lower half of the viewport
       if (percentY < 0.5) {
-        word.textContent = wordsPos[posIndex];
-        word.style.color = `hsl(${hue-120} 100 40)`;
+        word.textContent = wordsPos[wordsPosIndex];
+        word.style.color = `hsl(${hues[hueIndex]-120} 100 40)`;
       } else {
-        word.textContent = wordsNeg[negIndex];
-        word.style.color = `hsl(${hue+120} ${saturation} 40)`;
+        word.textContent = wordsNeg[wordsNegIndex];
+        word.style.color = `hsl(${hues[hueIndex]+120} ${saturation} 40)`;
       }
     }
 
     function updateColor() {
       // hue based on horizontal pointer position
-      hue = percentX * 360;
+      hueIndex = Math.floor(percentX * 10); // scale to 0-9 for the hues array
       // saturation and lightness based on vertical pointer position
       saturation = 100 - percentY * 100; // invert the percentage
       lightness = 100 - percentY * 100;
       // change the background color of the body element
-      body.style.backgroundColor = `hsl(${hue} ${saturation} ${lightness})`;
+      body.style.backgroundColor = `hsl(${hues[hueIndex]} ${saturation} ${lightness})`;
+      console.log(`Hue: ${hues[hueIndex]}, hueIndex: ${hueIndex}`);
     }
 
     function updateAnimation() {
