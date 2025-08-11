@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<body id="body" style="font-family: system-ui, sans-serif; font-size: 15vw; height: 100vh; margin: 0; overflow: hidden;">
+  <div id="spot" style="width: 8vw; height: 8vw; position: absolute;"></div>
+  <div style="display: grid; place-items: center; min-height: 100%;">
+    <div id="pDiv"></div>
+    <div id="nDiv"></div>
+  </div>
+
+  <script>
+    let w = window.innerWidth,
+      h = window.innerHeight,
+      pos = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still'],
+      neg = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated'],
+      hue,
+      sat,
+      li,
+      x = w/2,
+      y = h/2,
+      pX = x/w,
+      pY = y/h,
+      rad = spot.offsetWidth/2;
+
+    createPosTxt();
+    update();
+
+    function ran(min,max) {
+      return Math.random()*(max-min)+min;
+    }
+
+    document.addEventListener('pointermove', (e) => {
+      x = e.clientX;
+      y = e.clientY;
+      pX = x/w;
+      pY = y/h;
+      update();
+    });
+
+    function update() {
+      hue = pX*360;
+      sat = 100 - pY*100; // invert %
+      li = 100 - pY*100;
+      body.style.backgroundColor = `hsl(${hue} ${sat} ${li})`;
+      pDiv.style.opacity = 1-pY;
+      nDiv.style.opacity = pY;
+      nDiv.textContent = neg[Math.floor(pX*neg.length)];
+
+      if (pY < 0.5) {
+        spot.style.clipPath = `circle(50%)`;
+        spot.style.backgroundColor = `hsl(${hue-100} 100 70)`;
+        pDiv.style.color = `hsl(${hue-120} 100 40)`;
+        nDiv.style.color = `hsl(200 100 70)`;
+      } else {
+        spot.style.clipPath = 'polygon(50% 100%,100% 0,0 0)';
+        spot.style.backgroundColor = `hsl(0 100 40)`;
+        pDiv.style.color = `hsl(200 50 30)`;
+        nDiv.style.color = `hsl(0 80 50)`;
+      }
+      spot.animate(
+        [{transform: `translate(${x-rad}px, ${y-rad}px)` }],
+        {
+          duration: 1000,
+          easing: "ease-in-out",
+          fill: "forwards",
+        }
+      );
+    }
+
+    function createPosTxt() {
+      let txt = document.createElement('span');
+      txt.textContent = pos[Math.floor(ran(0, pos.length))];
+      pDiv.appendChild(txt);
+      let anim = txt.animate(
+        [
+          {opacity: 0, offset: 0},
+          {opacity: 1, offset: 0.25},
+          {opacity: 1, offset: 0.75},
+          {opacity: 0, offset: 1}
+        ],
+        {
+          duration: ran(4000, 6000),
+          easing: 'ease-in-out',
+        }
+      );
+      anim.onfinish = () => {
+        txt.remove();
+        createPosTxt();
+      };
+    }
+
+    pDiv.animate(
+      [{ transform: `translate(${ran(-100, 100)}px, ${ran(-40, 40)}px)` }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+
+    nDiv.animate(
+      [{ transform: `translate(${ran(-100, 50)}px, ${ran(-40, 40)}px)` }],
+      {
+        duration: 400,
+        easing: "cubic-bezier(.28, -0.62, .61, 1.55)",
+        iterations: Infinity,
+        direction: "alternate",
+      }
+    );
+  </script>
+</body>
+</html>
