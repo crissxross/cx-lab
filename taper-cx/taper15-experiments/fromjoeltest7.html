@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<body id="body" style="font-family: system-ui, sans-serif; font-size: 15vw; height: 100vh; margin: 0; overflow: hidden;">
-  <div id="spot" style="width: 8vw; height: 8vw; position: absolute;"></div>
-  <div style="display: grid; place-items: center; min-height: 100%;">
-    <div id="pDiv"></div>
-    <div id="nDiv"></div>
-  </div>
+<!-- The MINIFIED version of fromjoeltest7.html is 2092 bytes (excluding body tags) -->
+<html>
+<body style="margin: 0; overflow: hidden;">
+  <main id="m" style="font-family: system-ui, sans-serif; font-size: 15vw; height: 100vh;">
+    <div id="spot" style="width: 8vw; height: 8vw; position: absolute;"></div>
+    <div style="display: grid; place-items: center; min-height: 100%;">
+      <div id="pDiv"></div>
+      <div id="nDiv"></div>
+    </div>
+  </main>
 
   <script>
     let w = window.innerWidth,
@@ -40,7 +42,7 @@
       hue = pX*360;
       sat = 100 - pY*100; // invert %
       li = 100 - pY*100;
-      body.style.backgroundColor = `hsl(${hue} ${sat} ${li})`;
+      m.style.backgroundColor = `hsl(${hue} ${sat} ${li})`;
       pDiv.style.opacity = 1-pY;
       nDiv.style.opacity = pY;
       nDiv.textContent = neg[Math.floor(pX*neg.length)];

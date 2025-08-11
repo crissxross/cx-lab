@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
-  <style>
-    * { margin: 0;}
-    body { overflow: hidden; }
-  </style>
-  <canvas id="canv"></canvas>
+<!-- MINIFIED version of crossroads-canv-1.html is 1212 bytes (excluding body tags) -->
+<html>
+<body style="margin:0; overflow:hidden;">
+  <canvas id="c"></canvas>
   <script>
-    ctx = canv.getContext('2d');
-    canv.width = window.innerWidth;
-    canv.height = window.innerHeight;
-    let w = canv.width,
-      h = canv.height,
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    let w = c.width,
+      h = c.height,
       pX = 50,
       pY = 10,
       hue = 200,
@@ -36,7 +32,7 @@
       pX = Math.floor((e.x / w) * 100);
       pY = Math.floor((e.y / h) * 100);
       update();
-      console.log('percentY', pY, 'percentX', pX);
+      // console.log('percentY', pY, 'percentX', pX);
     });
 
     function update() {
@@ -49,8 +45,8 @@
       grad.addColorStop(1, col2);
       ctx.fillRect(0, 0, w, h);
 
-      console.log('hue', hue, 'sat', sat, 'li', li);
-      console.log('col1', col1, 'col2', col2);
+      // console.log('hue', hue, 'sat', sat, 'li', li);
+      // console.log('col1', col1, 'col2', col2);
 
       drawText(w*0.2, h*0.2, pos[pX % pos.length], col1);
       drawText(w*0.8, h*0.8, neg[pY % neg.length], col2, 'right');
@@ -63,7 +59,6 @@
       ctx.fillText(text, x, y);
       ctx.restore();
     }
-
   </script>
 </body>
 </html>
