@@ -1,0 +1,89 @@
+<!-- NOTE: previous MINIFIED version of crossroads-canv-1 was 1212 bytes -->
+<html>
+<body style="margin:0; overflow:hidden;">
+  <canvas id="c"></canvas>
+  <script>
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    let w = c.width,
+      h = c.height,
+      pX = 50,
+      pY = 10,
+      hue = 200,
+      sat = 100,
+      li = 50,
+      offset = 40,
+      col1 = `hsl(${hue} ${sat} ${li + offset})`,
+      col2 = `hsl(${hue} ${sat} ${li - offset})`,
+      grad = ctx.createLinearGradient(0,0,0, h),
+      // 15 words in each array
+      tL = ['joy', 'happy', 'relaxed', 'comfortable', 'peaceful', 'satisfied', 'content', 'calm', 'serene', 'tranquil', 'quiet', 'still', 'nostalgia','fourteen', 'fifteen'],
+      tR = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen'],
+      bL = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen'],
+      bR = ['sad', 'angry', 'anxious', 'nervous', 'tense', 'worried', 'stressed', 'upset', 'frustrated', 'irritated', 'annoyed', 'agitated', 'dystopia','fourteen', 'fifteen'];
+
+    grad.addColorStop(0, col1);
+    grad.addColorStop(1, col2);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+    ctx.font = '10vw Arial';
+
+    update();
+
+    window.addEventListener('mousemove', function (e) {
+      pX = Math.floor((e.x / w) * 100);
+      pY = Math.floor((e.y / h) * 100);
+      update();
+      // NOTE: always 15 words in each array so no need for pX % tL.length etc.
+      // top left (align right)
+      drawText(w*ran(0.35, 0.49), h*ran(0.05, 0.45), tL[pX % 15], col1, 'right');
+      // top right (align left)
+      drawText(w*ran(0.51, 0.65), h*ran(0.05, 0.45), tR[pX % 15], col1, 'left');
+      // bottom left (align right)
+      drawText(w*ran(0.35, 0.49), h*ran(0.51, 0.9), bL[pY % 15], col2, 'right', 'top');
+      // bottom right (align left)
+      drawText(w*ran(0.51, 0.65), h*ran(0.51, 0.9), bR[pY % 15], col2, 'left', 'top');
+      console.log('percentY', pY, 'percentX', pX);
+    });
+
+    function update() {
+      hue = Math.floor(pX * 3.6);
+      sat = 100 - pY;
+      li = 100 - pY;
+      col1 = `hsl(${hue} ${sat} ${li})`;
+      col2 = `hsl(${hue} ${sat} ${li - offset})`;
+      grad.addColorStop(0, col1);
+      grad.addColorStop(1, col2);
+      ctx.fillRect(0, 0, w, h);
+      // console.log('hue', hue, 'sat', sat, 'li', li);
+      // console.log('col1', col1, 'col2', col2);
+      drawAxes();
+    }
+
+    function drawText(x, y, txt, col, align, base) {
+      ctx.save();
+      ctx.fillStyle = col;
+      ctx.textAlign = align || 'left';
+      ctx.textBaseline = base || 'bottom';
+      ctx.fillText(txt, x, y);
+      ctx.restore();
+    }
+
+    function drawAxes() {
+      ctx.save();
+      ctx.strokeStyle = `hsl(${hue+90} ${sat} ${li} / 0.1)`;
+      ctx.lineWidth = 20;
+      ctx.beginPath();
+      ctx.moveTo(0, h / 2);
+      ctx.lineTo(w, h / 2);
+      ctx.moveTo(w / 2, 0);
+      ctx.lineTo(w / 2, h);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function ran(min,max) {return Math.random()*(max-min)+min}
+  </script>
+</body>
+</html>
