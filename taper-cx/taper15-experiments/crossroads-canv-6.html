@@ -1,0 +1,190 @@
+<!-- crossroads-canv-6-min.html minified is 2152 bytes (excluding html & body tags) - 104 bytes TOO BIG !!! -->
+ <html>
+<body style="margin:0; overflow:hidden;">
+  <canvas id="cv"></canvas>
+  <script>
+    c = cv.getContext('2d');
+    cv.width = window.innerWidth;
+    cv.height = window.innerHeight;
+    let w = cv.width,
+      h = cv.height,
+      x = w / 2, // for custom 'cursor'
+      y = h / 2,
+      pX = 50, // percentX
+      pY = 10, // percentY
+      hu = 200,
+      sat = 100,
+      li = 50,
+      co1 = `hsl(${hu} ${sat} ${li + 40})`,
+      co2 = `hsl(${hu} ${sat} ${li - 40})`,
+      g = c.createLinearGradient(0,0,0, h),
+      // 15 words in each string
+      tL='memories.nature.historical.golden.tradition.rose-tinted.classical.calm.heritage.tranquil.quiet.still.nostalgia.pastoral.arcadia'.split('.'),
+      tR='hope.feminism.equality.diversity.inclusion.emancipation.enfranchise.peace.democracy.relaxed.empathy.calm.social.sharing.caring'.split('.'),
+      bL='pollution.misogyny.oil.child labour.fossil fuels.war.racism.imperialism.monarchy.brutality.unjust.sad.bigotry.infant mortality.disease'.split('.'),
+      bR='apocalypse.catastrophe.micro-plastics.pollution.wild fires.post-truth.inequality.climate collapse.extinction.oligarchs.libertarian.extremism.doom.anxiety.fear'.split('.');
+
+    g.addColorStop(0, co1);
+    g.addColorStop(1, co2);
+    c.fillStyle = g;
+    c.fillRect(0, 0, w, h);
+    // NOTE: w 12 x h 7 is 16:9 ratio
+    // ctx.font = '7vw sans-serif';
+    c.font = '12vh sans-serif';
+
+    up();
+
+    window.addEventListener('mousemove', (e) => {
+      pX = Math.floor((e.x / w) * 100);
+      pY = Math.floor((e.y / h) * 100);
+      x = event.offsetX;
+      y = event.offsetY;
+      up();
+
+      liBtm = pY < 50 ? li - 60 : li - 10;
+
+      // TOP LEFT (align right)
+      txt(
+        w*ran(0.44, 0.49),
+        h*ran(0.1, 0.5),
+        tL[pX % 15],
+        hu+15,
+        sat,
+        li,
+        'right',
+        'bottom'
+    );
+      // TOP RIGHT (align left)
+      txt(
+        w*ran(0.51, 0.56),
+        h*ran(0.1, 0.5),
+        tR[pX % 15],
+        hu,
+        sat,
+        li,
+        'left',
+        'bottom'
+      );
+      // BOTTOM LEFT (align right)
+      txt(
+        w*ran(0.44, 0.49),
+        h*ran(0.51, 0.9),
+        bL[pY % 15],
+        // hue+10,
+        (hu = pY < 50 ? hu + 10 : 330 + ((100 - pX) * 0.6)),
+        (sat = pY > 70 ? sat + 50 : sat),
+        liBtm,
+        'right',
+        'top'
+    );
+      // BOTTOM RIGHT (align left)
+      txt(
+        w*ran(0.51, 0.56),
+        h*ran(0.51, 0.9),
+        bR[pY % 15],
+        // hue+20,
+        (hu = pY < 50 ? hu + 20 : 330 + (pX * 0.6)),
+        (sat = pY > 70 ? sat + 50 : sat),
+        liBtm,
+        'left',
+        'top'
+      );
+      // console.log('percentY', pY, 'percentX', pX);
+      // console.log('liBtm', liBtm);
+    });
+
+    // update
+    function up() {
+      // hue = Math.floor(pX * 3.6);
+      // 👇 invert (& limit) the color range so blues in past & reds in future
+      hu = Math.floor((100 - pX) * 2.5) - 30;
+      sat = 100 - pY;
+      li = 100 - pY;
+      co1 = `hsl(${hu} ${sat} ${li})`;
+      co2 = `hsl(${hu} ${sat} ${li - 40})`;
+      g.addColorStop(0, co1);
+      g.addColorStop(1, co2);
+      c.save();
+      c.globalAlpha = 0.1; // 0.05-0.2 work well
+      c.fillRect(0, 0, w, h);
+      c.restore();
+
+      // TRIANGLE
+      // Calculate angle based on mouse movement direction
+      let angle = Math.atan2(y - (h/2), x - (w/2));
+      // Rotate the triangle to point in direction of travel
+      c.save();
+      c.translate(x, y);
+      c.rotate(angle + Math.PI/2); // Add PI/2 to make triangle point forward
+      c.translate(-x, -y);
+      // (Re)draw triangle at origin for rotation
+      c.beginPath();
+      c.moveTo(x, y - 30);
+      c.lineTo(x - 20, y + 20);
+      c.lineTo(x + 20, y + 20);
+      c.closePath();
+      c.stroke();
+      c.restore();
+
+      // console.log('hue', hue, 'sat', sat, 'li', li);
+      // console.log('col1', col1, 'col2', col2);
+      // drawAxes(); // for reference
+    }
+
+    // function drawTriangle(x, y) {
+    //   ctx.beginPath();
+    //   ctx.moveTo(x, y - 30);
+    //   ctx.lineTo(x - 20, y + 20);
+    //   ctx.lineTo(x + 20, y + 20);
+    //   ctx.closePath();
+    //   ctx.stroke();
+    // }
+
+    function txt(x, y, t, H,S,L, a, b) {
+      c.save();
+      c.fillStyle = `hsl(${H} ${S} ${L})`;
+      c.textAlign = a;
+      c.textBaseline = b;
+      c.fillText(t, x, y);
+      c.restore();
+    }
+
+    function ran(min,max) {return Math.random()*(max-min)+min}
+
+    // NOTE: for reference only - draw...
+
+    // TRIANGLE
+      // drawTriangle(x, y);
+      // ctx.beginPath();
+      // ctx.moveTo(x, y - 30);
+      // ctx.lineTo(x - 20, y + 20);
+      // ctx.lineTo(x + 20, y + 20);
+      // ctx.closePath();
+
+    // ARROW
+      // ctx.moveTo(x, y - 30);
+      // ctx.lineTo(x + 20, y);
+      // ctx.lineTo(x + 10, y);
+      // ctx.lineTo(x + 10, y + 30);
+      // ctx.lineTo(x - 10, y + 30);
+      // ctx.lineTo(x - 10, y);
+      // ctx.lineTo(x - 20, y);
+      // ctx.closePath();
+      // ctx.stroke();
+
+    // NOTE: drawAxes for reference only
+    // function drawAxes() {
+    //   ctx.save();
+    //   ctx.strokeStyle = `hsl(${hue+90} ${sat} ${li} /.05)`;
+    //   ctx.lineWidth = 50;
+    //   ctx.beginPath();
+    //   ctx.moveTo(0, h / 2);
+    //   ctx.lineTo(w, h / 2);
+    //   ctx.moveTo(w / 2, 0);
+    //   ctx.lineTo(w / 2, h);
+    //   ctx.stroke();
+    //   ctx.restore();
+    // }
+  </script>
+</body>
+</html>
