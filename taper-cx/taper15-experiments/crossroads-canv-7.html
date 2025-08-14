@@ -1,0 +1,66 @@
+<!-- I asked Copilot to make the code from crossroads-canv-6.html more concise and this is the result BUT it does NOT have the same functionality !!! -->
+<html>
+<body style="margin:0;overflow:hidden">
+<canvas id="cv"></canvas>
+<script>
+c=cv.getContext('2d');
+cv.width=innerWidth;
+cv.height=innerHeight;
+let w=cv.width,h=cv.height,x=w/2,y=h/2,pX=50,pY=10,hu=200,sat=100,li=50,g=c.createLinearGradient(0,0,0,h),
+tL='memories.nature.historical.golden.tradition.rose-tinted.classical.calm.heritage.tranquil.quiet.still.nostalgia.pastoral.arcadia'.split('.'),
+tR='hope.feminism.equality.diversity.inclusion.emancipation.enfranchise.peace.democracy.relaxed.empathy.calm.social.sharing.caring'.split('.'),
+bL='pollution.misogyny.oil.child labour.fossil fuels.war.racism.imperialism.monarchy.brutality.unjust.sad.bigotry.infant mortality.disease'.split('.'),
+bR='apocalypse.catastrophe.micro-plastics.pollution.wild fires.post-truth.inequality.climate collapse.extinction.oligarchs.libertarian.extremism.doom.anxiety.fear'.split('.');
+
+c.font='12vh sans-serif';
+up();
+
+onmousemove=e=>{
+pX=(e.x/w*100)|0;
+pY=(e.y/h*100)|0;
+x=e.offsetX;
+y=e.offsetY;
+up();
+let l=pY<50?li-60:li-10,r=Math.random;
+txt(w*r(0.44,0.49),h*r(0.1,0.5),tL[pX%15],hu+15,sat,li,'right','bottom');
+txt(w*r(0.51,0.56),h*r(0.1,0.5),tR[pX%15],hu,sat,li,'left','bottom');
+txt(w*r(0.44,0.49),h*r(0.51,0.9),bL[pY%15],(hu=pY<50?hu+10:330+(100-pX)*0.6),(sat=pY>70?sat+50:sat),l,'right','top');
+txt(w*r(0.51,0.56),h*r(0.51,0.9),bR[pY%15],(hu=pY<50?hu+20:330+pX*0.6),(sat=pY>70?sat+50:sat),l,'left','top');
+};
+
+function up(){
+hu=((100-pX)*2.5-30)|0;
+sat=100-pY;
+li=100-pY;
+g.addColorStop(0,`hsl(${hu} ${sat} ${li})`);
+g.addColorStop(1,`hsl(${hu} ${sat} ${li-40})`);
+c.save();
+c.globalAlpha=0.1;
+c.fillStyle=g;
+c.fillRect(0,0,w,h);
+c.restore();
+let a=Math.atan2(y-h/2,x-w/2);
+c.save();
+c.translate(x,y);
+c.rotate(a+Math.PI/2);
+c.translate(-x,-y);
+c.beginPath();
+c.moveTo(x,y-30);
+c.lineTo(x-20,y+20);
+c.lineTo(x+20,y+20);
+c.closePath();
+c.stroke();
+c.restore();
+}
+
+function txt(x,y,t,H,S,L,a,b){
+c.save();
+c.fillStyle=`hsl(${H} ${S} ${L})`;
+c.textAlign=a;
+c.textBaseline=b;
+c.fillText(t,x,y);
+c.restore();
+}
+</script>
+</body>
+</html>
