@@ -1,0 +1,148 @@
+<!-- crossroads-canv-8-min.html minified is 2036 bytes (excluding html & body tags) -->
+<html>
+<body style="margin:0; overflow:hidden;">
+  <canvas id="cv"></canvas>
+  <script>
+    c = cv.getContext('2d');
+    cv.width = window.innerWidth;
+    cv.height = window.innerHeight;
+    let w = cv.width,
+      h = cv.height,
+      x = w / 2, // for custom 'cursor'
+      y = h / 2,
+      pX = 50, // percentX
+      pY = 10, // percentY
+      hu = 200,
+      sa = 100,
+      li = 50,
+      co1 = `hsl(${hu} ${sa} ${li + 40})`,
+      co2 = `hsl(${hu} ${sa} ${li - 40})`,
+      g = c.createLinearGradient(0,0,0, h),
+      // 15 words in each string
+      tL='memories.nature.historical.golden.tradition.rose-tinted.classical.calm.heritage.tranquil.quiet.still.nostalgia.pastoral.arcadia'.split('.'),
+      tR='hope.feminism.equality.diversity.inclusion.emancipation.enfranchise.peace.democracy.relaxed.empathy.calm.social.sharing.caring'.split('.'),
+      bL='pollution.misogyny.oil.child labour.fossil fuels.war.racism.imperialism.monarchy.brutality.unjust.sad.bigotry.infant mortality.disease'.split('.'),
+      bR='apocalypse.catastrophe.micro-plastics.pollution.wild fires.post-truth.inequality.climate collapse.extinction.oligarchs.libertarian.extremism.doom.anxiety.fear'.split('.'),
+      txt = (x, y, t, H,S,L, a, b) => {
+        c.save();
+        c.fillStyle = `hsl(${H} ${S} ${L})`;
+        c.textAlign = a;
+        c.textBaseline = b;
+        c.fillText(t, x, y);
+        c.restore();
+      }
+      // function ran(min,max) {return Math.random()*(max-min)+min}
+      r = (a, b) => Math.random() * (b - a) + a;
+
+    g.addColorStop(0, co1);
+    g.addColorStop(1, co2);
+    c.fillStyle = g;
+    c.fillRect(0, 0, w, h);
+    // NOTE: w 12 x h 7 is 16:9 ratio
+    // ctx.font = '7vw sans-serif';
+    c.font = '12vh sans-serif';
+
+    up();
+
+    onmousemove = (e) => {
+      // pX = Math.floor((e.x / w) * 100);
+      // pY = Math.floor((e.y / h) * 100);
+      // bitwise OR is more concise than Math.floor
+      pX = (e.x / w * 100) | 0;
+      pY = (e.y / h * 100) | 0;
+      x = e.offsetX;
+      y = e.offsetY;
+      up();
+
+      liBtm = pY < 50 ? li - 60 : li - 10;
+
+      // TOP LEFT (align right)
+      txt(
+        w*r(0.44, 0.49),
+        h*r(0.1, 0.5),
+        tL[pX % 15],
+        hu+15,
+        sa,
+        li,
+        'right',
+        'bottom'
+    );
+      // TOP RIGHT (align left)
+      txt(
+        w*r(0.51, 0.56),
+        h*r(0.1, 0.5),
+        tR[pX % 15],
+        hu,
+        sa,
+        li,
+        'left',
+        'bottom'
+      );
+      // BOTTOM LEFT (align right)
+      txt(
+        w*r(0.44, 0.49),
+        h*r(0.51, 0.9),
+        bL[pY % 15],
+        // hue+10,
+        (hu = pY < 50 ? hu + 10 : 330 + ((100 - pX) * 0.6)),
+        (sa = pY > 70 ? sa + 50 : sa),
+        liBtm,
+        'right',
+        'top'
+    );
+      // BOTTOM RIGHT (align left)
+      txt(
+        w*r(0.51, 0.56),
+        h*r(0.51, 0.9),
+        bR[pY % 15],
+        // hue+20,
+        (hu = pY < 50 ? hu + 20 : 330 + (pX * 0.6)),
+        (sa = pY > 70 ? sa + 50 : sa),
+        liBtm,
+        'left',
+        'top'
+      );
+      // console.log('percentY', pY, 'percentX', pX);
+      // console.log('liBtm', liBtm);
+    };
+
+    // update
+    function up() {
+      // hue = Math.floor(pX * 3.6);
+      // 👇 invert (& limit) the color range so blues in past & reds in future
+      // hu = Math.floor((100 - pX) * 2.5) - 30;
+      hu = ((100 - pX) * 2.5 - 30) | 0; // bitwise OR is more concise than Math.floor
+      sa = 100 - pY;
+      li = 100 - pY;
+      co1 = `hsl(${hu} ${sa} ${li})`;
+      co2 = `hsl(${hu} ${sa} ${li - 40})`;
+      g.addColorStop(0, co1);
+      g.addColorStop(1, co2);
+      c.save();
+      c.globalAlpha = 0.1; // 0.05-0.2 work well
+      c.fillRect(0, 0, w, h);
+      c.restore();
+
+      // TRIANGLE
+      // Calculate angle based on mouse movement direction
+      let a = Math.atan2(y - (h/2), x - (w/2));
+      // Rotate the triangle to point in direction of travel
+      c.save();
+      c.translate(x, y);
+      c.rotate(a + Math.PI/2); // Add PI/2 to make triangle point forward
+      c.translate(-x, -y);
+      // (Re)draw triangle at origin for rotation
+      c.beginPath();
+      c.moveTo(x, y - 30);
+      c.lineTo(x - 20, y + 20);
+      c.lineTo(x + 20, y + 20);
+      c.closePath();
+      c.stroke();
+      c.restore();
+
+      // console.log('hue', hu, 'sat', sa, 'li', li);
+      // console.log('co1', co1, 'co2', co2);
+    }
+  </script>
+</body>
+</html>
