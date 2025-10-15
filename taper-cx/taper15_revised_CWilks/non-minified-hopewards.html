@@ -15,7 +15,16 @@ This is from Taper #15: Crossroads, Fall 2025:
 
 https://taper.badquar.to/15/hopewards.html
 
-Think of the present moment as the centre of this crossroads. Move leftwards/backwards towards the past and rightwards/forwards towards the future. Downwards is literally and metaphorically darker and upwards is lighter. But what lies in each direction depends on your (geopolitical) frame of reference. This crossroads is from my vantage point as a lowly citizen of the United Kingdom of Great Britain & Northern Ireland. Sadly, the ills that I've relegated to the dark past are still with us in many parts of the world and will surely add to future harms unless we collectively choose a different trajectory: hopewards.
+Think of the present moment as the centre of this crossroads. Move
+leftwards/backwards towards the past and rightwards/forwards towards
+the future. Downwards is literally and metaphorically darker and
+upwards is lighter. But what lies in each direction depends on your
+frame of reference. This crossroads is from my geopolitical vantage
+point as a lowly citizen of the United Kingdom of Great Britain &
+Northern Ireland. Sadly, the ills that I've relegated to the dark
+past are still with us in many parts of the world and will surely add
+to future harms unless we collectively choose a different trajectory:
+hopewards.
 
 There are fifteen words or expressions in each quadrant.
 
@@ -55,7 +64,100 @@ using typographical quotes “” and apostrophes ‘’.
 		<a href="about.html#wilks">Christine Wilks</a>
 	</h1>
 </header>
-	<canvas id="cv"></canvas><script>c=cv.getContext("2d"),cv.width=window.innerWidth,cv.height=window.innerHeight-45;let w=cv.width,h=cv.height,x=w/2,y=h/2,pX=50,pY=10,hu=200,sa=100,li=50,co1=`hsl(${hu} ${sa} ${li+40})`,co2=`hsl(${hu} ${sa} ${li-40})`,g=c.createLinearGradient(0,0,0,h),ws="folklore.memory lane.olden days.deference.antiques.tradition.pageantry.classicism.heritage.pomp.bygone.heraldry.nostalgia.pastoral.arcadia.hope.feminism.equality.diversity.inclusion.empowerment.fairness.healthcare.peace.democracy.sustainable.empathy.welfare.social.justice.autocracy.misogyny.plague.child labour.oil.war.racism.imperialism.monarchy.brutality.starvation.colonialism.bigotry.infant mortality.disease.doom.deforestation.sea-level rise.wildfires.post-truth.oligarchy.rogue AI.climate collapse.emissions.extinction.cyberattacks.extremism.desertification.disinformation.pandemics".split("."),txt=(t,i,e,a,o,l,s,r)=>{c.save(),c.fillStyle=`hsl(${a} ${o} ${l})`,c.textAlign=s,c.textBaseline=r,c.fillText(e,t,i),c.restore()};function up(){hu=2.5*(100-pX)-30|0,sa=100-pY,li=100-pY,co1=`hsl(${hu} ${sa} ${li})`,co2=`hsl(${hu} ${sa} ${li-40})`,g.addColorStop(0,co1),g.addColorStop(1,co2),c.save(),c.globalAlpha=.1,c.fillRect(0,0,w,h),c.restore();let t=Math.atan2(y-h/2,x-w/2);c.save(),c.translate(x,y),c.rotate(t+Math.PI/2),c.translate(-x,-y),c.beginPath(),c.moveTo(x,y-30),c.lineTo(x-20,y+20),c.lineTo(x+20,y+20),c.closePath(),c.stroke(),c.restore()}r=(t,i)=>Math.random()*(i-t)+t,g.addColorStop(0,co1),g.addColorStop(1,co2),c.fillStyle=g,c.fillRect(0,0,w,h),c.font="11vh sans-serif",up(),onmousemove=t=>{pX=t.x/w*100|0,pY=t.y/h*100|0,x=t.offsetX,y=t.offsetY,up(),liB=pY<50?li-65:pY<70?li-15:li-10,txt(w*r(.44,.49),h*r(.1,.5),ws[pX%15],hu+15,sa,li,"right","bottom"),txt(w*r(.51,.56),h*r(.1,.5),ws[15+pX%15],hu,sa,li,"left","bottom"),txt(w*r(.44,.49),h*r(.51,.9),ws[30+pY%15],hu=pY>45?330+.6*(100-pX):hu+10,sa=pY>70?sa+50:sa,liB,"right","top"),txt(w*r(.51,.56),h*r(.51,.9),ws[45+pY%15],hu=pY>50?330+.6*pX:hu+20,sa=pY>70?sa+50:sa,liB,"left","top")};</script>
+	<canvas id="cv"></canvas>
+	<script>
+	// Get canvas context and set dimensions
+	const canvas = document.getElementById("cv");
+	const c = canvas.getContext("2d");
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight - 45;
+
+	let w = canvas.width;
+	let h = canvas.height;
+	let x = w / 2;
+	let y = h / 2;
+	let pX = 50;
+	let pY = 10;
+	let hu = 200;
+	let sa = 100;
+	let li = 50;
+
+	let co1 = `hsl(${hu} ${sa} ${li + 40})`;
+	let co2 = `hsl(${hu} ${sa} ${li - 40})`;
+	let g = c.createLinearGradient(0, 0, 0, h);
+
+	// Word arrays for each quadrant
+	let ws = "folklore.memory lane.olden days.deference.antiques.tradition.pageantry.classicism.heritage.pomp.bygone.heraldry.nostalgia.pastoral.arcadia.hope.feminism.equality.diversity.inclusion.empowerment.fairness.healthcare.peace.democracy.sustainable.empathy.welfare.social.justice.autocracy.misogyny.plague.child labour.oil.war.racism.imperialism.monarchy.brutality.starvation.colonialism.bigotry.infant mortality.disease.doom.deforestation.sea-level rise.wildfires.post-truth.oligarchy.rogue AI.climate collapse.emissions.extinction.cyberattacks.extremism.desertification.disinformation.pandemics".split(".");
+
+	// Text rendering function
+	const txt = (x, y, text, hue, saturation, lightness, textAlign, textBaseline) => {
+		c.save();
+		c.fillStyle = `hsl(${hue} ${saturation} ${lightness})`;
+		c.textAlign = textAlign;
+		c.textBaseline = textBaseline;
+		c.fillText(text, x, y);
+		c.restore();
+	};
+
+	// Update function
+	function up() {
+		hu = (2.5 * (100 - pX) - 30) | 0;
+		sa = 100 - pY;
+		li = 100 - pY;
+		co1 = `hsl(${hu} ${sa} ${li})`;
+		co2 = `hsl(${hu} ${sa} ${li - 40})`;
+
+		g.addColorStop(0, co1);
+		g.addColorStop(1, co2);
+
+		c.save();
+		c.globalAlpha = 0.1;
+		c.fillRect(0, 0, w, h);
+		c.restore();
+
+		// Draw arrow pointing towards mouse
+		let angle = Math.atan2(y - h / 2, x - w / 2);
+		c.save();
+		c.translate(x, y);
+		c.rotate(angle + Math.PI / 2);
+		c.translate(-x, -y);
+		c.beginPath();
+		c.moveTo(x, y - 30);
+		c.lineTo(x - 20, y + 20);
+		c.lineTo(x + 20, y + 20);
+		c.closePath();
+		c.stroke();
+		c.restore();
+	}
+
+	// Random number generator
+	const r = (min, max) => Math.random() * (max - min) + min;
+
+	// Initial setup
+	g.addColorStop(0, co1);
+	g.addColorStop(1, co2);
+	c.fillStyle = g;
+	c.fillRect(0, 0, w, h);
+	c.font = "11vh sans-serif";
+	up();
+
+	// Mouse move handler
+	onmousemove = (event) => {
+		pX = (event.x / w * 100) | 0;
+		pY = (event.y / h * 100) | 0;
+		x = event.offsetX;
+		y = event.offsetY;
+		up();
+
+		let liB = pY < 50 ? li - 65 : pY < 70 ? li - 15 : li - 10;
+
+		// Render text in four quadrants
+		txt(w * r(0.44, 0.49), h * r(0.1, 0.5), ws[pX % 15], hu + 15, sa, li, "right", "bottom");
+		txt(w * r(0.51, 0.56), h * r(0.1, 0.5), ws[15 + pX % 15], hu, sa, li, "left", "bottom");
+		txt(w * r(0.44, 0.49), h * r(0.51, 0.9), ws[30 + pY % 15], hu = pY > 45 ? 330 + 0.6 * (100 - pX) : hu + 10, sa = pY > 70 ? sa + 50 : sa, liB, "right", "top");
+		txt(w * r(0.51, 0.56), h * r(0.51, 0.9), ws[45 + pY % 15], hu = pY > 50 ? 330 + 0.6 * pX : hu + 20, sa = pY > 70 ? sa + 50 : sa, liB, "left", "top");
+	};
+	</script>
 </body>
 </html>
 
