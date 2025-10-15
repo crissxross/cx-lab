@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Hopewards (Taper #15)</title>
+
+<!-- “Hopewards” Copyright (C) 2025 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #15: Crossroads, Fall 2025:
+
+https://taper.badquar.to/15/hopewards.html
+
+TODO: REWRITE THIS CREATIVE STATEMENT:
+Whether individually or collectively, which way to turn? Retreat into
+nostalgia for an idealized past, turn the clock back and sink into
+darkness, or plunge into an even darker future. Or maybe, just maybe
+we'll rise up, rise up for a better future for all.
+
+TODO: add link to non-minified version in my GitHub repo
+
+TODO: remove MY NOTES FOR REVISION:
+TOP LEFT: memory lane...
+TOP RIGHT: hope...
+BOTTOM LEFT: autocracy...
+BOTTOM RIGHT: pandemics...
+Max 2048 bytes
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id=nav>
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #15 :
+		Crossroads</a> : Fall 2025 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="hopewards.html">“Hopewards”</a> by
+		<a href="about.html#wilks">Christine Wilks</a>
+	</h1>
+</header>
+	<canvas id="cv"></canvas><script>c=cv.getContext("2d"),cv.width=window.innerWidth,cv.height=window.innerHeight-45;let w=cv.width,h=cv.height,x=w/2,y=h/2,pX=50,pY=10,hu=200,sa=100,li=50,co1=`hsl(${hu} ${sa} ${li+40})`,co2=`hsl(${hu} ${sa} ${li-40})`,g=c.createLinearGradient(0,0,0,h),ws="folklore.memory lane.olden days.deference.antiques.tradition.pageantry.classicism.heritage.pomp.bygone.heraldry.nostalgia.pastoral.arcadia.hope.feminism.equality.diversity.inclusion.empowerment.fairness.healthcare.peace.democracy.sustainable.empathy.welfare.social.justice.autocracy.misogyny.plague.child labour.oil.war.racism.imperialism.monarchy.brutality.starvation.colonialism.bigotry.infant mortality.disease.pandemics.deforestation.sea-level rise.wildfires.post-truth.oligarchy.rogue AI.climate collapse.food waste.extinction.cyberattacks.extremism.desertification.disinformation.doom".split("."),txt=(t,i,e,a,o,l,s,r)=>{c.save(),c.fillStyle=`hsl(${a} ${o} ${l})`,c.textAlign=s,c.textBaseline=r,c.fillText(e,t,i),c.restore()};function up(){hu=2.5*(100-pX)-30|0,sa=100-pY,li=100-pY,co1=`hsl(${hu} ${sa} ${li})`,co2=`hsl(${hu} ${sa} ${li-40})`,g.addColorStop(0,co1),g.addColorStop(1,co2),c.save(),c.globalAlpha=.1,c.fillRect(0,0,w,h),c.restore();let t=Math.atan2(y-h/2,x-w/2);c.save(),c.translate(x,y),c.rotate(t+Math.PI/2),c.translate(-x,-y),c.beginPath(),c.moveTo(x,y-30),c.lineTo(x-20,y+20),c.lineTo(x+20,y+20),c.closePath(),c.stroke(),c.restore()}r=(t,i)=>Math.random()*(i-t)+t,g.addColorStop(0,co1),g.addColorStop(1,co2),c.fillStyle=g,c.fillRect(0,0,w,h),c.font="11vh sans-serif",up(),onmousemove=t=>{pX=t.x/w*100|0,pY=t.y/h*100|0,x=t.offsetX,y=t.offsetY,up(),liB=pY<50?li-65:pY<70?li-15:li-10,txt(w*r(.44,.49),h*r(.1,.5),ws[pX%15],hu+15,sa,li,"right","bottom"),txt(w*r(.51,.56),h*r(.1,.5),ws[15+pX%15],hu,sa,li,"left","bottom"),txt(w*r(.44,.49),h*r(.51,.9),ws[30+pY%15],hu=pY>45?330+.6*(100-pX):hu+10,sa=pY>70?sa+50:sa,liB,"right","top"),txt(w*r(.51,.56),h*r(.51,.9),ws[45+pY%15],hu=pY>50?330+.6*pX:hu+20,sa=pY>70?sa+50:sa,liB,"left","top")};</script>
+</body>
+</html>
+
+
