@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oscillate Pendulum</title>
+  <link rel="stylesheet" href="reset.css">
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      height: 100vh;
+      background: hsl(210deg 15% 6%);
+    }
+    .ball {
+      background: hsl(50deg 100% 50%);
+      border-radius: 45%;
+      width: 64px;
+      height: 64px;
+    }
+    button {
+      padding: 16px;
+      margin-top: 24px;
+      cursor: pointer;
+    }
+    /* oscillate animation */
+    @keyframes oscillate {
+      from {
+        transform: translateX(calc(var(--amount) * -1));
+      }
+      to {
+        transform: translateX(var(--amount));
+      }
+    }
+
+    .ball {
+      animation: oscillate 700ms ease-in-out alternate infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="ball" style="--amount: 12px;"></div>
+  <div class="ball" style="--amount: 24px;"></div>
+  <div class="ball" style="--amount: 48px;"></div>
+  <button>Play/pause animation</button>
+
+  <script>
+    const btn = document.querySelector('button');
+    const balls = [...document.querySelectorAll('.ball')];
+
+    let isPlaying = true;
+
+    btn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+
+      balls.forEach((ball) => {
+        ball.style.animationPlayState = isPlaying ? 'running' : 'paused';
+      });
+    });
+  </script>
+</body>
+</html>

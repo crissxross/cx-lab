@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falling Emojis</title>
+  <link rel="stylesheet" href="reset.css">
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <style>
+    body {
+      background: hsl(210deg 30% 90%);
+      padding: 16px;
+    }
+    main {
+      background: white;
+      box-shadow:
+        0px 1px 2px hsl(0deg 0% 0% / 0.2),
+        0px 2px 4px hsl(0deg 0% 0% / 0.2),
+        0px 10px 20px hsl(0deg 0% 0% / 0.2);
+      border-radius: 8px;
+      overflow: clip;
+      padding-bottom: 32px;
+    }
+    .emojiWrapper {
+      position: relative;
+      background: hsl(350deg 50% 95%);
+    }
+    .avatar {
+      position: relative;
+      width: 128px;
+      height: 128px;
+      margin-top: -64px;
+      margin-inline: auto;
+      border-radius: 50%;
+      background: hsl(50deg 80% 85%);
+      border: 8px solid white;
+    }
+    main h1 {
+      font-size: 1.25rem;
+      text-align: center;
+      margin-block: 16px;
+    }
+    /* Emoji falling animation */
+    @keyframes fall {
+      from {
+        transform: translateY(-100%);
+      }
+    }
+
+    .emojiWrapper {
+      display: flex;
+      justify-content: space-evenly;
+      height: 120px;
+      font-size: 2rem;
+      overflow: hidden;
+      user-select: none;
+    }
+    .emoji {
+      animation: fall linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="emojiWrapper"></div>
+    <img
+      class="avatar"
+      src="img/avatars/002.png"
+      alt="user avatar"
+    />
+    <h1>Someone Bought You A Coffee!</h1>
+  </main>
+
+<script>
+  const emojiWrapper = document.querySelector(".emojiWrapper");
+
+  _.range(20).forEach(() => {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.setAttribute("aria-hidden", "true");
+    emoji.textContent = _.sample(["🎉", "👍", "☕", "🎊", "💸", "☕"]);
+    emojiWrapper.appendChild(emoji);
+
+    emoji.style.transform = `translateY(100%)`;
+    emoji.style.animationDuration = `${_.random(1.5, 3.5)}s`;
+    emoji.style.animationDelay = `-${_.random(0, 2)}s`;
+  });
+</script>
+
+</body>
+</html>

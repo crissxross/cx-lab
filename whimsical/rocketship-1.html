@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocketship</title>
+  <link rel="stylesheet" href="reset.css">
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <style>
+    body {
+      background: hsl(220deg 50% 8%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rocketWrapper {
+      position: relative;
+    }
+
+    @keyframes oscilate {
+      from {
+        transform: translateY(-12px);
+      }
+      to {
+        transform: translateY(12px);
+      }
+    }
+
+    @keyframes disperse {
+      to {
+        /* transform: translateY(var(--distance)); */
+        transform:
+          translate(
+            calc(cos(var(--angle)) * var(--distance)),
+            calc(sin(var(--angle)) * var(--distance))
+          )
+      }
+    }
+
+    @keyframes fadeToTransparent {
+      to {
+        opacity: 0;
+      }
+    }
+
+    .rocket {
+      width: 125px;
+      max-width: 100%;
+      aspect-ratio: 500 / 503;
+      animation: oscilate 2000ms ease-in-out alternate infinite;
+    }
+    .particle {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 80%;
+      transform: translateX(-50%);
+      z-index: -1;
+      animation:
+        disperse 1500ms var(--delay) forwards cubic-bezier(0.00, 0.48, 0.17, 1.00),
+        fadeToTransparent var(--fade-duration) var(--fade-delay ) forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rocketWrapper">
+  <img
+    class="rocket"
+    alt="A cute 3D illustration of a rocketship made of clay"
+    src="img/clay-rocket.png"
+  />
+</div>
+
+<script>
+  const COLORS = [
+    'hsl(35deg 100% 50%)',
+    'hsl(40deg 100% 50%)',
+    'hsl(45deg 100% 60%)',
+    'hsl(50deg 100% 65%)',
+  ];
+  const FADE_DURATION = 500;
+  const FADE_DELAY = 1000;
+
+  const wrapper = document.querySelector('.rocketWrapper');
+
+  _.range(10).forEach(() => {
+
+    window.setInterval(() => {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.backgroundColor = _.sample(COLORS);
+
+      const angle = _.random(90-15, 90+15);
+      const distance = _.random(80, 120);
+      const delay = _.random(0, 450);
+
+      particle.style.setProperty('--distance', distance + 'px');
+      particle.style.setProperty('--angle', angle + 'deg');
+      particle.style.setProperty('--delay', delay + 'ms');
+
+      particle.style.setProperty('--fade-duration', FADE_DURATION + 'ms');
+      particle.style.setProperty('--fade-delay', FADE_DELAY + 'ms');
+
+      wrapper.appendChild(particle);
+
+      window.setTimeout(() => {
+        wrapper.removeChild(particle);
+      }, FADE_DURATION + FADE_DELAY + 500);
+
+    }, 500);
+  });
+
+
+
+
+
+
+// NOT USING FOR THIS
+
+  const convertPolarToCartesian = (angle, distance) => {
+    const angleInRadians = convertDegreesToRadians(angle);
+    const x = Math.cos(angleInRadians) * distance;
+    const y = Math.sin(angleInRadians) * distance;
+
+    return [x, y];
+  };
+
+  const convertDegreesToRadians =
+    (angle) => (angle * Math.PI) / 180;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider Rotate</title>
+  <link rel="stylesheet" href="reset.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: hsl(210deg 15% 6%);
+      color: white;
+    }
+    .wrapper {
+      flex: 1;
+      display: grid;
+      place-content: center;
+    }
+    .bar {
+      width: 100px;
+      height: 30px;
+      border-radius: 3px;
+      background: hsl(45deg 100% 50%);
+      background: oklch(0.87 0.2 90);
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 32px;
+      font-size: 0.875rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    input {
+      display: block;
+      width: 400px;
+      max-width: 75%;
+    }
+
+    /* rotation animation */
+
+      @keyframes twist {
+      from {
+        transform: rotate(calc(var(--rotation) * -1));
+      }
+      to {
+        transform: rotate(var(--rotation));
+      }
+    }
+
+    .bar {
+      --rotation: 0deg;
+      animation: twist 1000ms alternate infinite ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+  <div class="bar"></div>
+  </div>
+
+  <div class="controls">
+    <label for="slider">Rotate Amount</label>
+    <input
+      type="range"
+      id="slider"
+      min="0"
+      max="180"
+      value="0"
+    />
+  </div>
+
+  <script>
+    const slider = document.querySelector('#slider');
+    const bar = document.querySelector('.bar');
+
+    slider.addEventListener('input', (event) => {
+      const rotation = event.target.value;
+      bar.style.setProperty('--rotation', `${rotation}deg`);
+    });
+  </script>
+</body>
+</html>

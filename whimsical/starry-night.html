@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starry Night</title>
+  <link rel="stylesheet" href="reset.css">
+  <script src="utils.js"></script>
+  <style>
+    html {
+      color-scheme: dark;
+    }
+
+    body {
+      background: linear-gradient(
+        to bottom,
+        hsl(240deg 20% 10%),
+        hsl(240deg 40% 2%)
+      );
+      height: 100svh;
+      height: 100vh;
+    }
+
+    .particleButton {
+      position: absolute;
+      /* Ensure that the button sits in front of the particles: */
+      z-index: 2;
+      left: 0;
+      right: 0;
+      bottom: 1rem;
+      width: fit-content;
+      margin-inline: auto;
+      padding: 1rem 3rem;
+      border: none;
+      border-bottom: 3px solid hsl(240deg 90% 36%);
+      border-radius: 6px;
+      background: hsl(240deg 90% 48%);
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &:active {
+        border-bottom-width: 1px;
+      }
+    }
+
+    /* Star particle animation */
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .starLayer {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      user-select: none;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      animation: fadeIn 1000ms;
+    }
+  </style>
+</head>
+<body>
+
+<div class="starLayer" aria-hidden="true"></div>
+
+<button class="particleButton">Add Stars</button>
+
+<script>
+  const btn = document.querySelector('.particleButton');
+  const starLayer = document.querySelector('.starLayer');
+
+  btn.addEventListener('click', () => {
+    range(10).forEach(() => {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.innerText = '⭐';
+
+      star.style.top = random(0, 100) + '%';
+      star.style.left = random(0, 100) + '%';
+
+      starLayer.appendChild(star);
+    });
+  });
+</script>
+</body>
+
+</html>

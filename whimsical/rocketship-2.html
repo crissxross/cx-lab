@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocketship</title>
+  <link rel="stylesheet" href="reset.css">
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <style>
+    body {
+      background: hsl(220deg 50% 8%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rocketWrapper {
+      position: relative;
+    }
+
+    @keyframes oscilate {
+      from {
+        transform: translateY(-5%);
+      }
+      to {
+        transform: translateY(5%);
+      }
+    }
+
+    @keyframes disperse {
+      to {
+        transform:
+          translate(var(--x), var(--y))
+      }
+    }
+
+    @keyframes fadeToTransparent {
+      to {
+        opacity: 0;
+      }
+    }
+
+    .rocket {
+      width: 125px;
+      max-width: 100%;
+      aspect-ratio: 500 / 503;
+      position: relative;
+      animation: oscilate 1800ms ease-in-out alternate infinite;
+    }
+    .particle {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      bottom: 20px;
+      animation:
+        disperse 1500ms forwards cubic-bezier(0.00, 0.48, 0.17, 1.00),
+        fadeToTransparent var(--fade-duration) var(--fade-delay ) forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rocketWrapper">
+  <img
+    class="rocket"
+    alt="A cute 3D illustration of a rocketship made of clay"
+    src="img/clay-rocket.png"
+  />
+</div>
+
+<script>
+  const COLORS = [
+    'hsl(35deg 100% 50%)',
+    'hsl(40deg 100% 50%)',
+    'hsl(45deg 100% 60%)',
+    'hsl(50deg 100% 65%)',
+  ];
+  const FADE_DURATION = 500;
+  const FADE_DELAY = 1000;
+
+  const wrapper = document.querySelector('.rocketWrapper');
+
+  window.setInterval(() => {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.backgroundColor = _.sample(COLORS);
+
+    const angle = _.random(90-25, 90+25);
+    const distance = _.random(80, 120);
+
+    const [x, y] = convertPolarToCartesian(angle, distance);
+
+    particle.style.setProperty('--x', x + 'px');
+    particle.style.setProperty('--y', y + 'px');
+    particle.style.setProperty('--fade-duration', FADE_DURATION + 'ms');
+    particle.style.setProperty('--fade-delay', FADE_DELAY + 'ms');
+
+    // prepend so particles appear behind rocket
+    wrapper.prepend(particle);
+
+    window.setTimeout(() => {
+      wrapper.removeChild(particle);
+    }, FADE_DURATION + FADE_DELAY + 200);
+
+  }, 50);
+
+// helper functions
+  const convertPolarToCartesian = (angle, distance) => {
+    const angleInRadians = convertDegreesToRadians(angle);
+    const x = Math.cos(angleInRadians) * distance;
+    const y = Math.sin(angleInRadians) * distance;
+
+    return [x, y];
+  };
+
+  const convertDegreesToRadians =
+    (angle) => (angle * Math.PI) / 180;
+</script>
+
+</body>
+</html>
