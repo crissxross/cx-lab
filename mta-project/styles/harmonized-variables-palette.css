@@ -1,0 +1,46 @@
+
+:where(html) {
+  --red: 25;
+  --pink: 350;
+  --purple: 310;
+  --violet: 290;
+  --indigo: 270;
+  --blue: 240;
+  --cyan: 210;
+  --teal: 185;
+}
+
+/* l c values generalized from harmonized palette-2 & palette-2-max */
+:where(*) {
+  --color-100: oklch(0.97 0.02 var(--color-hue, 0));
+  --color-200: oklch(0.92 0.04 var(--color-hue, 0));
+  --color-300: oklch(0.86 0.08 var(--color-hue, 0));
+  --color-400: oklch(0.80 0.11 var(--color-hue, 0));
+  --color-500: oklch(0.72 0.16 var(--color-hue, 0));
+  --color-600: oklch(0.63 0.14 var(--color-hue, 0));
+  --color-700: oklch(0.53 0.12 var(--color-hue, 0));
+  --color-800: oklch(0.42 0.09 var(--color-hue, 0));
+  --color-900: oklch(0.31 0.07 var(--color-hue, 0));
+  --color-max-200: oklch(0.92 0.06 var(--color-hue, 0));
+  --color-max-300: oklch(0.86 0.10 var(--color-hue, 0));
+  --color-max-400: oklch(0.80 0.15 var(--color-hue, 0));
+  --color-max-500: oklch(0.72 0.21 var(--color-hue, 0));
+  --color-max-600: oklch(0.63 0.28 var(--color-hue, 0));
+  --color-max-700: oklch(0.54 0.26 var(--color-hue, 0));
+  --color-max-800: oklch(0.42 0.20 var(--color-hue, 0));
+  --color-max-900: oklch(0.30 0.16 var(--color-hue, 0));
+}
+
+
+:where(*) {
+  --gray-000: oklch(0.99 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-100: oklch(0.95 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-200: oklch(0.80 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-300: oklch(0.70 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-400: oklch(0.60 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-500: oklch(0.50 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-600: oklch(0.40 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-700: oklch(0.30 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-800: oklch(0.20 var(--gray-chroma, none) var(--gray-hue, none));
+  --gray-900: oklch(0.10 var(--gray-chroma, none) var(--gray-hue, none));
+}

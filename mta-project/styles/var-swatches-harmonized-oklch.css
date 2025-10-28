@@ -1,0 +1,93 @@
+
+.red { --color-hue: var(--red) }
+.pink { --color-hue: var(--pink) }
+.purple { --color-hue: var(--purple) }
+.violet { --color-hue: var(--violet) }
+.indigo { --color-hue: var(--indigo) }
+.blue { --color-hue: var(--blue) }
+.cyan { --color-hue: var(--cyan) }
+.teal { --color-hue: var(--teal) }
+
+.color-swatchset {
+  & > .swatch:nth-of-type(1)  { background: var(--color-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--color-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--color-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--color-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--color-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--color-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--color-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--color-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--color-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--color-max-200) }
+  & > .swatch:nth-of-type(11)  { background: var(--color-max-300) }
+  & > .swatch:nth-of-type(12)  { background: var(--color-max-400) }
+  & > .swatch:nth-of-type(13)  { background: var(--color-max-500) }
+  & > .swatch:nth-of-type(14)  { background: var(--color-max-600) }
+  & > .swatch:nth-of-type(15)  { background: var(--color-max-700) }
+  & > .swatch:nth-of-type(16)  { background: var(--color-max-800) }
+  & > .swatch:nth-of-type(17)  { background: var(--color-max-900) }
+}
+
+.gray-swatchset {
+  & > .swatch:nth-of-type(1)  { background: var(--gray-000) }
+  & > .swatch:nth-of-type(2)  { background: var(--gray-100) }
+  & > .swatch:nth-of-type(3)  { background: var(--gray-200) }
+  & > .swatch:nth-of-type(4)  { background: var(--gray-300) }
+  & > .swatch:nth-of-type(5)  { background: var(--gray-400) }
+  & > .swatch:nth-of-type(6)  { background: var(--gray-500) }
+  & > .swatch:nth-of-type(7)  { background: var(--gray-600) }
+  & > .swatch:nth-of-type(8)  { background: var(--gray-700) }
+  & > .swatch:nth-of-type(9)  { background: var(--gray-800) }
+  & > .swatch:nth-of-type(10) { background: var(--gray-900) }
+}
+
+.gray-cool {
+  --gray-hue: 270;
+  --gray-chroma: .02;
+}
+.gray-warm {
+  --gray-hue: 50;
+  --gray-chroma: .01;
+}
+.gray-rose {
+  --gray-hue: 10;
+  --gray-chroma: .02;
+}
+.gray-mauve {
+  --gray-hue: 310;
+  --gray-chroma: .02;
+}
+.gray-hueless {
+  --chroma: none;
+}
+
+
+
+.swatches-wrapper {
+  display: flex;
+  gap: 5px;
+  padding-inline: var(--size-2);
+  padding-block: 0px;
+}
+
+article {
+  flex: 1 0 15ch;
+  display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+  gap: 0px;
+  position: relative;
+
+  &::before {
+    content: attr(data-title);
+    display: grid;
+    place-items: center;
+    /* background: var(--color-max-600); */
+    background: white;
+    color: black;
+  }
+}
+
+
+/* h5 {
+  margin: 0;
+} */
