@@ -1,0 +1,196 @@
+
+.color-swatchset[data-title="Red 25"] {
+  & > .swatch:nth-of-type(1)  { background: var(--red-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--red-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--red-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--red-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--red-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--red-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--red-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--red-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--red-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--red-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--red-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--red-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--red-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--red-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--red-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--red-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--red-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--red-max-900) }
+}
+
+.color-swatchset[data-title="Pink 350"] {
+  & > .swatch:nth-of-type(1)  { background: var(--pink-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--pink-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--pink-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--pink-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--pink-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--pink-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--pink-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--pink-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--pink-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--pink-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--pink-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--pink-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--pink-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--pink-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--pink-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--pink-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--pink-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--pink-max-900) }
+}
+
+.color-swatchset[data-title="Purple 310"] {
+  & > .swatch:nth-of-type(1)  { background: var(--purple-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--purple-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--purple-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--purple-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--purple-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--purple-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--purple-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--purple-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--purple-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--purple-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--purple-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--purple-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--purple-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--purple-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--purple-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--purple-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--purple-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--purple-max-900) }
+}
+
+.color-swatchset[data-title="Violet 290"] {
+  & > .swatch:nth-of-type(1)  { background: var(--violet-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--violet-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--violet-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--violet-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--violet-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--violet-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--violet-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--violet-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--violet-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--violet-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--violet-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--violet-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--violet-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--violet-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--violet-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--violet-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--violet-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--violet-max-900) }
+}
+
+.color-swatchset[data-title="Indigo 270"] {
+  & > .swatch:nth-of-type(1)  { background: var(--indigo-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--indigo-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--indigo-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--indigo-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--indigo-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--indigo-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--indigo-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--indigo-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--indigo-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--indigo-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--indigo-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--indigo-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--indigo-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--indigo-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--indigo-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--indigo-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--indigo-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--indigo-max-900) }
+}
+
+.color-swatchset[data-title="Blue 240"] {
+  & > .swatch:nth-of-type(1)  { background: var(--blue-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--blue-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--blue-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--blue-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--blue-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--blue-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--blue-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--blue-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--blue-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--blue-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--blue-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--blue-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--blue-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--blue-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--blue-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--blue-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--blue-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--blue-max-900) }
+}
+
+.color-swatchset[data-title="Cyan 210"] {
+  & > .swatch:nth-of-type(1)  { background: var(--cyan-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--cyan-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--cyan-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--cyan-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--cyan-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--cyan-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--cyan-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--cyan-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--cyan-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--cyan-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--cyan-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--cyan-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--cyan-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--cyan-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--cyan-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--cyan-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--cyan-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--cyan-max-900) }
+}
+
+.color-swatchset[data-title="Teal 185"] {
+  & > .swatch:nth-of-type(1)  { background: var(--teal-100) }
+  & > .swatch:nth-of-type(2)  { background: var(--teal-200) }
+  & > .swatch:nth-of-type(3)  { background: var(--teal-300) }
+  & > .swatch:nth-of-type(4)  { background: var(--teal-400) }
+  & > .swatch:nth-of-type(5)  { background: var(--teal-500) }
+  & > .swatch:nth-of-type(6)  { background: var(--teal-600) }
+  & > .swatch:nth-of-type(7)  { background: var(--teal-700) }
+  & > .swatch:nth-of-type(8)  { background: var(--teal-800) }
+  & > .swatch:nth-of-type(9)  { background: var(--teal-900) }
+  & > .swatch:nth-of-type(10)  { background: var(--teal-max-100) }
+  & > .swatch:nth-of-type(11)  { background: var(--teal-max-200) }
+  & > .swatch:nth-of-type(12)  { background: var(--teal-max-300) }
+  & > .swatch:nth-of-type(13)  { background: var(--teal-max-400) }
+  & > .swatch:nth-of-type(14)  { background: var(--teal-max-500) }
+  & > .swatch:nth-of-type(15)  { background: var(--teal-max-600) }
+  & > .swatch:nth-of-type(16)  { background: var(--teal-max-700) }
+  & > .swatch:nth-of-type(17)  { background: var(--teal-max-800) }
+  & > .swatch:nth-of-type(18)  { background: var(--teal-max-900) }
+}
+
+.swatches-wrapper {
+  display: flex;
+  gap: 5px;
+  padding-inline: var(--size-2);
+  padding-block: 0px;
+}
+
+article {
+  flex: 1 0 15ch;
+  display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+  gap: 0px;
+  position: relative;
+
+  &::before {
+    content: attr(data-title);
+    display: grid;
+    place-items: center;
+    /* background: var(--color-bright); */
+    color: black;
+  }
+}
+
+
+/* h5 {
+  margin: 0;
+} */

@@ -1,0 +1,111 @@
+/* @import "https://unpkg.com/open-props/oklch-hues.min.css";
+@import "https://unpkg.com/open-props/colors-oklch.min.css";
+@import "https://unpkg.com/open-props/gray-oklch.min.css"; */
+
+/* copied from Open Props https://codepen.io/argyleink/pen/abarGpJ?editors=1100 */
+
+
+.salmon   { --color-hue: var(--hue-salmon) }
+.red      { --color-hue: var(--hue-red) }
+.rose     { --color-hue: var(--hue-rose) }
+.pink     { --color-hue: var(--hue-pink) }
+.magenta  { --color-hue: var(--hue-magenta) }
+.purple   { --color-hue: var(--hue-purple) }
+.violet   { --color-hue: var(--hue-violet) }
+.indigo   { --color-hue: var(--hue-indigo) }
+.blue     { --color-hue: var(--hue-blue) }
+.cyan     { --color-hue: var(--hue-cyan) }
+.teal     { --color-hue: var(--hue-teal) }
+.green    { --color-hue: var(--hue-green) }
+.lime     { --color-hue: var(--hue-lime) }
+.yellow   { --color-hue: var(--hue-yellow) }
+.orange   { --color-hue: var(--hue-orange) }
+
+.color-swatchset {
+  & > .swatch:nth-of-type(1)  { background: var(--color-0) }
+  & > .swatch:nth-of-type(2)  { background: var(--color-1) }
+  & > .swatch:nth-of-type(3)  { background: var(--color-2) }
+  & > .swatch:nth-of-type(4)  { background: var(--color-3) }
+  & > .swatch:nth-of-type(5)  { background: var(--color-4) }
+  & > .swatch:nth-of-type(6)  { background: var(--color-5) }
+  & > .swatch:nth-of-type(7)  { background: var(--color-6) }
+  & > .swatch:nth-of-type(8)  { background: var(--color-7) }
+  & > .swatch:nth-of-type(9)  { background: var(--color-8) }
+  & > .swatch:nth-of-type(10) { background: var(--color-9) }
+  & > .swatch:nth-of-type(11) { background: var(--color-10) }
+  & > .swatch:nth-of-type(12) { background: var(--color-11) }
+  & > .swatch:nth-of-type(13) { background: var(--color-12) }
+  & > .swatch:nth-of-type(14) { background: var(--color-13) }
+  & > .swatch:nth-of-type(15) { background: var(--color-14) }
+  & > .swatch:nth-of-type(16) { background: var(--color-15) }
+}
+
+.gray-swatchset {
+  & > .swatch:nth-of-type(1)  { background: var(--gray-0) }
+  & > .swatch:nth-of-type(2)  { background: var(--gray-1) }
+  & > .swatch:nth-of-type(3)  { background: var(--gray-2) }
+  & > .swatch:nth-of-type(4)  { background: var(--gray-3) }
+  & > .swatch:nth-of-type(5)  { background: var(--gray-4) }
+  & > .swatch:nth-of-type(6)  { background: var(--gray-5) }
+  & > .swatch:nth-of-type(7)  { background: var(--gray-6) }
+  & > .swatch:nth-of-type(8)  { background: var(--gray-7) }
+  & > .swatch:nth-of-type(9)  { background: var(--gray-8) }
+  & > .swatch:nth-of-type(10) { background: var(--gray-9) }
+  & > .swatch:nth-of-type(11) { background: var(--gray-10) }
+  & > .swatch:nth-of-type(12) { background: var(--gray-11) }
+  & > .swatch:nth-of-type(13) { background: var(--gray-12) }
+  & > .swatch:nth-of-type(14) { background: var(--gray-13) }
+  & > .swatch:nth-of-type(15) { background: var(--gray-14) }
+  & > .swatch:nth-of-type(16) { background: var(--gray-15) }
+}
+
+.gray-cool {
+  --gray-hue: 270;
+  --gray-chroma: .02;
+}
+.gray-warm {
+  --gray-hue: 50;
+  --gray-chroma: .01;
+}
+.gray-rose {
+  --gray-hue: 10;
+  --gray-chroma: .02;
+}
+.gray-mauve {
+  --gray-hue: 310;
+  --gray-chroma: .02;
+}
+.gray-hueless {
+  ---chroma: none;
+}
+
+
+.swatches-wrapper {
+  display: flex;
+  gap: 5px;
+  padding-inline: var(--size-2);
+  padding-block: 0px;
+}
+
+article {
+  flex: 1 0 15ch;
+  display: grid;
+  gap: 0px;
+  position: relative;
+
+  &::before {
+    content: attr(data-title);
+    display: grid;
+    place-items: center;
+    background: var(--color-bright);
+    color: white;
+  }
+
+  &:is(.gray-cool,.gray-warm,.gray-rose,.gray-mauve,.gray-hueless)::before {
+    background: var(--gray-7);
+  }
+}
+
+/* h5 {
+  margin: 0;
+} */
