@@ -51,53 +51,65 @@ using typographical quotes “” and apostrophes ‘’.
 	</h1>
 </header>
 <!-- All poem code goes here & must be less than or equal to 2048 bytes -->
-  <style>
-    #x {
-        display: grid;
-        place-items: center;
-        /* align-content: center; */
-        /* gap: 1rem; */
-        min-height: 100vh;
-        background: #000;
-        color: #fff;
-      }
-      #btn {
-        padding: .7em;
-        background: #333;
-        font-size: 1rem;
-        color: #fff;
-        cursor: pointer;
-        margin-bottom: 10vh;
-        &:hover {background: #444;}
+<!-- NOTES: fractal number of sides * maxLevel (of branching) = 16 -->
+
+<!-- TODO: move these styles (or some of them) to inline ??? -->
+<style>
+  body {
+      background: #000;
+      color: #fff;
+    }
+  #x {
+      display: grid;
+      place-items: center;
+      /* align-content: center; */
+      /* gap: 1rem; */
+    }
+    #btn {
+      padding: .7em;
+      background: #333;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+      /* margin-bottom: 10vh; */
+      &:hover {background: #444;}
     }
   </style>
   <div id="x">
     <h2>Dynamic Title</h2>
-    <canvas id="canv" style="border: 1px solid #222;"></canvas>
-    <button id="btn">New Measure</button>
+    <!-- <canvas id="canv" style="border: 1px solid #222;"></canvas> -->
+    <canvas id="canv"></canvas>
+    <button id="btn">New Measure / Standard</button>
   </div>
 
 <script>
 const ctx = canv.getContext("2d"),
   btn  = document.getElementById('btn'),
+  h2 = document.querySelector('h2'),
   rand = Math.random,
   SIZE = 600;
 canv.height = SIZE;
 canv.width = SIZE;
 ctx.lineCap = 'round';
 
-// NOTE: number of sides x number of levels should = 16
-// e.g., sides:4 levels:4 ; sides:8 levels:2 ; sides:2 levels:8
+function title(){
+  const measures = 'Degree Moment Segment Portion Quantity Unit Volume Mass Length Height Depth Quota Magnitude'.split(' '),
+    qualities = 'Intelligence Empathy Pleasure Insight Perception Understanding Wisdom Knowledge Awareness Trust Honesty Justice Reason'.split(' ');
+  return `A ${measures[Math.floor(rand() * measures.length)]} of ${qualities[Math.floor(rand() * qualities.length)]}`;
+}
 
 function drawFractal(){
+
+  h2.textContent = title();
+
   // valid pairs where sides * maxLevel === 16
   const combos = [[1,16],[2,8],[4,4],[8,2],[16,1]],
     [sides, maxLevel] = combos[Math.floor(rand() * combos.length)],
+    branches = 2,
     lineWidth = Math.floor(rand() * 11) + 4,
     hue = rand() * 360,
     spread = rand() * 4 - 2,
-    scale = rand() * 0.1 + 0.6,
-    branches = 2;
+    scale = rand() * 0.1 + 0.6;
 
   console.log(
     'sides:', sides,
@@ -120,16 +132,17 @@ function drawFractal(){
 
 function drawBranch(level, maxLevel, spread, scale, branches, hue){
     if (level > maxLevel) return;
-    const branchSize = 110;
-    const li = 10 + level * 10;
+    const size = 110,
+      li = 10 + level * 10;
     ctx.strokeStyle = `hsl(${hue} 100 ${li})`;
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(branchSize, 0);
+    ctx.lineTo(size, 0);
     ctx.stroke();
 
-    for (let i = 0; i < branches; i++){
-        const position = branchSize - (branchSize / branches) * i;
+    // for (let i = 0; i < branches; i++){
+    for (let i = branches; i--;){
+        const position = size - (size / branches) * i;
         ctx.save();
         ctx.translate(position, 0);
         ctx.scale(scale, scale);
