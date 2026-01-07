@@ -57,12 +57,10 @@ The branching of the fractal viz is governed by the number of limbs multiplied b
 	</h1>
 </header>
 
-<!-- TODO: should dynamic title start with “Visualization:” or simply "A" ??? -->
-
 <div style="display:grid;place-items:center;">
   <h2></h2>
   <canvas id="cv"></canvas>
-  <p> <button id="btn" style="font-size:1rem;cursor:pointer;padding:.4em;margin-left:1em;">Next</button></p>
+  <p> <button id="btn" style="font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em;">Next Visualization</button></p>
 </div>
 <script>
 document.body.style='background:#000;color:#fff;font-family:sans-serif';
@@ -72,13 +70,13 @@ const c = cv.getContext('2d'),
   p = document.querySelector('p'),
   ran = Math.random,
   SIZE = 600;
-cv.height = SIZE;
-cv.width = SIZE;
-c.lineCap = 'round';
+  cv.height = SIZE;
+  cv.width = SIZE;
+  c.lineCap = 'round';
 function title(){
   const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain Scintilla Particle Length Height Depth'.split(' '),
   q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
-  return `Visualization: a ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
+  return `A ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
 }
 function doViz(){
   h2.textContent = title();
