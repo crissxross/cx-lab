@@ -28,6 +28,10 @@ using typographical quotes “” and apostrophes ‘’.
 * Do not modify the template in any other way.
 *** END TEMPLATE INSTRUCTIONS ***
 
+NOTES:
+
+TITLE: Qualia Standards Visualizer
+
 -->
 
 <style>
@@ -50,109 +54,76 @@ using typographical quotes “” and apostrophes ‘’.
 		<a href="about.html#authorlastname">Author</a>
 	</h1>
 </header>
-<!-- All poem code goes here & must be less than or equal to 2048 bytes -->
-<!-- NOTES: fractal number of sides * maxLevel (of branching) = 16 -->
+<!-- NOTES: fractal number of sides * maxLevel (or depth) of recursion (branching) = 16 -->
 
-<!-- TODO: move these styles (or some of them) to inline ??? -->
-<style>
-  body {
-      background: #000;
-      color: #fff;
-    }
-  #x {
-      display: grid;
-      place-items: center;
-      /* align-content: center; */
-      /* gap: 1rem; */
-    }
-    #btn {
-      padding: .7em;
-      font-size: 1rem;
-      color: #fff;
-      cursor: pointer;
-      background: #333;
-      &:hover {background: #444;}
-    }
-  </style>
-  <div id="x">
-    <h2>Dynamic Title</h2>
-    <!-- <canvas id="canv" style="border: 1px solid #222;"></canvas> -->
-    <canvas id="canv"></canvas>
-    <button id="btn">New Measure / Standard</button>
+<!-- TODO: WORDS change all qualities to be instances of subjective conscious experience -->
+
+  <div style="display:grid;place-items:center;">
+    <h2></h2>
+    <canvas id="cv"></canvas>
+    <button id="btn" style="font-size:1rem;cursor:pointer;padding:.7em;">Next Qualia Standard</button>
   </div>
 
 <script>
-const ctx = canv.getContext("2d"),
+document.body.style = 'background:#000;color:#fff';
+const ctx = cv.getContext("2d"),
   btn  = document.getElementById('btn'),
   h2 = document.querySelector('h2'),
-  rand = Math.random,
+  ran = Math.random,
+  floor = Math.floor,
   SIZE = 600;
-canv.height = SIZE;
-canv.width = SIZE;
+cv.height = SIZE;
+cv.width = SIZE;
 ctx.lineCap = 'round';
 
 function title(){
   const measures = 'Degree Moment Segment Portion Quantity Unit Volume Mass Length Height Depth Quota Magnitude'.split(' '),
     qualities = 'Intelligence Empathy Pleasure Insight Perception Understanding Wisdom Knowledge Awareness Trust Honesty Justice Reason'.split(' ');
-  return `A ${measures[Math.floor(rand() * measures.length)]} of ${qualities[Math.floor(rand() * qualities.length)]}`;
+  return `A ${measures[floor(ran() * measures.length)]} of ${qualities[floor(ran() * qualities.length)]}`;
 }
 
-function drawFractal(){
-
+function drawViz(){
   h2.textContent = title();
-
-  // valid pairs where sides * maxLevel === 16
-  const combos = [[1,16],[2,8],[4,4],[8,2],[16,1]],
-    [sides, maxLevel] = combos[Math.floor(rand() * combos.length)],
+  const props = [[1,16],[2,8],[4,4],[8,2]],
+    [limbs, maxLevel] = props[floor(ran() * props.length)],
     branches = 2,
-    lineWidth = Math.floor(rand() * 11) + 4,
-    hue = rand() * 360,
-    spread = rand() * 4 - 2,
-    scale = rand() * 0.1 + 0.6;
-
-  console.log(
-    'sides:', sides,
-    'maxLevel:', maxLevel,
-    // 'lineWidth:', lineWidth,
-    // 'spread:', spread,
-    // 'scale:', scale
-  );
-
+    lineWidth = floor(ran() * 11) + 4,
+    hue = ran() * 360,
+    angle = ran() * 4 - 2,
+    scale = ran() * 0.1 + 0.6;
   ctx.clearRect(0, 0, SIZE, SIZE);
   ctx.lineWidth = lineWidth;
   ctx.save();
   ctx.translate(SIZE/2, SIZE/2);
-  for (let i = 0; i < sides; i++){
-      drawBranch(0, maxLevel, spread, scale, branches, hue);
-      ctx.rotate(Math.PI * 2 / sides);
+  for (let i = 0; i < limbs; i++){
+      drawBranch(0, maxLevel, angle, scale, branches, hue);
+      ctx.rotate(Math.PI * 2 / limbs);
   }
   ctx.restore();
 }
 
-function drawBranch(level, maxLevel, spread, scale, branches, hue){
+function drawBranch(level, maxLevel, angle, scale, branches, hue){
     if (level > maxLevel) return;
-    const size = 110,
+    const len = 110,
       li = 10 + level * 10;
     ctx.strokeStyle = `hsl(${hue} 100 ${li})`;
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(size, 0);
+    ctx.lineTo(len, 0);
     ctx.stroke();
-
-    // for (let i = 0; i < branches; i++){
     for (let i = branches; i--;){
-        const position = size - (size / branches) * i;
+        const position = len - (len / branches) * i;
         ctx.save();
         ctx.translate(position, 0);
         ctx.scale(scale, scale);
-        ctx.rotate(spread);
-        drawBranch(level + 1, maxLevel, spread, scale, branches, hue);
+        ctx.rotate(angle);
+        drawBranch(level + 1, maxLevel, angle, scale, branches, hue);
         ctx.restore();
     }
 }
 
-drawFractal();
-btn.addEventListener('click', drawFractal);
+drawViz();
+btn.addEventListener('click', drawViz);
 </script>
 
 </body>
