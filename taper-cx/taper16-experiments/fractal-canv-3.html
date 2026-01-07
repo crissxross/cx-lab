@@ -60,8 +60,10 @@ The branching of the fractal viz is governed by the number of limbs multiplied b
 <!-- 2041 bytes with inline styles (before minifying main element) -->
 <!-- 2040 bytes with styles in style rules or 2024 minified (before minifying main element) -->
 <!-- After minifying main element & style rules: 2009 bytes -->
-<style>*{margin:0;}body{background:#000;color:#fff;font-family:sans-serif;}main{display:grid;place-items:center;}h2{margin-top:1.2rem;}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em;}</style>
-<main><h2></h2><canvas id="cv"></canvas><p> <button id="btn">Next Visualization</button></p></main>
+<!-- 👆 byte measurements before editing any of title word strings -->
+
+<style>*{margin:0;}body{background:#000;color:#fff;font-family:sans-serif;}main{display:grid;place-items:center;}h2{margin-bottom:1.2rem;}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em;}</style>
+<main><canvas id="cv"></canvas><h2></h2><p> <button id="btn">Next Visualization</button></p></main>
 <script>
 const c = cv.getContext('2d'),
   btn  = document.getElementById('btn'),
@@ -72,7 +74,7 @@ const c = cv.getContext('2d'),
   let SIZE = 550;
   cv.height = cv.width = SIZE;
 function title(){
-  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain Scintilla Particle Length Height Depth'.split(' '),
+  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain Scintilla Particle Trace Depth'.split(' '),
   q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
   return `A ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
 }
@@ -80,7 +82,7 @@ function doViz(){
   h2.textContent = title();
   p.firstChild.textContent = `Qualia Standard: ${ran()*1000|0}`;
   const props = [[1,16],[2,8],[4,4],[8,2]],
-  [limbs,max] = props[ran()*props.length|0],
+  [limbs,max] = props[ran()*4|0],
   num = 2,
   lineW = (ran()*11|0)+4,
   hue = ran()*360,
