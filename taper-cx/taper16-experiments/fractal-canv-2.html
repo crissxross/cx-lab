@@ -32,6 +32,8 @@ NOTES:
 
 TITLE: Qualia Standards Visualizer
 
+The branching of the fractal viz is governed by the number of limbs multiplied by max level (or depth) of recursion (branching) = 16
+
 -->
 
 <style>
@@ -54,19 +56,17 @@ TITLE: Qualia Standards Visualizer
 		<a href="about.html#authorlastname">Author</a>
 	</h1>
 </header>
-<!-- NOTES: fractal number of sides * maxLevel (or depth) of recursion (branching) = 16 -->
 
 <!-- TODO: WORDS change all qualities to be instances of subjective conscious experience -->
 
-  <div style="display:grid;place-items:center;">
-    <h2></h2>
-    <canvas id="cv"></canvas>
-    <button id="btn" style="font-size:1rem;cursor:pointer;padding:.7em;">Next Qualia Standard</button>
-  </div>
-
+<div style="display:grid;place-items:center;">
+  <h2></h2>
+  <canvas id="cv"></canvas>
+  <button id="btn" style="font-size:1rem;cursor:pointer;padding:.7em;">Next Qualia Standard</button>
+</div>
 <script>
-document.body.style = 'background:#000;color:#fff';
-const ctx = cv.getContext("2d"),
+document.body.style='background:#000;color:#fff';
+const c = cv.getContext('2d'),
   btn  = document.getElementById('btn'),
   h2 = document.querySelector('h2'),
   ran = Math.random,
@@ -74,54 +74,50 @@ const ctx = cv.getContext("2d"),
   SIZE = 600;
 cv.height = SIZE;
 cv.width = SIZE;
-ctx.lineCap = 'round';
-
+c.lineCap = 'round';
 function title(){
-  const measures = 'Degree Moment Segment Portion Quantity Unit Volume Mass Length Height Depth Quota Magnitude'.split(' '),
-    qualities = 'Intelligence Empathy Pleasure Insight Perception Understanding Wisdom Knowledge Awareness Trust Honesty Justice Reason'.split(' ');
-  return `A ${measures[floor(ran() * measures.length)]} of ${qualities[floor(ran() * qualities.length)]}`;
+  const m = 'Degree Moment Segment Portion Quantity Unit Volume Mass Length Height Depth Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain'.split(' '),
+  q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
+  return `A ${m[floor(ran()*m.length)]} of ${q[floor(ran()*q.length)]}`;
 }
-
 function drawViz(){
   h2.textContent = title();
   const props = [[1,16],[2,8],[4,4],[8,2]],
-    [limbs, maxLevel] = props[floor(ran() * props.length)],
-    branches = 2,
-    lineWidth = floor(ran() * 11) + 4,
-    hue = ran() * 360,
-    angle = ran() * 4 - 2,
-    scale = ran() * 0.1 + 0.6;
-  ctx.clearRect(0, 0, SIZE, SIZE);
-  ctx.lineWidth = lineWidth;
-  ctx.save();
-  ctx.translate(SIZE/2, SIZE/2);
-  for (let i = 0; i < limbs; i++){
-      drawBranch(0, maxLevel, angle, scale, branches, hue);
-      ctx.rotate(Math.PI * 2 / limbs);
+  [limbs,max] = props[floor(ran()*props.length)],
+  num = 2,
+  lineW = floor(ran()*11)+4,
+  hue = ran()*360,
+  angle = ran()*4-2,
+  scale = ran()*0.1+0.6;
+  c.clearRect(0,0,SIZE,SIZE);
+  c.lineWidth = lineW;
+  c.save();
+  c.translate(SIZE/2,SIZE/2);
+  for (let i=limbs; i--;){
+    drawBranch(0, max, angle, scale, num, hue);
+    c.rotate(Math.PI*2/limbs);
   }
-  ctx.restore();
+  c.restore();
 }
-
-function drawBranch(level, maxLevel, angle, scale, branches, hue){
-    if (level > maxLevel) return;
-    const len = 110,
-      li = 10 + level * 10;
-    ctx.strokeStyle = `hsl(${hue} 100 ${li})`;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(len, 0);
-    ctx.stroke();
-    for (let i = branches; i--;){
-        const position = len - (len / branches) * i;
-        ctx.save();
-        ctx.translate(position, 0);
-        ctx.scale(scale, scale);
-        ctx.rotate(angle);
-        drawBranch(level + 1, maxLevel, angle, scale, branches, hue);
-        ctx.restore();
-    }
+function drawBranch(level, max, angle, scale, num, hue){
+  if (level>max) return;
+  const len = 110,
+  li = 10+level*10;
+  c.strokeStyle = `hsl(${hue} 100 ${li})`;
+  c.beginPath();
+  c.moveTo(0,0);
+  c.lineTo(len,0);
+  c.stroke();
+  for (let i=num; i--;){
+    const pos = len-(len/num)*i;
+    c.save();
+    c.translate(pos,0);
+    c.scale(scale, scale);
+    c.rotate(angle);
+    drawBranch(level+1, max, angle, scale, num, hue);
+    c.restore();
+  }
 }
-
 drawViz();
 btn.addEventListener('click', drawViz);
 </script>
