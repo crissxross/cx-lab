@@ -57,18 +57,19 @@ The branching of the fractal viz is governed by the number of limbs multiplied b
 	</h1>
 </header>
 
-<!-- TODO: WORDS change all qualities to be instances of subjective conscious experience -->
+<!-- TODO: should dynamic title start with “Visualization:” or simply "A" ??? -->
 
 <div style="display:grid;place-items:center;">
   <h2></h2>
   <canvas id="cv"></canvas>
-  <button id="btn" style="font-size:1rem;cursor:pointer;padding:.7em;">Next Qualia Standard</button>
+  <p> <button id="btn" style="font-size:1rem;cursor:pointer;padding:.4em;margin-left:1em;">Next</button></p>
 </div>
 <script>
-document.body.style='background:#000;color:#fff';
+document.body.style='background:#000;color:#fff;font-family:sans-serif';
 const c = cv.getContext('2d'),
   btn  = document.getElementById('btn'),
   h2 = document.querySelector('h2'),
+  p = document.querySelector('p'),
   ran = Math.random,
   floor = Math.floor,
   SIZE = 600;
@@ -78,10 +79,11 @@ c.lineCap = 'round';
 function title(){
   const m = 'Degree Moment Segment Portion Quantity Unit Volume Mass Length Height Depth Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain'.split(' '),
   q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
-  return `A ${m[floor(ran()*m.length)]} of ${q[floor(ran()*q.length)]}`;
+  return `Visualization: a ${m[floor(ran()*m.length)]} of ${q[floor(ran()*q.length)]}`;
 }
-function drawViz(){
+function doViz(){
   h2.textContent = title();
+  p.firstChild.textContent = `Qualia Standard: ${ran()*1000|0}`;
   const props = [[1,16],[2,8],[4,4],[8,2]],
   [limbs,max] = props[floor(ran()*props.length)],
   num = 2,
@@ -94,12 +96,12 @@ function drawViz(){
   c.save();
   c.translate(SIZE/2,SIZE/2);
   for (let i=limbs; i--;){
-    drawBranch(0, max, angle, scale, num, hue);
+    doBranch(0, max, angle, scale, num, hue);
     c.rotate(Math.PI*2/limbs);
   }
   c.restore();
 }
-function drawBranch(level, max, angle, scale, num, hue){
+function doBranch(level, max, angle, scale, num, hue){
   if (level>max) return;
   const len = 110,
   li = 10+level*10;
@@ -114,12 +116,12 @@ function drawBranch(level, max, angle, scale, num, hue){
     c.translate(pos,0);
     c.scale(scale, scale);
     c.rotate(angle);
-    drawBranch(level+1, max, angle, scale, num, hue);
+    doBranch(level+1, max, angle, scale, num, hue);
     c.restore();
   }
 }
-drawViz();
-btn.addEventListener('click', drawViz);
+doViz();
+btn.addEventListener('click', doViz);
 </script>
 
 </body>
