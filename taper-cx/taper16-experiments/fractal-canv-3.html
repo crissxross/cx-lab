@@ -57,13 +57,12 @@ The branching of the fractal viz is governed by the number of limbs multiplied b
 	</h1>
 </header>
 
-<div style="display:grid;place-items:center;">
-  <h2 style="margin-bottom: 0;"></h2>
-  <canvas id="cv"></canvas>
-  <p style="margin-top: 0;"> <button id="btn" style="font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em;">Next Visualization</button></p>
-</div>
+<!-- 2041 bytes with inline styles (before minifying main element) -->
+<!-- 2040 bytes with styles in style rules or 2024 minified (before minifying main element) -->
+<!-- After minifying main element & style rules: 2009 bytes -->
+<style>*{margin:0;}body{background:#000;color:#fff;font-family:sans-serif;}main{display:grid;place-items:center;}h2{margin-top:1.2rem;}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em;}</style>
+<main><h2></h2><canvas id="cv"></canvas><p> <button id="btn">Next Visualization</button></p></main>
 <script>
-document.body.style='background:#000;color:#fff;font-family:sans-serif';
 const c = cv.getContext('2d'),
   btn  = document.getElementById('btn'),
   h2 = document.querySelector('h2'),
