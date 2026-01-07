@@ -71,23 +71,22 @@ const c = cv.getContext('2d'),
   h2 = document.querySelector('h2'),
   p = document.querySelector('p'),
   ran = Math.random,
-  floor = Math.floor,
   SIZE = 600;
 cv.height = SIZE;
 cv.width = SIZE;
 c.lineCap = 'round';
 function title(){
-  const m = 'Degree Moment Segment Portion Quantity Unit Volume Mass Length Height Depth Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain'.split(' '),
+  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain Scintilla Particle Length Height Depth'.split(' '),
   q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
-  return `Visualization: a ${m[floor(ran()*m.length)]} of ${q[floor(ran()*q.length)]}`;
+  return `Visualization: a ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
 }
 function doViz(){
   h2.textContent = title();
   p.firstChild.textContent = `Qualia Standard: ${ran()*1000|0}`;
   const props = [[1,16],[2,8],[4,4],[8,2]],
-  [limbs,max] = props[floor(ran()*props.length)],
+  [limbs,max] = props[ran()*props.length|0],
   num = 2,
-  lineW = floor(ran()*11)+4,
+  lineW = (ran()*11|0)+4,
   hue = ran()*360,
   angle = ran()*4-2,
   scale = ran()*0.1+0.6;
