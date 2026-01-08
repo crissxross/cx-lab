@@ -34,6 +34,8 @@ TITLE: Qualia Standards Visualizer
 
 The branching of the fractal viz is governed by the number of limbs multiplied by max level (or depth) of recursion (branching) = 16
 
+NOTE: if you resize the window, the canvas does not automatically adjust so please refresh the page. This is intentional to keep code size down.
+
 -->
 
 <style>
@@ -57,7 +59,7 @@ The branching of the fractal viz is governed by the number of limbs multiplied b
 	</h1>
 </header>
 
-<!-- TODO: remove comments and add title, author & creative statement, etc. -->
+<!-- TODO: add title, author & creative statement, etc. -->
 
 <style>body{background:#000;color:#fff;font-family:sans-serif}main{display:grid;place-items:center}p,h2{margin-top:0}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}</style>
 <main><canvas id="cv"></canvas><h2></h2><p> <button id="btn">Next Visualization</button></p></main>
@@ -66,13 +68,13 @@ const c = cv.getContext('2d'),
   btn  = document.getElementById('btn'),
   h2 = document.querySelector('h2'),
   p = document.querySelector('p'),
-  ran = Math.random;
-  c.lineCap = 'round';
-  let SIZE = 550;
+  ran = Math.random,
+  SIZE = Math.min(window.innerWidth,window.innerHeight)*0.8|0;
   cv.height = cv.width = SIZE;
+  c.lineCap = 'round';
 function title(){
-  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain Scintilla Particle Trace Depth'.split(' '),
-  q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
+  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit'.split(' '),
+  q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Queasiness'.split(' ');
   return `A ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
 }
 function doViz(){
@@ -90,12 +92,12 @@ function doViz(){
   c.save();
   c.translate(SIZE/2,SIZE/2);
   for (let i=limbs; i--;){
-    doBranch(0, max, angle, scale, num, hue);
+    doBranch(0,max,angle,scale,num,hue);
     c.rotate(Math.PI*2/limbs);
   }
   c.restore();
 }
-function doBranch(level, max, angle, scale, num, hue){
+function doBranch(level,max,angle,scale,num,hue){
   if (level>max) return;
   const len = 100,
   li = 10+level*10;
@@ -110,7 +112,7 @@ function doBranch(level, max, angle, scale, num, hue){
     c.translate(pos,0);
     c.scale(scale, scale);
     c.rotate(angle);
-    doBranch(level+1, max, angle, scale, num, hue);
+    doBranch(level+1,max,angle,scale,num,hue);
     c.restore();
   }
 }
