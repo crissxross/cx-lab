@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #16)</title>
+
+<!-- “Title” Copyright (C) 2026 Author
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #16: For Good Measure, Spring 2026:
+
+https://taper.badquar.to/16/title_of_your_work.html
+
+... your creative statement here ...
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+NOTES:
+
+TITLE: Qualia Standards Visualizer
+
+The branching of the fractal viz is governed by the number of limbs multiplied by max level (or depth) of recursion (branching) = 16
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id=nav>
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #16 :
+		For Good Measure</a> : Spring 2026 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a>
+	</h1>
+</header>
+
+<!-- TODO: remove comments and add title, author & creative statement, etc. -->
+
+<style>body{background:#000;color:#fff;font-family:sans-serif}main{display:grid;place-items:center}p,h2{margin-top:0}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}</style>
+<main><canvas id="cv"></canvas><h2></h2><p> <button id="btn">Next Visualization</button></p></main>
+<script>
+const c = cv.getContext('2d'),
+  btn  = document.getElementById('btn'),
+  h2 = document.querySelector('h2'),
+  p = document.querySelector('p'),
+  ran = Math.random;
+  c.lineCap = 'round';
+  let SIZE = 550;
+  cv.height = cv.width = SIZE;
+function title(){
+  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Tranche Fraction Slice Piece Grain Scintilla Particle Trace Depth'.split(' '),
+  q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness'.split(' ');
+  return `A ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
+}
+function doViz(){
+  h2.textContent = title();
+  p.firstChild.textContent = `Qualia Standard: ${ran()*1000|0}`;
+  const props = [[1,16],[2,8],[4,4],[8,2]],
+  [limbs,max] = props[ran()*4|0],
+  num = 2,
+  lineW = (ran()*11|0)+4,
+  hue = ran()*360,
+  angle = ran()*4-2,
+  scale = ran()*0.1+0.6;
+  c.clearRect(0,0,SIZE,SIZE);
+  c.lineWidth = lineW;
+  c.save();
+  c.translate(SIZE/2,SIZE/2);
+  for (let i=limbs; i--;){
+    doBranch(0, max, angle, scale, num, hue);
+    c.rotate(Math.PI*2/limbs);
+  }
+  c.restore();
+}
+function doBranch(level, max, angle, scale, num, hue){
+  if (level>max) return;
+  const len = 100,
+  li = 10+level*10;
+  c.strokeStyle = `hsl(${hue} 100 ${li})`;
+  c.beginPath();
+  c.moveTo(0,0);
+  c.lineTo(len,0);
+  c.stroke();
+  for (let i=num; i--;){
+    const pos = len-(len/num)*i;
+    c.save();
+    c.translate(pos,0);
+    c.scale(scale, scale);
+    c.rotate(angle);
+    doBranch(level+1, max, angle, scale, num, hue);
+    c.restore();
+  }
+}
+doViz();
+btn.addEventListener('click', doViz);
+</script>
+
+</body>
+</html>
