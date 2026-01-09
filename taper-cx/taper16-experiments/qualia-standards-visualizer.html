@@ -15,13 +15,18 @@ This is from Taper #16: For Good Measure, Spring 2026:
 
 https://taper.badquar.to/16/title_of_your_work.html
 
-... your creative statement here ...
 
-Qualia Standards Visualizer
+QUALIA STANDARDS VISUALIZER
 
+Imagine, philosophers and neuroscientists have solved the problem of qualia. They’ve measured, analysed and quantified all the common perceptual experiences, bodily sensations, felt reactions, emotions, passions and moods. Next, they found a way to visualize them. It wasn’t long before the authorities (at the behest of the techno-authoritarians) decided to standardize these qualia. Their aims were twofold: (1) to reproduce them in AI agents; (2) to regulate human behaviour by expanding the notion of the quantified self and promoting ever deeper self-surveillance. Here, I offer a small sample of the qualia they identified and standardized.
 
+The code, specifically the doViz() function that generates the visualization, draws a fractal. Its branching is determined by the number of limbs (i.e. main branches) multiplied by the maximum level or depth of recursion stipulated. The authorities (with their preference for imperial systems) have deemed that the result of this calculation must always be 16. This is the standard for qualia.
 
-NOTE: the canvas size is relative to the size of the viewport but if you resize the window, the canvas does not automatically adjust so, in that case, please refresh the page. This is intentional to keep code size down.
+NOTE: if you resize the browser window, please refresh the page. The canvas size is relative to the viewport but the canvas does not automatically adjust on resizing. This is intentional to keep the code size down.
+
+For more about:
+- qualia, see https://plato.stanford.edu/entries/qualia/
+- generating fractals using JavaScript & HTML Canvas, see this tutorial https://youtu.be/DboxLjtm88g?si=nqRSYIKFnNVkNOun
 
 
 *** BEGIN TEMPLATE INSTRUCTIONS ***
@@ -53,41 +58,39 @@ using typographical quotes “” and apostrophes ‘’.
 		<a href="index.html">Taper #16 :
 		For Good Measure</a> : Spring 2026 &nbsp;
 		<a href="next.html">&gt;&gt;</a><br>
-		<a href="title_of_your_work.html">“Title”</a> by
-		<a href="about.html#authorlastname">Author</a>
+		<a href="qualia-standards-visualizer.html">“Qualia Standards Visualizer”</a> by
+		<a href="about.html#wilks">Christine Wilks</a>
 	</h1>
 </header>
-
-<!-- TODO: add creative statement, title, author, etc. -->
 
 <style>body{background:#000;color:#fff;font-family:sans-serif}main{display:grid;place-items:center}p,h2{margin-top:0}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}</style>
 <main><canvas id="cv"></canvas><h2></h2><p> <button id="btn">Next Visualization</button></p></main>
 <script>
-const c = cv.getContext('2d'),
-  btn  = document.getElementById('btn'),
-  h2 = document.querySelector('h2'),
-  p = document.querySelector('p'),
-  ran = Math.random,
-  SIZE = Math.min(window.innerWidth,window.innerHeight)*0.8|0;
-  cv.height = cv.width = SIZE;
-  c.lineCap = 'round';
+const c=cv.getContext('2d'),
+  btn=document.getElementById('btn'),
+  h2=document.querySelector('h2'),
+  p=document.querySelector('p'),
+  r=Math.random,
+  SIZE=Math.min(window.innerWidth,window.innerHeight)*0.8|0;
+  cv.height=cv.width=SIZE;
+  c.lineCap='round';
 function title(){
-  const m = 'Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit'.split(' '),
-  q = 'Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Queasiness'.split(' ');
-  return `A ${m[ran()*m.length|0]} of ${q[ran()*q.length|0]}`;
+  const m='Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit'.split(' '),
+  q='Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Queasiness'.split(' ');
+  return `A ${m[r()*m.length|0]} of ${q[r()*q.length|0]}`;
 }
 function doViz(){
-  h2.textContent = title();
-  p.firstChild.textContent = `Qualia Standard: ${ran()*1000|0}`;
-  const props = [[1,16],[2,8],[4,4],[8,2]],
-  [limbs,max] = props[ran()*4|0],
-  num = 2,
-  lineW = (ran()*11|0)+4,
-  hue = ran()*360,
-  angle = ran()*4-2,
-  scale = ran()*0.1+0.6;
+  h2.textContent=title();
+  p.firstChild.textContent=`Qualia Standard: ${r()*1000|0}`;
+  const props=[[1,16],[2,8],[4,4],[8,2]],
+  [limbs,max]=props[r()*4|0],
+  num=2,
+  lineW=(r()*11|0)+4,
+  hue=r()*360,
+  angle=r()*4-2,
+  scale=r()*0.1+0.6;
   c.clearRect(0,0,SIZE,SIZE);
-  c.lineWidth = lineW;
+  c.lineWidth=lineW;
   c.save();
   c.translate(SIZE/2,SIZE/2);
   for (let i=limbs; i--;){
@@ -98,15 +101,15 @@ function doViz(){
 }
 function doBranch(level,max,angle,scale,num,hue){
   if (level>max) return;
-  const len = 100,
-  li = 10+level*10;
-  c.strokeStyle = `hsl(${hue} 100 ${li})`;
+  const len=100,
+  li=10+level*10;
+  c.strokeStyle=`hsl(${hue} 100 ${li})`;
   c.beginPath();
   c.moveTo(0,0);
   c.lineTo(len,0);
   c.stroke();
   for (let i=num; i--;){
-    const pos = len-(len/num)*i;
+    const pos=len-(len/num)*i;
     c.save();
     c.translate(pos,0);
     c.scale(scale, scale);
