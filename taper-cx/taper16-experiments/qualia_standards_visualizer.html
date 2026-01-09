@@ -18,15 +18,33 @@ https://taper.badquar.to/16/qualia_standards_visualizer.html
 
 QUALIA STANDARDS VISUALIZER
 
-Imagine, philosophers and neuroscientists have solved the problem of qualia. They’ve measured, analysed and quantified all the common perceptual experiences, bodily sensations, felt reactions, emotions, passions and moods. Next, they found a way to visualize them. It wasn’t long before the authorities (at the behest of the techno-authoritarians) decided to standardize these qualia. Their aims were twofold: (1) to reproduce them in AI agents; (2) to regulate human behaviour by expanding the notion of the quantified self and promoting ever deeper self-surveillance. Here, I offer a small sample of the qualia they identified and standardized.
+Imagine, philosophers and neuroscientists have solved the problem of
+qualia. They’ve measured, analysed and quantified all the common
+perceptual experiences, bodily sensations, felt reactions, emotions,
+passions and moods. Next, they found a way to visualize them. It
+wasn’t long before the authorities (at the behest of the
+techno-authoritarians) decided to standardize these qualia. Their
+aims were twofold: (1) to reproduce them in AI agents; (2) to
+regulate human behaviour by expanding the notion of the quantified
+self and promoting ever deeper self-surveillance. Here, I offer a
+small random sample of the qualia they identified and standardized.
 
-The code, specifically the doViz() function that generates the visualization, draws a fractal. Its branching is determined by the number of limbs (i.e. main branches) multiplied by the maximum level or depth of recursion stipulated. The authorities (with their preference for imperial systems) have deemed that the result of this calculation must always be 16. This is the standard for qualia.
+The code, specifically the doViz() function that generates the
+visualization, draws a fractal. Its branching is determined by the
+number of limbs (i.e. main branches) multiplied by the maximum level
+or depth of recursion stipulated. The authorities (with their
+preference for imperial systems) have deemed that the result of this
+calculation must always be 16. This is the standard for qualia.
 
-NOTE: if you resize the browser window, please refresh the page. The canvas size is relative to the viewport but the canvas does not automatically adjust on resizing. This is intentional to keep the code size down.
+NOTE: if you resize the browser window, please refresh the page.
+The canvas size is relative to the viewport but it does not
+automatically adjust on resizing. This is intentional to keep the
+code size down.
 
 For more about:
 - qualia, see https://plato.stanford.edu/entries/qualia/
-- generating fractals using JavaScript & HTML Canvas, see this tutorial https://youtu.be/DboxLjtm88g?si=nqRSYIKFnNVkNOun
+- generating fractals using JavaScript & HTML Canvas, see this
+  tutorial https://youtu.be/DboxLjtm88g?si=nqRSYIKFnNVkNOun
 
 
 *** BEGIN TEMPLATE INSTRUCTIONS ***
@@ -76,7 +94,7 @@ const c=cv.getContext('2d'),
   c.lineCap='round';
 function title(){
   const m='Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit'.split(' '),
-  q='Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Honesty Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Queasiness'.split(' ');
+  q='Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Nausea Calm Fatigue Disgust Anxiety Fear Horror Contempt Joy Misery Joviality'.split(' ');
   return `A ${m[r()*m.length|0]} of ${q[r()*q.length|0]}`;
 }
 function doViz(){
