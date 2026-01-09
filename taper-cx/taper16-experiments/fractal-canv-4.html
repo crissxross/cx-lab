@@ -61,6 +61,8 @@ NOTE: if you resize the window, the canvas does not automatically adjust so plea
 
 <!-- TODO: add title, author & creative statement, etc. -->
 
+<!-- TODO: decide on which c.rotate(...) in doBranch() below -->
+
 <style>body{background:#000;color:#fff;font-family:sans-serif}main{display:grid;place-items:center}p,h2{margin-top:0}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}</style>
 <main><canvas id="cv"></canvas><h2></h2><p> <button id="btn">Next Visualization</button></p></main>
 <script>
@@ -111,7 +113,9 @@ function doBranch(level,max,angle,scale,num,hue){
     c.save();
     c.translate(pos,0);
     c.scale(scale, scale);
-    c.rotate(angle);
+    // c.rotate(angle);
+    // c.rotate(angle*(i-(num-1)/2));
+    c.rotate(angle*(i-(num-angle*5)/2)); // *4 or *5 ???
     doBranch(level+1,max,angle,scale,num,hue);
     c.restore();
   }
