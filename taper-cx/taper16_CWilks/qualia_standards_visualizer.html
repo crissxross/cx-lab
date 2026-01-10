@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Qualia Standards Visualizer (Taper #16)</title>
+
+<!-- “Qualia Standards Visualizer” Copyright (C) 2026 Christine Wilks
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #16: For Good Measure, Spring 2026:
+
+https://taper.badquar.to/16/qualia_standards_visualizer.html
+
+
+QUALIA STANDARDS VISUALIZER
+
+Imagine, philosophers and neuroscientists have solved the problem of
+qualia. They’ve measured, analysed and quantified all the common
+perceptual experiences, bodily sensations, felt reactions, emotions,
+passions and moods. Next, they found a way to visualize them. It
+wasn’t long before the authorities (at the behest of the
+techno-authoritarians) decided to standardize these qualia. Their
+aims were twofold: (1) to reproduce them in AI agents; (2) to
+regulate human behaviour by expanding the notion of the quantified
+self and promoting ever deeper self-surveillance. Here, I offer a
+small random sample of the qualia they identified and standardized.
+
+The code, specifically the doViz() function that generates the
+visualization, draws a fractal. Its branching is determined by the
+number of limbs (i.e. main branches) multiplied by the maximum level
+or depth of recursion stipulated. The authorities (with their
+preference for imperial systems) have deemed that the result of this
+calculation must always be 16. This is the standard for qualia.
+
+NOTE: if you resize the browser window, please refresh the page.
+The canvas size is relative to the viewport but it does not
+automatically adjust on resizing. This is intentional to keep the
+code size down.
+
+For more about:
+- qualia, see https://plato.stanford.edu/entries/qualia/
+- generating fractals using JavaScript & HTML Canvas, see this
+  tutorial https://youtu.be/DboxLjtm88g?si=nqRSYIKFnNVkNOun
+
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id=nav>
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #16 :
+		For Good Measure</a> : Spring 2026 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="qualia_standards_visualizer.html">“Qualia Standards Visualizer”</a> by
+		<a href="about.html#wilks">Christine Wilks</a>
+	</h1>
+</header>
+
+<style>body{background:#000;color:#fff;font-family:sans-serif}main{display:grid;place-items:center}p,h2{margin-top:0}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}</style>
+<main><canvas id="cv"></canvas><h2></h2><p> <button id="btn">Next Visualization</button></p></main>
+<script>
+const c=cv.getContext('2d'),
+  btn=document.getElementById('btn'),
+  h2=document.querySelector('h2'),
+  p=document.querySelector('p'),
+  r=Math.random,
+  SIZE=Math.min(window.innerWidth,window.innerHeight)*0.8|0;
+  cv.height=cv.width=SIZE;
+  c.lineCap='round';
+function title(){
+  const m='Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit'.split(' '),
+  q='Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Nausea Calm Fatigue Disgust Anxiety Fear Horror Contempt Joy Misery Joviality'.split(' ');
+  return `A ${m[r()*m.length|0]} of ${q[r()*q.length|0]}`;
+}
+function doViz(){
+  h2.textContent=title();
+  p.firstChild.textContent=`Qualia Standard: ${r()*1000|0}`;
+  const props=[[1,16],[2,8],[4,4],[8,2]],
+  [limbs,max]=props[r()*4|0],
+  num=2,
+  lineW=(r()*11|0)+4,
+  hue=r()*360,
+  angle=r()*4-2,
+  scale=r()*0.1+0.6;
+  c.clearRect(0,0,SIZE,SIZE);
+  c.lineWidth=lineW;
+  c.save();
+  c.translate(SIZE/2,SIZE/2);
+  for (let i=limbs; i--;){
+    doBranch(0,max,angle,scale,num,hue);
+    c.rotate(Math.PI*2/limbs);
+  }
+  c.restore();
+}
+function doBranch(level,max,angle,scale,num,hue){
+  if (level>max) return;
+  const len=100,
+  li=10+level*10;
+  c.strokeStyle=`hsl(${hue} 100 ${li})`;
+  c.beginPath();
+  c.moveTo(0,0);
+  c.lineTo(len,0);
+  c.stroke();
+  for (let i=num; i--;){
+    const pos=len-(len/num)*i;
+    c.save();
+    c.translate(pos,0);
+    c.scale(scale, scale);
+    c.rotate(angle*(i-(num-angle*5)/2));
+    doBranch(level+1,max,angle,scale,num,hue);
+    c.restore();
+  }
+}
+doViz();
+btn.addEventListener('click', doViz);
+</script>
+
+</body>
+</html>
