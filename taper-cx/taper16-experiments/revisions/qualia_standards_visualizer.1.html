@@ -81,75 +81,9 @@ using typographical quotes “” and apostrophes ‘’.
 	</h1>
 </header>
 
-<style>
-body{background:#000;color:#fff;font-family:sans-serif}
-main{display:grid;grid-template-columns:1fr 1fr 1fr;align-items: end;text-align:center;margin:0 6px}
-h2,h4{margin-top:0}
-#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}
-p{color:#999}
-</style>
-<main>
-  <p>Warning: any experience that deviates from the standard at a variance greater than 0.16% should be reported to QSCA.<br>THE USE OF THIS VISUALIZER OR RELIANCE ON ANY INFORMATION CONTAINED THEREIN IS SOLELY AT YOUR OWN RISK.</p>
-  <div>
-    <canvas id="cv"></canvas>
-    <h2></h2>
-    <h4> <button id="btn">Next Visualization</button></h4>
-  </div>
-  <p>© Qualia Standards Compliance Authority</p>
-</main>
-<script>
-  const c = cv.getContext("2d")
-    , btn = document.getElementById("btn")
-    , h2 = document.querySelector("h2")
-    , h4 = document.querySelector("h4")
-    , r = Math.random
-    , SIZE = .8 * Math.min(window.innerWidth, window.innerHeight) | 0;
-  function title() {
-      const t = "Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit".split(" ")
-        , e = "Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Nausea Calm Fatigue Disgust Anxiety Fear Horror Contempt Joy Misery Joviality".split(" ");
-      return `A ${t[r() * t.length | 0]} of ${e[r() * e.length | 0]}`
-  }
-  function doViz() {
-      h2.textContent = title(),
-      h4.firstChild.textContent = "Qualia Standard: " + (1e3 * r() | 0);
-      const [t,e] = [[1, 16], [2, 8], [4, 4], [8, 2]][4 * r() | 0]
-        , n = 4 + (11 * r() | 0)
-        , i = 360 * r()
-        , o = 4 * r() - 2
-        , a = .1 * r() + .6;
-      c.clearRect(0, 0, SIZE, SIZE),
-      c.lineWidth = n,
-      c.save(),
-      c.translate(SIZE / 2, SIZE / 2);
-      for (let n = t; n--; )
-          doBranch(0, e, o, a, 2, i),
-          c.rotate(2 * Math.PI / t);
-      c.restore()
-  }
-  function doBranch(t, e, n, r, i, o) {
-      if (t > e)
-          return;
-      const a = 10 + 10 * t;
-      c.strokeStyle = `hsl(${o} 100 ${a})`,
-      c.beginPath(),
-      c.moveTo(0, 0),
-      c.lineTo(100, 0),
-      c.stroke();
-      for (let a = i; a--; ) {
-          const s = 100 - 100 / i * a;
-          c.save(),
-          c.translate(s, 0),
-          c.scale(r, r),
-          c.rotate(n * (a - (i - 5 * n) / 2)),
-          doBranch(t + 1, e, n, r, i, o),
-          c.restore()
-      }
-  }
-  cv.height = cv.width = SIZE,
-  c.lineCap = "round",
-  doViz(),
-  btn.addEventListener("click", doViz);
-</script>
+<style>body{background:#000;color:#fff;font-family:sans-serif}main{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:end;text-align:center;margin:0 6px}h2,h4{margin-top:0}#btn{font-size:1rem;cursor:pointer;padding:.3em;margin-left:1.5em}p{font-size:0.9rem;color:#999}</style>
+<main><p>WARNING: any experience that deviates from the standard should be reported. USE OF THIS VISUALIZER IS SOLELY AT YOUR OWN RISK.</p><div><canvas id="cv"></canvas><h2></h2><h4> <button id="btn">Next Visualization</button></h4></div><p>&copy; Qualia Standards Compliance Authority</p></main>
+<script>const c=cv.getContext("2d"),btn=document.getElementById("btn"),h2=document.querySelector("h2"),h4=document.querySelector("h4"),r=Math.random,SIZE=.8*Math.min(window.innerWidth,window.innerHeight)|0;function title(){const t="Degree Moment Segment Portion Quantity Unit Quota Scruple Dose Quantum Fragment Bit Fraction Slice Piece Grain Scintilla Particle Trace Depth Tinge Whit".split(" "),e="Boredom Empathy Pleasure Insight Curiosity Lust Delight Pain Hunger Regret Trust Happiness Jealousy Thirst Hotness Pride Itchiness Dizziness Love Nausea Calm Fatigue Disgust Anxiety Fear Horror Contempt Joy Misery Joviality".split(" ");return`A ${t[r()*t.length|0]} of ${e[r()*e.length|0]}`}function doViz(){h2.textContent=title(),h4.firstChild.textContent="Qualia Standard: "+(1e3*r()|0);const[t,e]=[[1,16],[2,8],[4,4],[8,2]][4*r()|0],n=4+(11*r()|0),i=360*r(),o=4*r()-2,a=.1*r()+.6;c.clearRect(0,0,SIZE,SIZE),c.lineWidth=n,c.save(),c.translate(SIZE/2,SIZE/2);for(let n=t;n--;)doBranch(0,e,o,a,2,i),c.rotate(2*Math.PI/t);c.restore()}function doBranch(t,e,n,r,i,o){if(t>e)return;const a=10+10*t;c.strokeStyle=`hsl(${o} 100 ${a})`,c.beginPath(),c.moveTo(0,0),c.lineTo(100,0),c.stroke();for(let a=i;a--;){const s=100-100/i*a;c.save(),c.translate(s,0),c.scale(r,r),c.rotate(n*(a-(i-5*n)/2)),doBranch(t+1,e,n,r,i,o),c.restore()}}cv.height=cv.width=SIZE,c.lineCap="round",doViz(),btn.addEventListener("click",doViz);</script>
 
 </body>
 </html>
