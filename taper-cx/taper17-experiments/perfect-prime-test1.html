@@ -1,0 +1,193 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfect Prime Test 1</title>
+</head>
+<body>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: grid;
+        place-content: center;
+        gap: 2rem;
+        min-height: 100vh;
+        background: black;
+        color: #fff;
+      }
+      #canv {
+        border: 1px solid #222;
+      }
+      button {
+        padding: .7em;
+        background: #333;
+        font-size: 1rem;
+        color: #fff;
+        cursor: pointer;
+        &:hover {background: #444;}
+    }
+  </style>
+  <canvas id="canv"></canvas>
+  <button id="btn">Play sound 1 (basic)</button>
+  <button id="btn2">Play sound 2 (radu)</button>
+  <button id="btn3">Play sound 3 (fireship) </button>
+  <button id="btn4">Play multiple sounds 4</button>
+  <button id="btn5">Play more sounds 5</button>
+  <button id="btn6">Play sounds type 6</button>
+  <button id="btn7">Play sounds in unison 7</button>
+
+<script>
+  const ctx = canv.getContext("2d"),
+  btn  = document.getElementById('btn'),
+  btn2 = document.getElementById('btn2'),
+  btn3 = document.getElementById('btn3'),
+  btn4 = document.getElementById('btn4'),
+  btn5 = document.getElementById('btn5'),
+  btn6 = document.getElementById('btn6'),
+  btn7 = document.getElementById('btn7');
+
+  const audioCtx = new AudioContext();
+
+// Connect all of our audio nodes to this gain node so their volume is lower.
+const primaryGainControl = audioCtx.createGain();
+primaryGainControl.gain.setValueAtTime(0.05, 0);
+primaryGainControl.connect(audioCtx.destination);
+
+  const notes = [
+  { name: "C", frequency: 261.63 },
+  { name: "C#", frequency: 277.18 },
+  { name: "D", frequency: 293.66 },
+  { name: "D#", frequency: 311.13 },
+  { name: "E", frequency: 329.63 },
+  { name: "F", frequency: 349.23 },
+  { name: "F#", frequency: 369.99 },
+  { name: "G", frequency: 392.0 },
+  { name: "G#", frequency: 415.3 },
+  { name: "A", frequency: 440.0 },
+  { name: "A#", frequency: 466.16 },
+  { name: "B", frequency: 493.88 },
+  { name: "C", frequency: 523.25 },
+];
+
+  function playSound(frequency = 440, duration = 1) {
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime); // A4 note
+    osc.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration); // Play for duration seconds
+  }
+
+  // Radu's playSound2 function with envelope
+  function playSound2(frequency = 440, duration = 1) {
+    const osc = audioCtx.createOscillator();
+    const envelope = audioCtx.createGain();
+    osc.connect(envelope);
+    envelope.connect(audioCtx.destination);
+
+    envelope.gain.setValueAtTime(0, audioCtx.currentTime);
+    // envelope.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.05);
+    envelope.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.05);
+    envelope.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+
+  // from Fireship's 'keyboard' with vibrato and ADSR envelope
+  function playSound3(frequency = 440, duration = 1) {
+    // Create an oscillator at the note's frequency
+    const now = audioCtx.currentTime;
+    const noteOscillator = audioCtx.createOscillator();
+    noteOscillator.type = "square";
+    noteOscillator.frequency.setValueAtTime(frequency, now);
+
+    const vibrato = audioCtx.createOscillator();
+    vibrato.frequency.value = 10; // 10 Hz
+    const vibratoGain = audioCtx.createGain();
+    vibratoGain.gain.value = 1.5;
+    vibrato.connect(vibratoGain);
+    vibratoGain.connect(noteOscillator.frequency);
+    vibrato.start();
+
+    const attackTime = 0.2;
+    const decayTime = 0.3;
+    const sustainLevel = 0.7;
+    const releaseTime = 0.2;
+    // const duration = 1;
+    const noteGain = audioCtx.createGain();
+    noteGain.gain.setValueAtTime(0, 0);
+    noteGain.gain.linearRampToValueAtTime(1, now + attackTime);
+    noteGain.gain.linearRampToValueAtTime(
+      sustainLevel,
+      now + attackTime + decayTime
+    );
+    noteGain.gain.setValueAtTime(sustainLevel, now + duration - releaseTime);
+    noteGain.gain.linearRampToValueAtTime(0, now + duration);
+
+    noteOscillator.start();
+    noteOscillator.stop(now + 1);
+    noteOscillator.connect(noteGain);
+    noteGain.connect(primaryGainControl);
+  }
+
+  // Radu's playSound2 function with envelope
+  function playSoundType(type = "sine", frequency = 440, duration = 1) {
+    const osc = audioCtx.createOscillator();
+    osc.type = type;
+    const envelope = audioCtx.createGain();
+    osc.connect(envelope);
+    envelope.connect(audioCtx.destination);
+
+    envelope.gain.setValueAtTime(0, audioCtx.currentTime);
+    // envelope.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.05);
+    envelope.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.05);
+    envelope.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+
+  const playMultipleSounds = (frequencies, duration = 1) => {
+    frequencies.forEach((freq, index) => {
+        setTimeout(() => playSound2(freq, duration), index * 100); // Stagger the sounds
+    });
+  };
+
+  const playMoreSounds = (duration = 1) => {
+    const someFrequencies = [349.23, 440, 523.25, 659.25, 783.99, 880]; // E4, A4, C5, E5, G5, A5
+    playMultipleSounds(someFrequencies, duration);
+  };
+
+  const playSoundsInUnison = (frequency, duration = 1) => {
+    playSound2(frequency, duration); // sine
+    playSound3(frequency, duration); // square
+    playSoundType("sawtooth", frequency, duration);
+    playSoundType("triangle", frequency, duration);
+  };
+
+  btn.addEventListener('click', () => playSound());
+  btn2.addEventListener('click', () => playSound2());
+  btn3.addEventListener('click', () => playSound3());
+  btn4.addEventListener('click', () => playMultipleSounds([349.23, 392.0, 440, 523.25, 659.25], 1));
+  btn5.addEventListener('click', () => playMoreSounds(1));
+  btn6.addEventListener('click', () => playSoundType("sawtooth"));
+  btn7.addEventListener('click', () => playSoundsInUnison(440, 1));
+
+
+  // const SIZE = 600;
+  // canv.height = SIZE;
+  // canv.width = SIZE;
+  // ctx.lineCap = 'round';
+
+</script>
+</body>
+</html>

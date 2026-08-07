@@ -177,6 +177,7 @@ notes.forEach(({ name, frequency }) => {
     const sustainLevel = 0.7;
     const releaseTime = 0.2;
     const duration = 1;
+    // noteGain is the envelope for the note. It controls the volume of the note over time.
     const noteGain = audioContext.createGain();
     noteGain.gain.setValueAtTime(0, 0);
     noteGain.gain.linearRampToValueAtTime(1, now + attackTime);
