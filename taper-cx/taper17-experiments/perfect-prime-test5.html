@@ -1,0 +1,129 @@
+<html>
+<head>
+  <title>Perfect Prime Test 5</title>
+  <!-- from template -->
+  <style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+  <header id="nav">
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #17 :
+		Prime</a> : Fall 2026 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a>
+	</h1>
+</header>
+  <style>
+    body {
+      min-height: 100vh;
+      /* background: repeating-conic-gradient(#000 0 25%,#222 0 50%) 0 / 50px 50px; */
+      background: repeating-conic-gradient(#000 0 12.5%,#222 0 25%) 0 / 50px 50px;
+    }
+    main {
+      color: #fff;
+      text-align: center;
+      padding-top: 2rem;
+      font-size: 2rem;
+    }
+    button {
+      padding: .7em 1em;
+      font-size: 1rem;
+      &:not(:disabled) {cursor: pointer;}
+    }
+  </style>
+  <main>
+    <button id="btn">Start</button>
+    <p id="feedback">Click to play sounds (test 5)</p>
+  </main>
+
+<script>
+const audioCtx = new AudioContext(),
+btn  = document.getElementById('btn'),
+feedback = document.getElementById('feedback');
+let zeroCenter = { x: 0, y: 0 };
+let started = false;
+
+// central 80% box and a random zero-detune center inside it
+const centerBox = { w: window.innerWidth * 0.8, h: window.innerHeight * 0.8 };
+
+btn.addEventListener('click', (e) => {
+  e.stopPropagation(); // prevent this click from reaching the global handler
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const hw = centerBox.w / 2;
+  const hh = centerBox.h / 2;
+
+  zeroCenter = {
+    x: cx - hw + Math.random() * centerBox.w,
+    y: cy - hh + Math.random() * centerBox.h
+  };
+
+  started = true;
+  btn.disabled = true;
+  // btn.textContent = 'Started';
+  console.log('new zeroCenter', zeroCenter);
+});
+
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+function playNote(frequency = 440, detune = 0, type = 'sine', gainAmount = 0.2, duration = 5) {
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = type;
+  osc.frequency.value = frequency;
+  osc.detune.value = detune; // in cents
+
+  gain.gain.setValueAtTime(gainAmount, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + duration + 0.05);
+}
+
+function playSounds(e) {
+  if (!started) return;
+  if (e.target === btn) return;
+
+  // ensure context is resumed on user gesture
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  // 1) default note
+  playNote();
+
+const x = e.clientX;
+const y = e.clientY;
+
+// compute normalized distance from the random zero center using both X & Y
+const dx = (x - zeroCenter.x) / (centerBox.w / 2);
+const dy = (y - zeroCenter.y) / (centerBox.h / 2);
+// Euclidean distance, normalized so corners ~1
+const norm = Math.sqrt(dx * dx + dy * dy) / Math.SQRT2;
+let detune = clamp(norm, 0, 1) * 100;
+if (detune < 1) detune = 0;
+
+console.log(`zeroCenter: (${Math.round(zeroCenter.x)}, ${Math.round(zeroCenter.y)}), Mouse: (${x}, ${y}), Detune: ${detune.toFixed(1)}`);
+
+  // choose some custom params (frequency, detune, type, gain, duration)
+  playNote(440, detune, 'sawtooth', 0.12, 5);
+  feedback.innerText = `Detune: ${detune.toFixed(1)}`;
+}
+
+window.addEventListener('click', playSounds);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfect Prime Test 2</title>
+</head>
+<body>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: grid;
+        place-content: center;
+        gap: 2rem;
+        min-height: 100vh;
+        background: black;
+        color: #fff;
+      }
+      #canv {
+        border: 1px solid #222;
+      }
+      button {
+        padding: .7em;
+        background: #333;
+        font-size: 1rem;
+        color: #fff;
+        cursor: pointer;
+        &:hover {background: #444;}
+    }
+  </style>
+  <button id="btn1">Play note 1 (no detune)</button>
+  <button id="btn2">Play note 2</button>
+  <button id="btn3">Play note 3</button>
+  <button id="btn4">Play note 4 </button>
+  <button id="btn5">Play all notes </button>
+
+  <script>
+    const audioCtx = new AudioContext(),
+    btn1  = document.getElementById('btn1'),
+    btn2 = document.getElementById('btn2'),
+    btn3 = document.getElementById('btn3'),
+    btn4 = document.getElementById('btn4'),
+    btn5 = document.getElementById('btn5');
+
+    function playNote(freq, detune=0, type='sawtooth', gain=0.1, dur=3) {
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      // detune is in cents, so 100 cents = 1 semitone
+      osc.detune.setValueAtTime(detune, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(gain, audioCtx.currentTime);
+
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + dur);
+    }
+
+    btn1.addEventListener('click', () => {
+      playNote(440, 0,); // A4 note
+    });
+    btn2.addEventListener('click', () => {
+      playNote(440, 50,);
+    });
+    btn3.addEventListener('click', () => {
+      playNote(440, 70,);
+    });
+    btn4.addEventListener('click', () => {
+      playNote(440, 100,);
+    });
+    btn5.addEventListener('click', () => {
+      playNote(440, 0,);
+      playNote(440, 50,);
+      playNote(440, 70,);
+      playNote(440, 100,);
+    });
+  </script>
+
+</body>
+</html>

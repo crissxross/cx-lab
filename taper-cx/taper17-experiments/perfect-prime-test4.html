@@ -1,0 +1,120 @@
+<html>
+<head>
+    <title>Perfect Prime Test 4</title>
+</head>
+<body>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: grid;
+        place-content: center;
+        gap: 2rem;
+        min-height: 100vh;
+        background: black;
+        color: #fff;
+      }
+      #canv {
+        border: 1px solid #222;
+      }
+      button {
+        padding: .7em;
+        background: #333;
+        font-size: 1rem;
+        color: #fff;
+        cursor: pointer;
+        &:hover {background: #444;}
+    }
+  </style>
+  <p>Click to play sounds (test 4)</p>
+
+  <script>
+const audioCtx = new AudioContext();
+
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+/**
+ * Play a single note.
+ * @param {number} frequency - Hz (default 440)
+ * @param {number} detune - cents (default 0)
+ * @param {string} type - oscillator type (default 'sine')
+ * @param {number} gainAmount - linear gain (default 0.2)
+ * @param {number} duration - seconds (default 1)
+ */
+function playNote(frequency = 440, detune = 0, type = 'sine', gainAmount = 0.2, duration = 3) {
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = type;
+  osc.frequency.value = frequency;
+  osc.detune.value = detune; // in cents
+
+  gain.gain.setValueAtTime(gainAmount, now);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + duration + 0.05);
+}
+
+function playSounds(e) {
+  // ensure context is resumed on user gesture
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  // 1) default note
+  playNote();
+
+  // central 80% box and a random zero-detune center inside it
+const centerBox = { w: window.innerWidth * 0.8, h: window.innerHeight * 0.8 };
+let zeroCenter = (function randomZeroCenter() {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const hw = centerBox.w / 2;
+  const hh = centerBox.h / 2;
+  return {
+    x: cx - hw + Math.random() * centerBox.w,
+    y: cy - hh + Math.random() * centerBox.h
+  };
+})();
+
+// optional reset of the zero center
+function resetZeroCenter() {
+  zeroCenter = (function () {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const hw = centerBox.w / 2;
+    const hh = centerBox.h / 2;
+    return {
+      x: cx - hw + Math.random() * centerBox.w,
+      y: cy - hh + Math.random() * centerBox.h
+    };
+  })();
+}
+
+const x = e.clientX;
+const y = e.clientY;
+
+// compute normalized distance from the random zero center using both X & Y
+const dx = (x - zeroCenter.x) / (centerBox.w / 2);
+const dy = (y - zeroCenter.y) / (centerBox.h / 2);
+// Euclidean distance, normalized so corners ~1
+const norm = Math.sqrt(dx * dx + dy * dy) / Math.SQRT2;
+const detune = clamp(norm, 0, 1) * 100;
+
+console.log(`zeroCenter: (${Math.round(zeroCenter.x)}, ${Math.round(zeroCenter.y)}), Mouse: (${x}, ${y}), Detune: ${detune.toFixed(1)}`);
+
+  // choose some custom params (frequency, detune, type, gain, duration)
+  playNote(660, detune, 'sawtooth', 0.12, 1.4);
+}
+
+window.addEventListener('click', playSounds);
+</script>
+
+</body>
+</html>
