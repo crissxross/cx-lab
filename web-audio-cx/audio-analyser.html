@@ -44,7 +44,8 @@
         // Load the audio the first time through, otherwise play it from the buffer
         msg.textContent = "Loading audio…";
 
-        fetch("../assets/viper.mp3")
+        // fetch("../assets/viper.mp3")
+        fetch("../assets/GratiasAgimusTibiSop.mp3")
           .then((response) => response.arrayBuffer())
           .then((downloadedBuffer) =>
             audioContext.decodeAudioData(downloadedBuffer)

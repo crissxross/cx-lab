@@ -16,11 +16,7 @@ let audioCtx=null;
 
 function playNote(freq,type){
     if(audioCtx==null){
-        audioCtx=new(
-            AudioContext || 
-            webkitAudioContext || 
-            window.webkitAudioContext
-        )();
+        audioCtx=newAudioContext();
     }
     const dur=0.2;
     const osc=audioCtx.createOscillator();
@@ -58,56 +54,56 @@ function play(){
 
 animate();
 function quickSort(array) {
-   const moves = [];
+    const moves = [];
 
-   function swap(i, j) {
-       [array[i], array[j]] = [array[j], array[i]];
-       moves.push({ indices: [i, j], swap: true });
-   }
+    function swap(i, j) {
+        [array[i], array[j]] = [array[j], array[i]];
+        moves.push({ indices: [i, j], swap: true });
+    }
 
-   function partition(low, high) {
-       const pivot = array[high];
-       let i = low - 1;
+    function partition(low, high) {
+        const pivot = array[high];
+        let i = low - 1;
 
-       for (let j = low; j < high; j++) {
-           if (array[j] < pivot) {
-               i++;
-               swap(i, j);
-           }
-       }
+        for (let j = low; j < high; j++) {
+            if (array[j] < pivot) {
+                i++;
+                swap(i, j);
+            }
+        }
 
-       swap(i + 1, high);
-       return i + 1;
-   }
+        swap(i + 1, high);
+        return i + 1;
+    }
 
-   function quickSortRecursive(low, high) {
-       if (low < high) {
-           const partitionIndex = partition(low, high);
-           quickSortRecursive(low, partitionIndex - 1);
-           quickSortRecursive(partitionIndex + 1, high);
-       }
-   }
+    function quickSortRecursive(low, high) {
+        if (low < high) {
+            const partitionIndex = partition(low, high);
+            quickSortRecursive(low, partitionIndex - 1);
+            quickSortRecursive(partitionIndex + 1, high);
+        }
+    }
 
-   quickSortRecursive(0, array.length - 1);
-   return moves;
-}
+    quickSortRecursive(0, array.length - 1);
+    return moves;
+  }
 
 function insertionSort(array) {
-   const moves = [];
+    const moves = [];
 
-   for (let i = 1; i < array.length; i++) {
-       let currentIndex = i;
+    for (let i = 1; i < array.length; i++) {
+        let currentIndex = i;
 
-       while (currentIndex > 0 && array[currentIndex - 1] > array[currentIndex]) {
-           [array[currentIndex - 1], array[currentIndex]] = [array[currentIndex], array[currentIndex - 1]];
-           moves.push({ indices: [currentIndex - 1, currentIndex], swap: true });
-           currentIndex--;
-       }
+        while (currentIndex > 0 && array[currentIndex - 1] > array[currentIndex]) {
+            [array[currentIndex - 1], array[currentIndex]] = [array[currentIndex], array[currentIndex - 1]];
+            moves.push({ indices: [currentIndex - 1, currentIndex], swap: true });
+            currentIndex--;
+        }
 
-       //moves.push({ indices: [currentIndex, i], swap: false });
-   }
+        //moves.push({ indices: [currentIndex, i], swap: false });
+    }
 
-   return moves;
+    return moves;
 }
 
 function bubbleSort(array){
