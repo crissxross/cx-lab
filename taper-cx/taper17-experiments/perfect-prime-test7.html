@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #17)</title>
+
+<!-- “Title” Copyright (C) 2026 Author
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #17: Prime, Fall 2026:
+
+https://taperzine.org/17/title_of_your_work.html
+
+... your creative statement here ...
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id="nav">
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #17 :
+		Prime</a> : Fall 2026 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a>
+	</h1>
+</header>
+
+<!-- All poem code goes here, and must be less than or equal to 2048 bytes (not including closing </body> and </html> tags below)-->
+<style>
+  body {min-height:100vh;background:repeating-conic-gradient(#000 0 12.5%,#222 0 25%) 0 / 50px 50px;}
+  #v {color:#fff;text-align:center;font-size:2rem;line-height:2;}
+  button {padding:.7em 1em;font-size:1rem;cursor:pointer;}
+</style>
+<div id="v"><p id="p">Click to play notes & tune into perfect prime (0)</p></div>
+<script>
+  let z = {x:0, y:0},go = 0;
+  const a = new AudioContext(),
+  w = window.innerWidth,
+  h = window.innerHeight,
+  b = document.createElement('button'),
+  o = document.createElement('div'),
+  t = document.createElement('p');
+  b.innerText = 'Start';
+  v.append(b);
+  o.style.cssText = 'position:absolute; width:18px; height:18px; border-radius:50%; background:gold;';
+  t.style.cssText = 'position:absolute; color:gold; inset:20% 20%;';
+
+  const play = (dtu=0, type='sine', dur=5) => {
+    const now = a.currentTime,
+    osc = a.createOscillator(),
+    g = a.createGain();
+    osc.type = type;
+    osc.frequency.value = 440;
+    osc.detune.value = dtu;
+    g.gain.setValueAtTime(0.2, now);
+    g.gain.exponentialRampToValueAtTime(0.0001, now+dur);
+    osc.connect(g);
+    g.connect(a.destination);
+    osc.start(now);
+    osc.stop(now+dur+0.05);
+  }
+
+  b.addEventListener('click', () => {
+    go = 1;
+    m = 60;
+    z = {x: Math.round(m+Math.random()*(w-m*2)), y: Math.round(m+Math.random()*(h-m*2))};
+    b.remove();
+    o.remove();
+  });
+
+  window.addEventListener('click', (e) => {
+    if (!go) return;
+    play();
+    const x = e.clientX, y = e.clientY,
+    dx = (x-z.x)/(w/2),
+    dy = (y-z.y)/(h/2),
+    dtu = ((Math.sqrt(dx*dx+dy*dy)/Math.SQRT2)*100).toFixed(2);
+    p.innerText = `detune: ${dtu}`;
+    play(dtu);
+    if (dtu < 1) {
+      p.innerText = `detune: 0 👌 perfect prime!`;
+      o.style.inset = `${z.y-9}px ${z.x-9}px`;
+      document.body.appendChild(o);
+      t.innerText = 'Explore!'
+      b.innerText = 'Restart';
+      o.append(t);
+      v.append(b);
+      setTimeout(() => t.remove(), 5000);
+    }
+  });
+</script>
+
+</body>
+</html>
+
+<!-- TODO: if I don't need all those params for play function, remove unnecessary ones -->
+
+<!--
+The chequerboard pattern:
+background: repeating-conic-gradient(#000 0 25%,#222 0 50%) 0 / 50px 50px;
+-->
