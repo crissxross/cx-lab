@@ -16,7 +16,7 @@ let audioCtx=null;
 
 function playNote(freq,type){
     if(audioCtx==null){
-        audioCtx=newAudioContext();
+        audioCtx=new AudioContext();
     }
     const dur=0.2;
     const osc=audioCtx.createOscillator();
