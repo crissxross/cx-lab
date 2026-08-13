@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Title (Taper #17)</title>
+
+<!-- “Title” Copyright (C) 2026 Author
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved. This file is offered as-is,
+without any warranty.
+
+This is from Taper #17: Prime, Fall 2026:
+
+https://taperzine.org/17/title_of_your_work.html
+
+... your creative statement here ...
+
+*** BEGIN TEMPLATE INSTRUCTIONS ***
+* All poem code goes between the closing header and closing body tags
+below, and must not exceed 2KB (2048 bytes).
+* Without removing any template punctuation, insert your author name,
+poem title, and poem filename throughout the template, making sure your
+text, capitalization, and punctuation is consistent across the file.
+* Insert your creative statement above, wrapped to 72 characters, and
+using typographical quotes “” and apostrophes ‘’.
+* Do not modify the template in any other way.
+*** END TEMPLATE INSTRUCTIONS ***
+
+-->
+
+<style>
+	body { margin:0 ; overflow:hidden }
+	a { color:#eee ; text-decoration:none }
+	header { margin:0 ; padding:0 ; background-color:#444 ; color:#bbb ;
+		position:relative ; z-index:1000 }
+	header > h1 { margin:0 ; font-size:12px ; font-family:sans-serif ;
+		border-bottom:1px #999 solid ; padding:5px 10px ; line-height:17px }
+</style>
+</head>
+<body>
+<header id="nav">
+	<h1>
+		<a href="prev.html">&lt;&lt;</a> &nbsp;
+		<a href="index.html">Taper #17 :
+		Prime</a> : Fall 2026 &nbsp;
+		<a href="next.html">&gt;&gt;</a><br>
+		<a href="title_of_your_work.html">“Title”</a> by
+		<a href="about.html#authorlastname">Author</a>
+	</h1>
+</header>
+
+<!-- All poem code goes here, and must be less than or equal to 2048 bytes (not including closing </body> and </html> tags below) -->
+
+<style>
+  body {min-height:100vh;background:repeating-conic-gradient(#000 0 25%,#222 0 50%) 0 / 50px 50px;}
+  button {padding:.7em 1em;font-size:1rem;cursor:pointer;}
+  #v {color:#fff;text-align:center;font-size:2rem;line-height:2;}
+  #o1,#o2 {position:absolute;width:20px;height:20px;border-radius:50%;background:gold;}
+</style>
+<div id="v">
+  <p id="i">Click to play</p>
+  <div id="o1"></div>
+  <div id="o2"></div>
+</div>
+
+<script>
+  let go=0,s='';
+  const a=new AudioContext(),
+  w=window.innerWidth,
+  h=window.innerHeight,
+  b=document.createElement('button'),
+  // p=document.createElement('p'),
+  f=['sine','square','sawtooth','triangle'];
+  o1.style.inset=`20vh ${w*0.33}px`;
+  o2.style.inset=`20vh ${w*0.66}px`;
+  b.innerText='Start';
+  v.append(b);
+  // p.style.cssText='position:absolute;color:gold;inset:20% 20%;';
+
+  const play=(dtu=0, s='sine', t=3) => {
+    const now=a.currentTime,
+    osc=a.createOscillator(),
+    g=a.createGain();
+    osc.type=s;
+    osc.frequency.value=440;
+    osc.detune.value=dtu;
+    g.gain.setValueAtTime(0.2, now);
+    g.gain.exponentialRampToValueAtTime(0.0001, now+t);
+    osc.connect(g);
+    g.connect(a.destination);
+    osc.start(now);
+    osc.stop(now+t+.05);
+  }
+
+  b.addEventListener('click', () => {
+    s=f[Math.floor(Math.random()*f.length)];
+    b.remove();
+    go=1;
+  });
+
+  window.addEventListener('click', (e) => {
+    if (!go) return;
+    play();
+    const detune = e.clientY/100;
+    console.log('detune', detune)
+    play(detune);
+    if (detune < 1) {
+      b.innerText = 'Restart';
+      v.append(b);
+    }
+  });
+</script>
+
+</body>
+</html>
